@@ -1,0 +1,49 @@
+{
+  "environment": "demo",
+  "isSimulated": true,
+  "provenance": "synthetic_for_demo",
+  "samples": [
+    {
+      "number": "001",
+      "title": "[DEMO] Ghi nhận rung sau thay dao",
+      "keywords": ["CNC", "rung", "thay dao", "nhật ký"],
+      "symptom": "Mô phỏng: CNC-04 xuất hiện rung sau thời điểm thay dao; chưa có số đo rung được xác minh.",
+      "context": "Máy CNC-04, tình huống gia công sau thay dao. Model sản phẩm, mã dao và tốc độ chưa được xác minh trong dữ liệu mẫu.",
+      "cause": "Chưa xác định nguyên nhân. Quan hệ về thời điểm thay dao chưa đủ để kết luận dao gây rung.",
+      "causeStatus": "unknown",
+      "solution": "Mô phỏng: ghi lại thời điểm thay dao, phân biệt hiện tượng quan sát với giả thuyết và lập danh sách thông tin cần đối chiếu: mã dao, chương trình, vật liệu, điều kiện gá đặt.",
+      "result": "Đã hoàn thành hồ sơ ghi nhận trong kịch bản. Chưa chứng minh máy được phục hồi; kết thúc ca mẫu với trạng thái chưa phục hồi.",
+      "evidence": "Nhật ký quan sát và kiểm tra mô phỏng trong BM-KNOWLEDGE-001; không phải biên bản đo hoặc bằng chứng sửa chữa thực tế.",
+      "followUp": "Bổ sung số đo có đơn vị, thời điểm đo và thông tin dao trước khi đánh giá nguyên nhân.",
+      "limits": "Chỉ là bài học về cách ghi nhận trong demo CNC-04. Không cung cấp thông số sửa chữa, ngưỡng rung hay hướng dẫn vận hành máy thực tế."
+    },
+    {
+      "number": "002",
+      "title": "[DEMO] Ghi nhận nhiệt độ tăng kèm Alarm",
+      "keywords": ["CNC", "nhiệt độ", "Alarm", "bằng chứng"],
+      "symptom": "Mô phỏng: màn hình CNC-04 báo nhiệt độ tăng kèm Alarm; chưa xác minh mã Alarm và giá trị nhiệt độ.",
+      "context": "Tình huống CNC-04 trong ca sản xuất mô phỏng. Chưa có vị trí đo, đơn vị, thời gian chạy hoặc điều kiện môi trường được xác minh.",
+      "cause": "Chưa rõ nguyên nhân. Không suy đoán hệ thống làm mát hoặc cảm biến hỏng chỉ từ mô tả Alarm.",
+      "causeStatus": "unknown",
+      "solution": "Mô phỏng: lưu mô tả hiện tượng, lập danh sách cần bổ sung gồm nội dung Alarm nguyên văn, ảnh màn hình, thời điểm xuất hiện, vị trí đo và điều kiện quan sát.",
+      "result": "Hồ sơ mẫu đã phân biệt thông tin quan sát và thông tin còn thiếu. Chưa có kết quả khắc phục; máy ở trạng thái chưa phục hồi khi kết thúc ca mẫu.",
+      "evidence": "Nhật ký mô phỏng BM-KNOWLEDGE-002. Không có ảnh Alarm hoặc số đo thực tế đính kèm.",
+      "followUp": "Đối chiếu mã Alarm và tài liệu có hiệu lực của đúng model máy sau khi thu thập đủ dữ liệu.",
+      "limits": "Dữ liệu demo về cách thu thập bằng chứng; không phải bảng mã lỗi, quy trình reset Alarm hoặc ngưỡng dừng máy."
+    },
+    {
+      "number": "003",
+      "title": "[DEMO] Đối chiếu rung sau thay đồ gá",
+      "keywords": ["CNC", "rung", "đồ gá", "đối chiếu"],
+      "symptom": "Mô phỏng: CNC-04 được ghi nhận rung và tiếng ồn sau thay đồ gá; chưa có đo kiểm xác nhận.",
+      "context": "Ca CNC-04 sau thay đổi đồ gá trong kịch bản. Mã đồ gá, vật liệu và chương trình gia công chưa được xác minh.",
+      "cause": "Giả thuyết: hiện tượng có thể liên quan điều kiện gá đặt. Chưa được kiểm chứng và chưa loại trừ nguyên nhân khác.",
+      "causeStatus": "hypothesis",
+      "solution": "Mô phỏng: ghi nhận thay đổi trước sự cố, tách giả thuyết khỏi kết luận và lập bảng đối chiếu điều kiện trước/sau: đồ gá, sản phẩm, chương trình và thời điểm xuất hiện rung.",
+      "result": "Đã lưu được bối cảnh và kế hoạch kiểm chứng trong hồ sơ mẫu. Chưa xác nhận nguyên nhân hoặc phục hồi; ca mẫu kết thúc ở trạng thái chưa phục hồi.",
+      "evidence": "Hai ghi nhận mô phỏng trong BM-KNOWLEDGE-003; không có kết quả thử nghiệm hoặc xác nhận nguyên nhân thực tế.",
+      "followUp": "Bổ sung dữ liệu kiểm chứng theo quy trình có hiệu lực trước khi chuyển giả thuyết thành nguyên nhân đã xác nhận.",
+      "limits": "Bài học mô phỏng về đối chiếu bối cảnh CNC-04; không hướng dẫn chỉnh đồ gá hoặc cung cấp thông số siết, tốc độ hay chế độ cắt."
+    }
+  ]
+}

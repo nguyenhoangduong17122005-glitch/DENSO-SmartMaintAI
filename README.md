@@ -158,7 +158,7 @@ Yêu cầu: **Python 3.14**, có Python Launcher (`py`) và Internet để cài 
 3. Nhấp đúp **Chay-demo.cmd**, giữ cửa sổ máy chủ mở.
 4. Mở **http://127.0.0.1:8001/** → chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo**. Không cần mật khẩu.
 
-Lần đầu tự tạo 5 hồ sơ mẫu và cấu hình từ khóa/trả lời mẫu. Các lần sau chỉ cần chạy `Chay-demo.cmd`. Dừng máy chủ bằng **Ctrl+C**.
+Lần đầu tự tạo 5 hồ sơ ban đầu, thêm 3 ca đã kết thúc kèm bài học và tri thức mô phỏng đã xuất bản, dùng cấu hình từ khóa/trả lời mẫu. Các lần sau chỉ cần chạy `Chay-demo.cmd`. Dừng máy chủ bằng **Ctrl+C**.
 
 Hoặc chạy từ Terminal tại thư mục dự án:
 
@@ -194,7 +194,7 @@ docker compose ps
 
 Nếu tải ZIP, giải nén rồi mở Terminal tại thư mục chứa `compose.yaml` và chạy hai lệnh Docker trên.
 
-Chờ container sẵn sàng, mở **http://127.0.0.1:8001/** và chọn vai trò. Trên bản clone mới không có `.env`, Docker mặc định dùng **SQLite + từ khóa + trả lời mẫu**, không cần Gemini API key. App tự tạo schema, tài khoản demo và 5 hồ sơ mẫu; khởi động lại không tạo lại dữ liệu trùng.
+Chờ container sẵn sàng, mở **http://127.0.0.1:8001/** và chọn vai trò. Trên bản clone mới không có `.env`, Docker mặc định dùng **SQLite + từ khóa + trả lời mẫu**, không cần Gemini API key. App tự tạo schema, tài khoản demo và 8 hồ sơ mẫu (5 hồ sơ ban đầu, 3 ca làm nguồn cho bài học/tri thức); khởi động lại không tạo lại dữ liệu trùng.
 
 Mở **http://127.0.0.1:8001/api/health** để kiểm tra backend. Kết quả mong đợi chứa `"status":"ok"`, `"environment":"demo"` và `"liveHozenDX":false`.
 

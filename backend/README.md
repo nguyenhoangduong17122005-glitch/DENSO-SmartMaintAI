@@ -1,5 +1,7 @@
 # Backend SmartMaint — API cho bản demo
 
+Khởi động local hoặc hosted tự bổ sung một lần **3 bài học từ ca và 3 nguồn tri thức đã xuất bản**, kèm báo cáo nguồn mô phỏng. Xem [dữ liệu mẫu](../docs/guides/DENSO-DEMO-SAMPLE-DATA.md). Lệnh `py -m backend.demo_knowledge` thêm mẫu vào database đã khởi tạo theo cấu hình hiện tại, giữ nguyên dữ liệu có sẵn.
+
 Tình trạng hiện tại: [bàn giao demo](../docs/guides/DEMO-HANDOVER.md). Xem [README dự án](../README.md) để cài trên máy mới. Dùng `Cai-dat-demo.cmd` rồi `Chay-demo.cmd`; máy chủ mặc định ở cổng 8001. Các mô tả theo số bước bên dưới ghi lại quá trình triển khai trước đây.
 
 RAG hiện có [Gemini Embedding + sqlite-vec + Gemini](../docs/guides/DENSO-RAG-VECTOR-GEMINI.md). Ứng dụng đọc `.env`; cần điền GEMINI_API_KEY để dùng API thật. `Chay-demo.cmd` chuẩn bị chỉ mục khi có key; `py -m backend.rag.check` kiểm tra live rõ ràng. Các ghi chú bước 6–9 bên dưới mô tả chế độ demo từ khóa/mẫu trước khi bổ sung vector.

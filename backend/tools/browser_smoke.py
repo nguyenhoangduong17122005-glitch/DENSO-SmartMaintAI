@@ -433,6 +433,23 @@ def main():
             with connect(db_path) as db:
                 assert db.execute('SELECT count(*) FROM knowledge_versions WHERE knowledge_id=?',(knowledge_id,)).fetchone()[0]==1
                 assert db.execute('PRAGMA foreign_key_check').fetchall()==[]
+            # The shipped lessons must appear through the same API-backed views.
+            from ..demo_knowledge import add_knowledge_samples
+            assert len(add_knowledge_samples(db_path)) == 3
+            assert add_knowledge_samples(db_path) == []
+            navigate("SM.go('proposals')")
+            wait("!!document.querySelector('[data-page=proposal][data-id=DP-DEMO-CNC-003]')")
+            for number in ['001', '002', '003']:
+                assert evaluate("!!document.querySelector('[data-page=proposal][data-id=DP-DEMO-CNC-"+number+"]')")
+            navigate("SM.go('proposal','DP-DEMO-CNC-001')")
+            wait("document.querySelector('#knowledge-api-view')?.textContent.includes('RP-DEMO-CNC-001')")
+            navigate("SM.go('library')")
+            wait("document.querySelectorAll('.library-card').length===4")
+            evaluate("const f=document.querySelector('[data-form=database-library-search]');f.querySelector('[name=query]').value='Alarm';f.requestSubmit()")
+            assert evaluate("document.querySelectorAll('.library-card').length===1")
+            assert evaluate("document.querySelector('.library-card').textContent.includes('nhiệt độ')")
+            navigate("SM.go('knowledge-detail','KN-DEMO-CNC-002')")
+            wait("document.querySelector('#knowledge-api-view')?.textContent.includes('RP-DEMO-CNC-002')")
         assert not errors, errors
         print("Browser smoke passed: login, persistence, recovery, search, source-based template answers, source reading, no-match, mobile, rounds, confirmation, scopes.")
         print("Screenshot: " + str(run_dir / "workspace.png"))

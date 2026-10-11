@@ -14,6 +14,8 @@ def prepare():
     path = Path(os.getenv('SMARTMAINT_DB', str(DEFAULT_DB)))
     result = initialize_demo_remote() if settings() else initialize_demo(path)
     print('Demo data ready:', result['usersCreated'], 'new users,', result['samplesAdded'], 'new sample cases.')
+    from .demo_knowledge import add_knowledge_samples
+    print('Knowledge demo ready:', len(add_knowledge_samples(path)), 'new lesson/source pairs.')
     if os.getenv('SMARTMAINT_RETRIEVAL_MODE') == 'vector' and os.getenv('GEMINI_API_KEY', '').strip():
         import sqlite3
         from .rag.search import load_runtime_documents

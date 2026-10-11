@@ -39,6 +39,13 @@ def main():
     import uvicorn
     import os
     import sqlite3
+    from pathlib import Path
+    from .store import DEFAULT_DB
+    from .setup_demo import initialize_demo
+    from .demo_knowledge import add_knowledge_samples
+    path = Path(os.getenv('SMARTMAINT_DB', str(DEFAULT_DB)))
+    initialize_demo(path)
+    print('Knowledge demo ready:', len(add_knowledge_samples(path)), 'new lesson/source pairs.')
     if os.getenv('SMARTMAINT_RETRIEVAL_MODE') == 'vector' and os.getenv('GEMINI_API_KEY', '').strip():
         from .rag.vectors import build_index, VectorError
         from .rag.search import load_runtime_documents

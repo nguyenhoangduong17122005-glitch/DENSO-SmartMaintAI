@@ -23,6 +23,9 @@
 | `.github/workflows/docker-smoke.yml` | Build và kiểm tra Docker trên GitHub Actions |
 | `scripts/ci/docker_smoke.py` | Kiểm tra HTTP, RAG mẫu và hồ sơ qua restart container |
 | `backend/serve.py` | Khởi tạo dữ liệu khi cần và chạy server một worker |
+| `backend/demo_knowledge.py` | Thêm một lần 3 bài học mô phỏng, báo cáo nguồn và tri thức đã xuất bản trên SQLite/Turso |
+| `fixtures/cases/cnc-knowledge-samples.json` | Nội dung 3 cặp bài học/tri thức, ghi rõ giới hạn mô phỏng |
+| `backend/tests/test_demo_knowledge.py` | Kiểm tra lưu bền, quyền, nguồn, tính nguyên tử và không ghi đè dữ liệu |
 | `backend/hosting.py` | Host/origin HTTPS theo cấu hình chính xác |
 | `backend/tests/test_hosting.py` | Kiểm tra host, HTTPS, cookie, CSRF và khởi tạo lặp lại |
 | `docs/guides/LIVE-DEMO-DEPLOYMENT.md` | Các bước deploy và kiểm tra URL Live Demo |

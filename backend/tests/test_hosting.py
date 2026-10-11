@@ -60,5 +60,6 @@ def test_container_prepare_is_repeatable_without_editing_local_config(tmp_path, 
         connection.execute("UPDATE cases SET title='Container edit preserved' WHERE id='BM-26028'")
     prepare()
     with connect(db) as connection:
-        assert connection.execute('SELECT count(*) FROM cases').fetchone()[0] == 5
+        assert connection.execute('SELECT count(*) FROM cases').fetchone()[0] == 8
+        assert connection.execute('SELECT count(*) FROM knowledge WHERE active_version=1').fetchone()[0] == 3
         assert connection.execute("SELECT title FROM cases WHERE id='BM-26028'").fetchone()[0] == 'Container edit preserved'

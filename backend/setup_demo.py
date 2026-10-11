@@ -38,6 +38,8 @@ def main():
     load_config()
     path = Path(os.environ.get("SMARTMAINT_DB", DEFAULT_DB))
     result = initialize_demo(path)
+    from .demo_knowledge import add_knowledge_samples
+    print('Knowledge demo ready:', len(add_knowledge_samples(path)), 'new lesson/source pairs.')
     print("Demo data ready:", result["usersCreated"], "new users,",
           result["samplesAdded"], "additional sample cases.")
     print("Existing records and passwords were preserved.")
