@@ -10,6 +10,8 @@ DENSO SmartMaintAI hỗ trợ nhân viên bảo trì ghi nhận sự cố CNC, p
 
 Chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo** → mở **Hồ sơ công việc**. Không cần nhập mật khẩu trong chế độ trình diễn. Render Free có thể khởi động chậm sau thời gian không có truy cập; hãy mở website trước buổi thuyết trình.
 
+Trong ứng dụng, mở **Hướng dẫn demo** để xem các bước theo vai trò và dùng nút thu gọn menu để mở rộng vùng làm việc. Nếu trình duyệt vẫn hiện giao diện cũ sau khi cập nhật, nhấn **Ctrl + F5**.
+
 Live Demo lưu nghiệp vụ trong **Turso online dùng chung**. Các thao tác lưu thành công có thể được người khác nhìn thấy trong cùng phạm vi quyền. Bản chạy local và Docker có database riêng, không tự đồng bộ với website.
 
 [Kiến trúc](#kiến-trúc) · [Luồng dữ liệu](#luồng-dữ-liệu) · [Ảnh kết quả](#giao-diện-demo) · [Chạy nhanh bằng Docker](#chạy-bằng-docker) · [Kịch bản kiểm tra](#kịch-bản-demo) · [Chạy trên Windows](#chạy-trên-windows)
@@ -18,7 +20,7 @@ Live Demo lưu nghiệp vụ trong **Turso online dùng chung**. Các thao tác 
 
 Kinh nghiệm bảo trì thường nằm rải rác trong lịch sử sửa chữa, tài liệu và ghi chú của chuyên gia. Khi máy xuất hiện dấu hiệu bất thường, nhân viên cần tìm đúng thông tin, đối chiếu điều kiện và giữ được căn cứ của các bước đã thực hiện.
 
-SmartMaint nối **hồ sơ sự cố → nhật ký theo đợt → báo cáo xác nhận → tri thức được duyệt → tra cứu có nguồn**. RAG hỗ trợ tìm lại tài liệu và kinh nghiệm; quyết định xử lý, xác nhận đóng góp và kiểm duyệt vẫn do người dùng thực hiện.
+SmartMaintAI nối **hồ sơ sự cố → nhật ký theo đợt → báo cáo xác nhận → tri thức được duyệt → tra cứu có nguồn**. RAG hỗ trợ tìm lại tài liệu và kinh nghiệm; quyết định xử lý, xác nhận đóng góp và kiểm duyệt vẫn do người dùng thực hiện.
 
 ## Chức năng chính
 
@@ -262,9 +264,9 @@ Chay-demo.cmd      Chạy ứng dụng
 | Bản sửa Turso `0d5e02c` | 17 kiểm thử adapter đạt, gồm đóng luồng autocommit, giao dịch, lưu qua khởi động lại và luồng BM → tri thức → RAG |
 | Kiểm tra luồng với sơ đồ | 55 kiểm thử hồ sơ, nhật ký, báo cáo, tri thức và tìm kiếm đạt trong lần rà soát ngày 11/10/2026 |
 | Tra cứu mẫu | 10/10 câu hỏi demo đạt; đây là kiểm tra chức năng, không phải benchmark chất lượng AI độc lập |
-| Giao diện | Đã chạy browser smoke bằng Edge trên database/profile kiểm thử riêng |
+| Giao diện mới | Browser smoke bằng Edge đạt trên database/profile riêng, gồm hướng dẫn theo vai trò, thu gọn menu và luồng BM → tri thức → RAG; 9 kiểm thử API/hosting liên quan đạt |
 | Docker và libSQL | Đã kiểm tra build/chạy, lưu dữ liệu và luồng nghiệp vụ trong [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/workflows/docker-smoke.yml) |
-| Website công khai | Render báo Live với commit `0d5e02c`; `/api/health` trả `status: ok` khi kiểm tra ngày 11/10/2026; chưa coi đây là kiểm thử thủ công mọi chức năng trên cloud |
+| Website công khai | Đã kiểm tra ngày 11/10/2026: trang chủ trả HTTP 200 và chứa giao diện SmartMaintAI mới cùng script hướng dẫn; `/api/health` trả `status: ok`. Các kiểm tra này chưa bao phủ mọi chức năng trên cloud |
 
 Chạy lại bộ kiểm thử:
 
