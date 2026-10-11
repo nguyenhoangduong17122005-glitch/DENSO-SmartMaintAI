@@ -4,7 +4,7 @@ Ngày kiểm tra: 11/10/2026. Bước 5 hoàn tất trong phạm vi demo chạy 
 
 Bổ sung hồ sơ nộp dự án cùng ngày: README có kiến trúc/luồng dữ liệu Mermaid, 4 ảnh chụp thực tế và hướng dẫn Docker. Đã thêm Dockerfile, Compose, Blueprint Render tùy chọn và cấu hình host/origin HTTPS. Bộ test sau bổ sung: **170 passed**; browser smoke với ảnh README đạt. Docker build/chạy và giữ dữ liệu sau restart đã [đạt trên CI](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577); chưa có URL Live Demo đã xuất bản. Repo đích hiện đã được cung cấp: [DENSO_Knowledge_Graph](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph).
 
-Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter HTTPS và kiểm thử lưu/rollback/chống lặp, báo cáo → duyệt → xuất bản → RAG. Database cloud cần được tạo và cấu hình riêng; chưa xác minh triển khai cloud. Xem [hướng dẫn Live Demo](LIVE-DEMO-DEPLOYMENT.md).
+Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter HTTPS và kiểm thử lưu/rollback/chống lặp, báo cáo → duyệt → xuất bản → RAG. [Kiểm tra với server libSQL thật trong CI đã đạt](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38131288432). Database cloud cần được tạo và cấu hình riêng; chưa xác minh triển khai cloud. Xem [hướng dẫn Live Demo](LIVE-DEMO-DEPLOYMENT.md).
 
 ## Năm bước đã thực hiện
 

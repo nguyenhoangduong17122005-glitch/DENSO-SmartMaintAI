@@ -1,4 +1,4 @@
-﻿# Live Demo miễn phí: Render + Turso
+# Live Demo miễn phí: Render + Turso
 
 Repo: [DENSO_Knowledge_Graph](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph).
 
@@ -126,7 +126,7 @@ py -m backend.serve
 - Khi mất phản hồi COMMIT, database có thể đã ghi nhưng app nhận lỗi 503. Tải lại hồ sơ trước khi gửi lại; API ghi vẫn có khóa chống lặp. Adapter không tự retry ghi.
 - Token hết hạn/hạn mức hết làm kết nối lỗi. Cập nhật token trong Render rồi deploy lại, không reset database để xử lý lỗi xác thực.
 - Bộ chọn vai trò dành cho dữ liệu mô phỏng; HozenDX vẫn mock. Chưa đưa dữ liệu nhà máy thực lên bản public này.
-- [Docker CI đã đạt](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): build/chạy image, chọn vai trò, trả lời mẫu, tạo hồ sơ và giữ hồ sơ sau restart container. Workflow hiện bổ sung kiểm tra với server libSQL riêng trong CI; xem kết quả commit mới nhất trong Actions.
+- [Docker CI đã đạt](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): build/chạy image, chọn vai trò, trả lời mẫu, tạo hồ sơ và giữ hồ sơ sau restart container. [Bản cập nhật miễn phí cũng đã đạt CI](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38131288432), gồm 170 test và kiểm tra server libSQL thật: tạo lại ứng dụng vẫn giữ hồ sơ, báo cáo → duyệt → xuất bản → RAG có citation.
 - Chưa có database/token cloud của bạn, nên chưa xác minh Turso Cloud hoặc URL Render thật. Kiểm tra giao thức local không thay thế kiểm tra triển khai cloud.
 
 ## Nếu tiếp tục dùng frontend Netlify

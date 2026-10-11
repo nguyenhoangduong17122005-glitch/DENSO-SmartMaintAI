@@ -88,7 +88,7 @@ Có thể tạo lại ảnh bằng lệnh kiểm thử: `.\.venv\Scripts\python.
 
 Cần Docker Engine/Docker Desktop và Docker Compose. Chạy từ thư mục dự án:
 
-Docker đã được build và chạy thành công trên [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): chọn vai trò, trả lời có nguồn, tạo hồ sơ và giữ hồ sơ sau restart container. Bản cập nhật lưu trữ miễn phí còn được kiểm tra với server libSQL riêng trong workflow; xem Actions của commit mới nhất.
+Docker đã được build và chạy thành công trên [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): chọn vai trò, trả lời có nguồn, tạo hồ sơ và giữ hồ sơ sau restart container. Adapter lưu trữ miễn phí đã [đạt kiểm tra với server libSQL thật trong CI](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38131288432), gồm lưu hồ sơ sau tạo lại ứng dụng và luồng báo cáo → duyệt → xuất bản → trả lời có citation. Chưa xác minh database Turso Cloud/URL Render trong tài khoản của bạn.
 
 ```bash
 git clone https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph.git
