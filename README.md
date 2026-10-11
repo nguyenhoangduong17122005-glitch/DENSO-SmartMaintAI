@@ -1,12 +1,12 @@
-﻿# DENSO SmartMaint — Demo bảo trì CNC và tra cứu tri thức
+﻿# DENSO SmartMaintAI — Demo bảo trì CNC và tra cứu tri thức
 
-DENSO SmartMaint hỗ trợ nhân viên bảo trì ghi nhận sự cố CNC, phối hợp chuyên gia và tìm lại kinh nghiệm xử lý có dẫn nguồn. Thông tin từ hồ sơ công việc được tổng hợp thành báo cáo, duyệt độc lập và xuất bản vào kho tri thức để phục vụ những lần tra cứu sau.
+DENSO SmartMaintAI hỗ trợ nhân viên bảo trì ghi nhận sự cố CNC, phối hợp chuyên gia và tìm lại kinh nghiệm xử lý có dẫn nguồn. Thông tin từ hồ sơ công việc được tổng hợp thành báo cáo, duyệt độc lập và xuất bản vào kho tri thức để phục vụ những lần tra cứu sau.
 
 **Bản demo hackathon đã có website công khai và có thể chạy lại bằng Docker hoặc Python.** Dữ liệu CNC là mô phỏng; kết nối HozenDX hiện dùng mock. Không cần API key để thử chế độ từ khóa/trả lời mẫu.
 
 ### Dùng thử ngay
 
-**[Mở Live Demo DENSO SmartMaint](https://denso-smartmaint-demo.onrender.com/)** · **[Mã nguồn GitHub](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph)**
+**[Mở Live Demo DENSO SmartMaintAI](https://denso-smartmaint-demo.onrender.com/)** · **[Mã nguồn GitHub](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI)**
 
 Chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo** → mở **Hồ sơ công việc**. Không cần nhập mật khẩu trong chế độ trình diễn. Render Free có thể khởi động chậm sau thời gian không có truy cập; hãy mở website trước buổi thuyết trình.
 
@@ -176,8 +176,8 @@ Sau khi sửa `.env`, dừng máy chủ và chạy lại. Không mở `index.htm
 Clone bản mới và chạy từ thư mục gốc:
 
 ```bash
-git clone https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph.git
-cd DENSO_Knowledge_Graph
+git clone https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI.git
+cd DENSO-SmartMaintAI
 docker compose up --build -d
 docker compose ps
 ```
@@ -261,7 +261,7 @@ Chay-demo.cmd      Chạy ứng dụng
 | Kiểm tra luồng với sơ đồ | 55 kiểm thử hồ sơ, nhật ký, báo cáo, tri thức và tìm kiếm đạt trong lần rà soát ngày 11/10/2026 |
 | Tra cứu mẫu | 10/10 câu hỏi demo đạt; đây là kiểm tra chức năng, không phải benchmark chất lượng AI độc lập |
 | Giao diện | Đã chạy browser smoke bằng Edge trên database/profile kiểm thử riêng |
-| Docker và libSQL | Đã kiểm tra build/chạy, lưu dữ liệu và luồng nghiệp vụ trong [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/workflows/docker-smoke.yml) |
+| Docker và libSQL | Đã kiểm tra build/chạy, lưu dữ liệu và luồng nghiệp vụ trong [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/workflows/docker-smoke.yml) |
 | Website công khai | Render báo Live với commit `0d5e02c`; `/api/health` trả `status: ok` khi kiểm tra ngày 11/10/2026; chưa coi đây là kiểm thử thủ công mọi chức năng trên cloud |
 
 Chạy lại bộ kiểm thử:
