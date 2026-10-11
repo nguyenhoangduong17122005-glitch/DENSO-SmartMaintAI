@@ -82,7 +82,7 @@ Hồ sơ vừa tạo và bản nháp đề xuất không tự trở thành ngu�
 
 ![Kho tri thức sau luồng duyệt độc lập](docs/assets/screenshots/knowledge-library.png)
 
-Có thể tạo lại ảnh bằng lệnh kiểm thử: `.\.venv\Scripts\python.exe -m backend.browser_smoke --original-ui --docs-screenshots` (cần Edge và thư viện kiểm thử).
+Có thể tạo lại ảnh bằng lệnh kiểm thử: `.\.venv\Scripts\python.exe -m backend.tools.browser_smoke --original-ui --docs-screenshots` (cần Edge và thư viện kiểm thử).
 
 ## Chạy nhanh bằng Docker
 
@@ -170,6 +170,8 @@ Hướng dẫn điền dữ liệu và đổi vai trò để kiểm tra trọn l
 
 ## Cấu trúc thư mục
 
+Xem [bản đồ file theo công việc](docs/PROJECT-STRUCTURE.md) và [các script hỗ trợ](scripts/README.md). Công cụ kiểm tra/xuất dữ liệu nằm ở `backend/tools/`; lệnh Gemini tùy chọn nằm ở `scripts/windows/`.
+
 Logo, ảnh nền và font đã có trong `frontend/assets/`; không cần tải thêm bộ frontend bên ngoài. Font Plus Jakarta Sans được lưu kèm giấy phép OFL. CSS chính nằm tại `frontend/assets/css/styles.css`, phần thích ứng với menu/API ở `theme-compat.css`.
 
 ```text
@@ -183,7 +185,8 @@ demo/
 ├── backend/                  API, quyền, hồ sơ, nhật ký
 │   ├── main.py               Khởi tạo API và phục vụ frontend
 │   ├── config.py             Đọc cấu hình .env
-│   ├── store.py              SQLite nghiệp vụ
+│   ├── store.py              Kết nối database nghiệp vụ
+│   ├── remote_store.py       Adapter Turso/libSQL cho hosting miễn phí
 │   ├── domain.py             Dữ liệu có phiên bản
 │   ├── journal.py            Nhật ký và các đợt xử lý
 │   ├── workflow.py           Hỗ trợ BM, kết thúc và báo cáo
@@ -200,9 +203,13 @@ demo/
 │   │   ├── answers.py        Gemini trả lời kèm dẫn chứng
 │   │   └── check.py          Kiểm tra kết nối RAG thật
 │   ├── migrations/           Nâng cấp schema database
+│   ├── tools/                Kiểm tra browser, RAG, database và xuất hồ sơ
 │   ├── tests/                Kiểm thử tự động
 │   ├── requirements.txt      Thư viện chạy ứng dụng
 │   └── requirements-dev.txt  Thư viện kiểm thử
+├── scripts/                  Script hỗ trợ
+│   ├── windows/              Lệnh Gemini/vector tùy chọn
+│   └── ci/                   Kiểm tra Docker trong GitHub Actions
 ├── fixtures/                 Dữ liệu mô phỏng: cases, HozenDX, RAG
 ├── docs/                     Mục lục: docs/README.md
 │   ├── guides/               Hướng dẫn chạy, BM, RAG và GitHub
@@ -218,8 +225,6 @@ demo/
 ├── .env.example              Mẫu cấu hình không có key
 ├── Cai-dat-demo.cmd           Cài thư viện và khởi tạo dữ liệu demo
 ├── Chay-demo.cmd             Chạy demo và mở trình duyệt
-├── Tao-chi-muc-RAG.cmd        Tạo/cập nhật chỉ mục vector
-├── Kiem-tra-RAG.cmd          Kiểm tra embedding/vector/Gemini thật
 ├── Dockerfile                Đóng gói frontend và backend Python
 ├── compose.yaml              Chạy Docker local, lưu database bằng volume
 ├── .dockerignore             Loại cấu hình riêng khỏi Docker image
@@ -227,7 +232,7 @@ demo/
 └── README.md                 Hướng dẫn bắt đầu
 ```
 
-Database và chỉ mục vector được tạo trong `.runtime/`. Kết quả kiểm tra nằm trong `.runtime/reports/`; báo cáo bộ câu hỏi được tạo bằng `backend.demo_check`. Database, backup, API key và cache được `.gitignore` loại khỏi repo. API chỉ phục vụ các tài nguyên giao diện được cho phép, không công khai thư mục dự án.
+Database và chỉ mục vector được tạo trong `.runtime/`. Kết quả kiểm tra nằm trong `.runtime/reports/`; báo cáo bộ câu hỏi được tạo bằng `backend.tools.demo_check`. Database, backup, API key và cache được `.gitignore` loại khỏi repo. API chỉ phục vụ các tài nguyên giao diện được cho phép, không công khai thư mục dự án.
 
 ## Các lệnh thường dùng
 
@@ -243,13 +248,13 @@ Database và chỉ mục vector được tạo trong `.runtime/`. Kết quả ki
 .\.venv\Scripts\python.exe -m backend.rag.check
 
 # Xuất hồ sơ từ database thành HTML dễ đọc
-.\.venv\Scripts\python.exe -m backend.export_cases
+.\.venv\Scripts\python.exe -m backend.tools.export_cases
 
 # Cài thư viện kiểm thử; kiểm thử offline, không gọi Gemini thật
 .\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest backend/tests -q
-.\.venv\Scripts\python.exe -m backend.demo_check
-.\.venv\Scripts\python.exe -m backend.browser_smoke --original-ui
+.\.venv\Scripts\python.exe -m backend.tools.demo_check
+.\.venv\Scripts\python.exe -m backend.tools.browser_smoke --original-ui
 ```
 
 Kiểm tra trình duyệt cần Microsoft Edge; có thể đặt `SMARTMAINT_EDGE` tới file thực thi trên máy. Các lệnh vector và Gemini gửi nguồn/câu hỏi tới provider và sử dụng hạn mức API. Bộ test offline dùng database riêng. Lệnh xuất hồ sơ đọc database mặc định `.runtime/smartmaint.sqlite3` và tạo `.runtime/ho-so-cong-viec.html`.
@@ -258,7 +263,7 @@ Kiểm tra trình duyệt cần Microsoft Edge; có thể đặt `SMARTMAINT_EDG
 
 - **`ERR_CONNECTION_REFUSED`:** chạy `Chay-demo.cmd`, giữ cửa sổ máy chủ mở và kiểm tra lỗi trong cửa sổ đó. Địa chỉ đúng là `http://127.0.0.1:8001/`.
 - **Không tìm thấy thư viện:** chạy lại `Cai-dat-demo.cmd`; các lệnh Terminal phải dùng Python trong `.venv` như trên.
-- **Vẫn dùng câu trả lời mẫu:** kiểm tra hai chế độ và API key trong `.env`, khởi động lại máy chủ, rồi chạy `Kiem-tra-RAG.cmd`. Kết quả trên giao diện cho biết chế độ thực sự đã dùng và lý do dự phòng.
+- **Vẫn dùng câu trả lời mẫu:** kiểm tra hai chế độ và API key trong `.env`, khởi động lại máy chủ, rồi chạy `scripts/windows/Kiem-tra-RAG.cmd`. Kết quả trên giao diện cho biết chế độ thực sự đã dùng và lý do dự phòng.
 - **Mở bằng Live Server hoặc nhấp trực tiếp `index.html`:** dùng `Chay-demo.cmd` để có backend và lưu SQLite.
 
 GitHub chia sẻ mã nguồn để từng người tải về chạy với database và API key riêng. Muốn nhiều người dùng chung một URL/database thì cần triển khai backend trên máy chủ; GitHub Pages không chạy backend Python này. Xem [hướng dẫn chia sẻ GitHub](docs/guides/GITHUB-SHARING.md).
@@ -275,4 +280,4 @@ GitHub chia sẻ mã nguồn để từng người tải về chạy với datab
 - [Kế hoạch demo ban đầu — tài liệu lịch sử](docs/history/DENSO-DEMO-PLAN.md)
 - [Hướng dẫn backend và database](backend/README.md)
 
-Nguồn HozenDX và dữ liệu hiện đều mô phỏng. Vector và Gemini hoạt động thật khi đã đặt API key và tạo chỉ mục; giao diện hiển thị rõ nếu đang dùng chế độ dự phòng. Hồ sơ mới không tự trở thành nguồn RAG: cần xác nhận báo cáo, tạo đề xuất, duyệt độc lập và xuất bản tri thức. Khi dùng chế độ từ khóa, xuất bản không gọi embedding; nếu sau đó bật vector, tạo lại chỉ mục bằng `Tao-chi-muc-RAG.cmd`.
+Nguồn HozenDX và dữ liệu hiện đều mô phỏng. Vector và Gemini hoạt động thật khi đã đặt API key và tạo chỉ mục; giao diện hiển thị rõ nếu đang dùng chế độ dự phòng. Hồ sơ mới không tự trở thành nguồn RAG: cần xác nhận báo cáo, tạo đề xuất, duyệt độc lập và xuất bản tri thức. Khi dùng chế độ từ khóa, xuất bản không gọi embedding; nếu sau đó bật vector, tạo lại chỉ mục bằng `scripts/windows/Tao-chi-muc-RAG.cmd`.

@@ -45,7 +45,7 @@ Browser smoke kiểm tra nhập câu hỏi, mở nguồn, không có kết quả
 
 ```powershell
 py -m pytest backend/tests -q
-py -m backend.browser_smoke
+py -m backend.tools.browser_smoke
 ```
 
 Bước 8 mới bổ sung model để trả lời từ các đoạn được tìm thấy nếu có cấu hình model. Hiện tại đây là **demo tìm kiếm tài liệu có trích dẫn**, chưa phải RAG có LLM.

@@ -1,6 +1,6 @@
 """Optional local Edge smoke test; uses a separate DB/profile under .runtime.
 
-Requires websocket-client. Run: py -m backend.browser_smoke
+Requires websocket-client. Run: py -m backend.tools.browser_smoke
 """
 import base64
 import json
@@ -15,8 +15,8 @@ from uuid import uuid4
 
 import websocket
 
-from .manage import seed_demo
-from .store import ROOT, connect
+from ..manage import seed_demo
+from ..store import ROOT, connect
 
 
 def free_port():
@@ -37,6 +37,8 @@ def wait_json(url):
 
 
 def main():
+    # Diagnostics must never seed or mutate the configured cloud database.
+    os.environ['SMARTMAINT_STORAGE'] = 'sqlite'
     demo_roles = "--demo-roles" in sys.argv
     original_ui = "--original-ui" in sys.argv
     demo_roles = demo_roles or original_ui

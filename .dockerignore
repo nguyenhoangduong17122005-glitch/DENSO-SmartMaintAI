@@ -9,7 +9,7 @@
 **/__pycache__/
 **/*.pyc
 backend/tests/
-backend/browser_smoke.py
+backend/tools/browser_smoke.py
 backend/requirements-dev.txt
 **/.env
 **/.env.*

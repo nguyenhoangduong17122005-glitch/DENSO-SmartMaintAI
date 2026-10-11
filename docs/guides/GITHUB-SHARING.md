@@ -47,7 +47,7 @@ GitHub lưu mã nguồn; địa chỉ `127.0.0.1` chạy trên máy của từng
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest backend/tests -q
-.\.venv\Scripts\python.exe -m backend.browser_smoke --original-ui
+.\.venv\Scripts\python.exe -m backend.tools.browser_smoke --original-ui
 ```
 
 Browser smoke cần trình duyệt Chrome/Edge trên máy. Kiểm tra Gemini thật là bước riêng, cần key và mạng; bộ test offline không chứng minh provider đang hoạt động.

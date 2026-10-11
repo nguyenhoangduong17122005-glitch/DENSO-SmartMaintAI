@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from .store import DEFAULT_DB, case_payload
+from ..store import DEFAULT_DB, case_payload
 
 
 def main():
@@ -52,7 +52,7 @@ def main():
                       'th,td{border:1px solid #d6e0e6;text-align:left;padding:10px;vertical-align:top}th{width:180px}p,td{white-space:pre-wrap;overflow-wrap:anywhere}'
                       'article{border-left:3px solid #cd2030;padding:4px 16px;margin:16px 0}a{color:#005e9e}</style>'
                       f'<h1>Hồ sơ công việc trong database</h1><p>Nguồn: {escape(DEFAULT_DB)}<br>Xuất lúc: {generated} (UTC+7)<br>Tổng số: {len(cases)} hồ sơ.</p>'
-                      '<p>Đây là bản xem tại thời điểm xuất. Sau khi thêm dữ liệu, chạy lại: <b>py -m backend.export_cases</b>, rồi tải lại trang này. '
+                      '<p>Đây là bản xem tại thời điểm xuất. Sau khi thêm dữ liệu, chạy lại: <b>py -m backend.tools.export_cases</b>, rồi tải lại trang này. '
                       'Chỉ gồm hồ sơ trong SQLite, chưa gồm dữ liệu prototype lưu trên trình duyệt.</p><ul>' + links + '</ul>' + ''.join(sections) + '</html>', encoding='utf-8')
     print(f'Exported {len(cases)} cases: {output}')
     for case in cases:

@@ -5,9 +5,9 @@ from pathlib import Path
 
 
 def main():
-    from .config import load_config
-    from .remote_store import settings
-    from .store import DEFAULT_DB, connect
+    from ..config import load_config
+    from ..remote_store import settings
+    from ..store import DEFAULT_DB, connect
     load_config()
     remote = settings()
     path = Path(os.getenv('SMARTMAINT_DB', str(DEFAULT_DB)))

@@ -1,5 +1,17 @@
 # Kiểm kê file sau khi sắp xếp
 
+## Nhóm công cụ sau lần sắp xếp mới nhất
+
+| Vị trí hiện tại | Công dụng |
+|---|---|
+| `backend/tools/` | Công cụ kiểm tra browser, bộ câu hỏi demo, kết nối database và xuất hồ sơ |
+| `scripts/windows/` | Hai lệnh Gemini/vector tùy chọn; tự chuyển về gốc khi chạy |
+| `scripts/ci/` | Script kiểm tra Docker dành cho GitHub Actions |
+| `docs/PROJECT-STRUCTURE.md` | Tìm file theo công việc và các lệnh công cụ mới |
+| `scripts/README.md` | Hướng dẫn script hỗ trợ |
+
+`Cai-dat-demo.cmd` và `Chay-demo.cmd` giữ ở thư mục gốc. Database, backup và `.env` giữ nguyên vị trí. Các đường dẫn công cụ cũ trong tài liệu đã đổi sang đường dẫn mới.
+
 ## Bổ sung cho README, Docker và Live Demo
 
 | File | Công dụng / lý do giữ |
@@ -9,7 +21,7 @@
 | `compose.yaml` | Chạy local bằng Docker với volume giữ database |
 | `render.yaml` | Blueprint Render Free + Turso libSQL; không có disk trả phí |
 | `.github/workflows/docker-smoke.yml` | Build và kiểm tra Docker trên GitHub Actions |
-| `scripts/docker_smoke.py` | Kiểm tra HTTP, RAG mẫu và hồ sơ qua restart container |
+| `scripts/ci/docker_smoke.py` | Kiểm tra HTTP, RAG mẫu và hồ sơ qua restart container |
 | `backend/serve.py` | Khởi tạo dữ liệu khi cần và chạy server một worker |
 | `backend/hosting.py` | Host/origin HTTPS theo cấu hình chính xác |
 | `backend/tests/test_hosting.py` | Kiểm tra host, HTTPS, cookie, CSRF và khởi tạo lặp lại |
@@ -32,11 +44,11 @@ Rà soát ngày 11/10/2026. Kiểm tra cấu trúc/tham chiếu và định dạ
 | `.vscode/settings.json` | Cấu hình xem SQLite và ẩn cache trên VS Code | JSON hợp lệ |
 | `backend/__init__.py` | Định danh package Python | Python AST hợp lệ |
 | `backend/browser_import.py` | Nhập hồ sơ localStorage có kiểm tra | Python AST hợp lệ |
-| `backend/browser_smoke.py` | Kiểm tra giao diện trên DB riêng | Python AST hợp lệ |
+| `backend/tools/browser_smoke.py` | Kiểm tra giao diện trên DB riêng | Python AST hợp lệ |
 | `backend/config.py` | Đọc cấu hình riêng | Python AST hợp lệ |
-| `backend/demo_check.py` | Kiểm tra bộ câu hỏi mẫu, ghi báo cáo local | Python AST hợp lệ |
+| `backend/tools/demo_check.py` | Kiểm tra bộ câu hỏi mẫu, ghi báo cáo local | Python AST hợp lệ |
 | `backend/domain.py` | Chuẩn hóa và phiên bản nghiệp vụ | Python AST hợp lệ |
-| `backend/export_cases.py` | Xuất hồ sơ HTML chỉ đọc | Python AST hợp lệ |
+| `backend/tools/export_cases.py` | Xuất hồ sơ HTML chỉ đọc | Python AST hợp lệ |
 | `backend/hozendx.py` | Adapter thiết bị mock | Python AST hợp lệ |
 | `backend/journal.py` | Nhật ký, đợt xử lý, xác nhận | Python AST hợp lệ |
 | `backend/knowledge.py` | Đề xuất, duyệt và xuất bản tri thức | Python AST hợp lệ |
@@ -126,9 +138,9 @@ Rà soát ngày 11/10/2026. Kiểm tra cấu trúc/tham chiếu và định dạ
 | `frontend/workspace/workspace.css` | Kiểu giao diện đang được HTML/CSS tham chiếu | Phân loại/đối chiếu tham chiếu |
 | `frontend/workspace/workspace.html` | Trang giao diện hoặc workspace | Phân loại/đối chiếu tham chiếu |
 | `frontend/workspace/workspace.js` | Hồ sơ/nhật ký/BM/RAG dùng API | Phân loại/đối chiếu tham chiếu |
-| `Kiem-tra-RAG.cmd` | Lệnh cài/chạy/kiểm tra dành cho Windows | Phân loại/đối chiếu tham chiếu |
+| `scripts/windows/Kiem-tra-RAG.cmd` | Lệnh cài/chạy/kiểm tra dành cho Windows | Phân loại/đối chiếu tham chiếu |
 | `README.md` | Hướng dẫn/thiết kế/mục lục | Đối chiếu liên kết local |
-| `Tao-chi-muc-RAG.cmd` | Lệnh cài/chạy/kiểm tra dành cho Windows | Phân loại/đối chiếu tham chiếu |
+| `scripts/windows/Tao-chi-muc-RAG.cmd` | Lệnh cài/chạy/kiểm tra dành cho Windows | Phân loại/đối chiếu tham chiếu |
 
 ## Dữ liệu riêng trên máy
 
@@ -143,7 +155,7 @@ Không phát hiện file trùng nội dung trong danh sách sau phân loại.
 | File | Công dụng |
 |---|---|
 | `backend/remote_store.py` | Adapter libSQL HTTP v2, transaction/commit/rollback và bootstrap cloud trống |
-| `backend/check_storage.py` | Đọc trạng thái kết nối/schema và đếm hồ sơ/tri thức, không in bí mật |
+| `backend/tools/check_storage.py` | Đọc trạng thái kết nối/schema và đếm hồ sơ/tri thức, không in bí mật |
 | `backend/tests/test_remote_store.py` | Giao thức trên SQLite thật, lỗi mạng, lưu dữ liệu, BM/báo cáo/tri thức/RAG; có chế độ kiểm tra server libSQL trong CI |
 | `render.yaml` | Render Free, yêu cầu database Turso; không có disk trả phí |
 

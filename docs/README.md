@@ -1,5 +1,7 @@
 # Tài liệu và dữ liệu
 
+Xem [cấu trúc dự án và vị trí các file](PROJECT-STRUCTURE.md) để tìm nhanh phần cần sửa/chạy.
+
 ## Dùng bản demo hiện tại
 
 | Tài liệu | Nội dung |

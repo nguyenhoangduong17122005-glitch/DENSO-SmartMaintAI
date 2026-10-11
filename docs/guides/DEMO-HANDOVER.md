@@ -19,7 +19,7 @@ Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter H
 | Kiểm tra | Kết quả |
 |---|---|
 | Bộ test offline `py -m pytest backend/tests -q` | 170 passed (bổ sung hosting và remote storage) |
-| Kiểm tra giao diện bằng Edge `py -m backend.browser_smoke --original-ui` | Đạt, dùng database/profile riêng |
+| Kiểm tra giao diện bằng Edge `py -m backend.tools.browser_smoke --original-ui` | Đạt, dùng database/profile riêng |
 | Bản sao mới không có `.env`/database | Tạo cấu hình offline, 5 tài khoản và 5 hồ sơ mẫu |
 | Chạy khởi tạo lần hai | Không tạo dữ liệu trùng; không thay cấu hình, mật khẩu hoặc hồ sơ đã có |
 | API trên bản sao mới | Trang chính, chọn vai trò và mở hồ sơ mẫu hoạt động |
@@ -28,7 +28,7 @@ Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter H
 
 Kiểm tra giao diện gồm tạo/lưu/tải lại dữ liệu, đổi vai trò, hỗ trợ BM, báo cáo, đề xuất/duyệt tri thức và tra cứu nguồn đã xuất bản. Bộ test tự động còn kiểm tra phạm vi quyền, CSRF, lịch sử phiên bản và lỗi khi xuất bản/index.
 
-Gemini thật đã được kiểm tra ở các bước trước trong cùng phiên làm việc: tìm kiếm `vector_search`, sinh câu trả lời `gemini`, truy xuất và trích dẫn được tri thức mới đã duyệt trên database riêng. Bước 5 không gọi lại provider để tránh dùng thêm hạn mức. Máy người nhận phải cấu hình key riêng và chạy `Kiem-tra-RAG.cmd` để xác minh kết nối của họ.
+Gemini thật đã được kiểm tra ở các bước trước trong cùng phiên làm việc: tìm kiếm `vector_search`, sinh câu trả lời `gemini`, truy xuất và trích dẫn được tri thức mới đã duyệt trên database riêng. Bước 5 không gọi lại provider để tránh dùng thêm hạn mức. Máy người nhận phải cấu hình key riêng và chạy `scripts/windows/Kiem-tra-RAG.cmd` để xác minh kết nối của họ.
 
 Bản sao mới được kiểm tra bằng Python và các thư viện đã cài trên máy phát triển. Chưa kiểm tra tải/cài thư viện từ Internet trên một máy Windows khác. File `Cai-dat-demo.cmd` cài đúng các phiên bản trong `backend/requirements.txt` vào `.venv`.
 

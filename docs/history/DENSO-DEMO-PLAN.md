@@ -41,7 +41,7 @@ Tìm kiếm tài liệu hoặc câu trả lời theo mẫu cần được gọi 
 
 **Bước 8:** đã có [trả lời theo mẫu và adapter Gemini tùy chọn](DENSO-STEP8-ANSWERS.md). Chế độ mẫu chạy được ngay; chưa kiểm chứng gọi model thật vì chưa có cấu hình key/model.
 
-**Bước 9 hoàn thành cho demo local:** [kết quả 10 câu hỏi và kịch bản trình bày 5 phút](DENSO-STEP9-DEMO-REVIEW.md). Có lệnh `py -m backend.demo_check` để chạy lại API trên DB riêng; Gemini thật cần kiểm tra sau khi cấu hình.
+**Bước 9 hoàn thành cho demo local:** [kết quả 10 câu hỏi và kịch bản trình bày 5 phút](DENSO-STEP9-DEMO-REVIEW.md). Có lệnh `py -m backend.tools.demo_check` để chạy lại API trên DB riêng; Gemini thật cần kiểm tra sau khi cấu hình.
 
 1. Soạn bộ nguồn CNC mô phỏng nhỏ để có nội dung tra cứu hoàn chỉnh.
 2. Thêm ô hỏi/tra cứu ngay trong hồ sơ; backend tìm nguồn và trả mã tài liệu/đoạn nội dung.

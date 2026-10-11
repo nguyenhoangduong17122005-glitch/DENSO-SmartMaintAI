@@ -11,13 +11,15 @@ from zoneinfo import ZoneInfo
 
 from fastapi.testclient import TestClient
 
-from .domain import digest
-from .manage import seed_demo
-from .rag.search import CORPUS_PATH, load_documents
-from .store import ROOT
+from ..domain import digest
+from ..manage import seed_demo
+from ..rag.search import CORPUS_PATH, load_documents
+from ..store import ROOT
 
 
 def main():
+    # Diagnostics must never seed or mutate the configured cloud database.
+    os.environ['SMARTMAINT_STORAGE'] = 'sqlite'
     run_dir = ROOT / '.runtime' / ('demo-check-' + uuid4().hex)
     run_dir.mkdir(parents=True)
     db_path = run_dir / 'check.sqlite3'
@@ -31,7 +33,7 @@ def main():
     results = []
     # Always offline: never inherit a configured provider for this demo check.
     with patch.dict(os.environ, {'SMARTMAINT_ANSWER_MODE': 'template', 'SMARTMAINT_RETRIEVAL_MODE': 'keyword', 'SMARTMAINT_DB': str(db_path)}):
-        from .main import create_app
+        from ..main import create_app
         with TestClient(create_app(db_path)) as client:
             login = client.post('/api/auth/login', json={'username': 'minh', 'password': password})
             login.raise_for_status()

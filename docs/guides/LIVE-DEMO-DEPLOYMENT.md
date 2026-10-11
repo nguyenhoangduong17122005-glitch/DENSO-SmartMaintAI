@@ -111,13 +111,13 @@ TURSO_AUTH_TOKEN=<database-token-riêng>
 Chạy từ thư mục dự án:
 
 ```powershell
-py -m backend.check_storage
+py -m backend.tools.check_storage
 py -m backend.serve
 ```
 
 `check_storage` chỉ đọc, hiển thị kết nối/schema và số hồ sơ/tri thức; database mới có `schemaReady: false` đến lần khởi tạo. Dừng server cũ trước khi dùng cùng cổng 8001. Có thể dùng `docker compose up --build -d`: Compose chuyển tiếp cấu hình Turso.
 
-Đổi `SMARTMAINT_STORAGE=sqlite` để dùng file local cũ, vẫn được giữ nguyên. Dữ liệu cloud và local là hai nguồn độc lập. `backend.export_cases` chỉ xuất SQLite local; để xem cloud dùng giao diện hoặc Turso shell.
+Đổi `SMARTMAINT_STORAGE=sqlite` để dùng file local cũ, vẫn được giữ nguyên. Dữ liệu cloud và local là hai nguồn độc lập. `backend.tools.export_cases` chỉ xuất SQLite local; để xem cloud dùng giao diện hoặc Turso shell.
 
 ## Giới hạn và bằng chứng kiểm tra
 

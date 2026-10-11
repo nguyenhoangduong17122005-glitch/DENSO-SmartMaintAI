@@ -1,12 +1,12 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+cd /d "%~dp0..\.."
 title DENSO - Kiem tra Gemini va Vector RAG
 echo Kiem tra embedding, vector va cau tra loi Gemini that.
 echo Hay dien GEMINI_API_KEY trong .env truoc khi chay.
 echo Lenh nay gui tai lieu demo den Gemini va su dung han muc API.
 set "DEMO_PY=py"
-if exist ".venv\Scripts\python.exe" set "DEMO_PY=%~dp0.venv\Scripts\python.exe"
+if exist ".venv\Scripts\python.exe" set "DEMO_PY=%CD%\.venv\Scripts\python.exe"
 "%DEMO_PY%" -m backend.rag.check
 if errorlevel 1 (
   echo.

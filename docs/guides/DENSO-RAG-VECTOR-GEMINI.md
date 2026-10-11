@@ -11,7 +11,7 @@ Giao diện SmartMaint gốc được giữ nguyên. Mục **Hồ sơ CNC & tra 
 5. Vào **Hồ sơ CNC & tra cứu**, mở BM-26028. Dòng trạng thái cho biết chỉ mục đã sẵn sàng hay chưa và Gemini đã có cấu hình hay chưa.
 6. Nhập câu hỏi, bấm **Tra cứu tài liệu** để gọi embedding câu hỏi và tìm vector. Bấm **Trả lời từ nguồn** để thực hiện truy xuất rồi gọi Gemini. Nhãn trên kết quả mới xác nhận chế độ đã thực sự dùng; có cấu hình không đồng nghĩa gọi thành công.
 
-Chỉ mục có thể tạo riêng bằng `Tao-chi-muc-RAG.cmd`, hoặc:
+Chỉ mục có thể tạo riêng bằng `scripts/windows/Tao-chi-muc-RAG.cmd`, hoặc:
 
 ```powershell
 py -m backend.rag.vectors
@@ -67,7 +67,7 @@ Nhật ký mới và dữ liệu prototype trong localStorage chưa tự trở t
 
 ## Kiểm thử
 
-`py -m pytest backend/tests -q` và `py -m backend.browser_smoke --original-ui` dùng chế độ offline, chỉ mục/DB riêng và provider giả để kiểm tra cơ chế. Các vector thử nghiệm không ghi vào chỉ mục của người dùng. Kiểm thử live chỉ thực hiện với `py -m backend.rag.check` hoặc thao tác ứng dụng khi có cấu hình hợp lệ.
+`py -m pytest backend/tests -q` và `py -m backend.tools.browser_smoke --original-ui` dùng chế độ offline, chỉ mục/DB riêng và provider giả để kiểm tra cơ chế. Các vector thử nghiệm không ghi vào chỉ mục của người dùng. Kiểm thử live chỉ thực hiện với `py -m backend.rag.check` hoặc thao tác ứng dụng khi có cấu hình hợp lệ.
 
 ## Tài liệu kỹ thuật đã đối chiếu
 

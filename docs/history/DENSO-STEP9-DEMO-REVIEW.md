@@ -8,7 +8,7 @@ Kiểm tra hồi quy: **109 bài pytest đạt**. Edge browser smoke đạt các
 
 ## Kết quả bộ 10 câu hỏi
 
-Đã chạy cả 10 câu qua API đăng nhập → đọc hồ sơ → yêu cầu trả lời → mở nguồn bằng ASGI TestClient, dùng DB riêng. **10/10 đạt các kiểm tra tự động** về nguồn đứng đầu, trạng thái, citation, nguyên văn trích dẫn, nhãn mô phỏng và hồ sơ không đổi. Báo cáo JSON nằm ở `.runtime/reports/STEP9-DEMO-RESULTS.json` trên máy đã chạy kiểm tra; không đưa vào repo. Chạy `py -m backend.demo_check` để tạo lại báo cáo, gồm câu hỏi, đáp án thực nhận, các checks và hash bộ nguồn.
+Đã chạy cả 10 câu qua API đăng nhập → đọc hồ sơ → yêu cầu trả lời → mở nguồn bằng ASGI TestClient, dùng DB riêng. **10/10 đạt các kiểm tra tự động** về nguồn đứng đầu, trạng thái, citation, nguyên văn trích dẫn, nhãn mô phỏng và hồ sơ không đổi. Báo cáo JSON nằm ở `.runtime/reports/STEP9-DEMO-RESULTS.json` trên máy đã chạy kiểm tra; không đưa vào repo. Chạy `py -m backend.tools.demo_check` để tạo lại báo cáo, gồm câu hỏi, đáp án thực nhận, các checks và hash bộ nguồn.
 
 | Câu | Nội dung | Nguồn đứng đầu | Trạng thái | Đối chiếu nội dung mẫu |
 |---|---|---|---|---|
@@ -59,9 +59,9 @@ py -m uvicorn backend.main:app --host 127.0.0.1 --port 8001
 Chạy lại kiểm tra:
 
 ```powershell
-py -m backend.demo_check
+py -m backend.tools.demo_check
 py -m pytest backend/tests -q
-py -m backend.browser_smoke
+py -m backend.tools.browser_smoke
 ```
 
 `demo_check` ép template, tạo DB riêng dưới `.runtime/demo-check-*`, gọi API qua TestClient và cập nhật JSON ở .runtime/reports. Không dùng hoặc thay đổi tài khoản/mật khẩu/hồ sơ của DB mặc định. Cần thư viện trong `backend/requirements-dev.txt`. Thời gian ghi trong JSON là in-process, không phải độ trễ HTTP hoặc Gemini.

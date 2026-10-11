@@ -119,7 +119,7 @@ Kết quả kiểm tra ngày 10/10/2026: **57 bài pytest đạt**; Edge browser
 
 ```powershell
 py -m pytest backend/tests -q
-py -m backend.browser_smoke
+py -m backend.tools.browser_smoke
 ```
 
 Test migration dùng DB v1 tạm, kiểm tra giữ nguyên tài khoản/hồ sơ/audit, backup có dữ liệu trước nâng cấp, rerun idempotent và rollback khi nguồn hỏng. Test nghiệp vụ kiểm tra vòng đời đợt, revision, retry, phân quyền, số đo/đơn vị, người ghi/người thực hiện, xác nhận một nhóm rồi đính chính một mục, bất biến lịch sử và rào chắn duyệt/xuất bản. Browser smoke chạy Edge với DB riêng để kiểm tra nhập/lưu, phục hồi phiên, nhật ký, đính chính và xác nhận nhóm.

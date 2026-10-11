@@ -4,7 +4,7 @@ Tình trạng hiện tại: [bàn giao demo](../docs/guides/DEMO-HANDOVER.md). X
 
 RAG hiện có [Gemini Embedding + sqlite-vec + Gemini](../docs/guides/DENSO-RAG-VECTOR-GEMINI.md). Ứng dụng đọc `.env`; cần điền GEMINI_API_KEY để dùng API thật. `Chay-demo.cmd` chuẩn bị chỉ mục khi có key; `py -m backend.rag.check` kiểm tra live rõ ràng. Các ghi chú bước 6–9 bên dưới mô tả chế độ demo từ khóa/mẫu trước khi bổ sung vector.
 
-Trang chính `/` giữ giao diện SmartMaint gốc. Tổng quan, hồ sơ công việc, hỗ trợ/xác nhận, hồ sơ tham gia, đề xuất/kiểm duyệt và kho tri thức đã dùng API/SQLite theo quyền. PM và thông báo prototype còn mô phỏng. Hồ sơ cũ trong localStorage được giữ riêng để xem/nhập, không tự đồng bộ sang database. Workspace độc lập được giữ tại `/workspace`. Dùng `py -m backend.browser_smoke --original-ui` để kiểm tra giao diện tích hợp trên DB riêng.
+Trang chính `/` giữ giao diện SmartMaint gốc. Tổng quan, hồ sơ công việc, hỗ trợ/xác nhận, hồ sơ tham gia, đề xuất/kiểm duyệt và kho tri thức đã dùng API/SQLite theo quyền. PM và thông báo prototype còn mô phỏng. Hồ sơ cũ trong localStorage được giữ riêng để xem/nhập, không tự đồng bộ sang database. Workspace độc lập được giữ tại `/workspace`. Dùng `py -m backend.tools.browser_smoke --original-ui` để kiểm tra giao diện tích hợp trên DB riêng.
 
 Bổ sung [4 hồ sơ CNC và 6 tài liệu tra cứu mẫu](../docs/guides/DENSO-DEMO-SAMPLE-DATA.md). Lệnh `py -m backend.manage add-samples` thêm hồ sơ vào DB đã init-demo, không ghi đè hồ sơ hiện có. Bộ nguồn tra cứu tổng cộng 14 tài liệu.
 
@@ -12,7 +12,7 @@ Demo hiện bắt đầu bằng **Chọn vai trò → Vào hệ thống**, khôn
 
 Để bật lại màn hình đăng nhập mật khẩu, đặt `$env:SMARTMAINT_DEMO_ROLE_SELECTION='0'` trước khi khởi động backend. Chế độ chọn vai trò không cần mật khẩu chỉ dành cho demo local; khi tắt, API chọn vai trò trả 404. Mật khẩu cũ không bị thay đổi.
 
-Bước 9: [báo cáo 10 câu hỏi và kịch bản demo 5 phút](../docs/history/DENSO-STEP9-DEMO-REVIEW.md). Chạy `py -m backend.demo_check` để kiểm tra lại chế độ mẫu qua API trên DB riêng; không gọi Gemini và không sửa dữ liệu hiện có.
+Bước 9: [báo cáo 10 câu hỏi và kịch bản demo 5 phút](../docs/history/DENSO-STEP9-DEMO-REVIEW.md). Chạy `py -m backend.tools.demo_check` để kiểm tra lại chế độ mẫu qua API trên DB riêng; không gọi Gemini và không sửa dữ liệu hiện có.
 
 Bước 8 thêm **Trả lời từ nguồn**: mặc định trích tài liệu theo mẫu, chưa dùng AI. Có adapter Gemini tùy chọn qua biến môi trường; chưa có cấu hình model thật trong môi trường hiện tại. Xem [hướng dẫn và giới hạn bước 8](../docs/history/DENSO-STEP8-ANSWERS.md).
 
@@ -111,7 +111,7 @@ py -m pytest backend/tests -q
 Kiểm thử trình duyệt tùy chọn trên Windows có Edge:
 
 ```powershell
-py -m backend.browser_smoke
+py -m backend.tools.browser_smoke
 ```
 
 Lệnh này tự chạy backend tạm và Edge headless, dùng DB/profile riêng trong `.runtime/browser-smoke-*`; kiểm tra luồng đăng nhập, lưu, phục hồi phiên, tạo hồ sơ và phân quyền, rồi dừng hai process. Screenshot lưu cùng thư mục. Không dùng hoặc đổi dữ liệu demo mặc định. Có thể cấu hình đường dẫn Edge bằng `SMARTMAINT_EDGE`.
@@ -122,4 +122,4 @@ Bộ test dùng SQLite tạm và TestClient, kiểm tra quyền, session/thu h�
 
 Mặc định `SMARTMAINT_STORAGE=sqlite`. Khi đặt `SMARTMAINT_STORAGE=turso`, `TURSO_DATABASE_URL` và `TURSO_AUTH_TOKEN`, các module nghiệp vụ dùng `store.connect` → adapter libSQL HTTP v2. Không fallback ghi vào file tạm. Database remote mới được seed một lần; database hiện có phải ở schema v5. SQLite local vẫn dùng migration/backup cũ.
 
-Chạy `python -m backend.check_storage` để đọc trạng thái kết nối/schema và đếm dữ liệu. `export_cases` vẫn là công cụ SQLite local. Vector index vẫn là cache sqlite-vec local và có thể tạo lại từ nguồn đã xuất bản. Hướng dẫn: [Live Demo miễn phí](../docs/guides/LIVE-DEMO-DEPLOYMENT.md).
+Chạy `python -m backend.tools.check_storage` để đọc trạng thái kết nối/schema và đếm dữ liệu. `export_cases` vẫn là công cụ SQLite local. Vector index vẫn là cache sqlite-vec local và có thể tạo lại từ nguồn đã xuất bản. Hướng dẫn: [Live Demo miễn phí](../docs/guides/LIVE-DEMO-DEPLOYMENT.md).
