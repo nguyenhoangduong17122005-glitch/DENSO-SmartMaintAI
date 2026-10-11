@@ -8,6 +8,8 @@ DENSO SmartMaintAI hỗ trợ nhân viên bảo trì ghi nhận sự cố CNC, p
 
 **[Mở Live Demo DENSO SmartMaintAI](https://denso-smartmaint-demo.onrender.com/)** · **[Mã nguồn GitHub](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI)**
 
+**Dành cho ban giám khảo:** [Hướng dẫn xem demo trong 3 phút và tự chạy bản nộp](docs/guides/HACKATHON-SUBMISSION.md).
+
 Chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo** → mở **Ca bảo trì**. Không cần nhập mật khẩu trong chế độ trình diễn. Render Free có thể khởi động chậm sau thời gian không có truy cập; hãy mở website trước buổi thuyết trình.
 
 Trong ứng dụng, mở **Hướng dẫn demo** để xem các bước theo vai trò và dùng nút thu gọn menu để mở rộng vùng làm việc. Nếu trình duyệt vẫn hiện giao diện cũ sau khi cập nhật, nhấn **Ctrl + F5**.
@@ -287,9 +289,10 @@ Chay-demo.cmd      Chạy ứng dụng
 | Toàn bộ kiểm thử backend, 12/10/2026 | **178 passed**; SQLite, adapter libSQL, nghiệp vụ, quyền, revision, dữ liệu mẫu và RAG trên môi trường kiểm thử |
 | Tra cứu mẫu | 10/10 câu hỏi demo đạt; đây là kiểm tra chức năng, không phải benchmark chất lượng AI độc lập |
 | Giao diện mới | **Đạt** browser smoke bằng Edge trên database/profile riêng: bố cục, bốn tab, giữ nội dung nhập, điện thoại, BM → tri thức → RAG, 3 bài học mẫu, mở chi tiết và lọc kho tri thức |
-| Rà soát file, 12/10/2026 | 131 file nguồn/tài nguyên/tài liệu được kiểm kê; Python AST, JSON, YAML, CSV và 136 tham chiếu local trong Markdown/HTML/CSS hợp lệ. Không kiểm kê nội dung bí mật/database riêng |
+| Rà soát file, 12/10/2026 | Kiểm kê mã nguồn/tài nguyên/tài liệu; Python AST, JSON, YAML, CSV và tham chiếu local trong Markdown/HTML/CSS hợp lệ. Cấu hình riêng và database cá nhân được loại khỏi gói nộp |
 | Docker và libSQL | Đã kiểm tra build/chạy, lưu dữ liệu và luồng nghiệp vụ trong [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/workflows/docker-smoke.yml) |
 | Website công khai | Ngày 12/10/2026 xác minh qua API: đủ 3 bài học mẫu, 3 nguồn đã xuất bản và báo cáo nguồn đã xác nhận. Chưa kiểm thử mọi chức năng trên cloud |
+| Bản ZIP giải nén sạch, 12/10/2026 | Thiết lập không có `.env`/database trước đó, tải đủ tài nguyên giao diện, chọn vai trò, có 8 hồ sơ và 3 cặp bài học/tri thức; tạo ca mới và đọc lại sau khởi động lại thành công |
 
 Chạy lại bộ kiểm thử:
 

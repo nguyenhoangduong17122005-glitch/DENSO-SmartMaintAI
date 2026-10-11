@@ -6,6 +6,7 @@ Xem [cấu trúc dự án và vị trí các file](PROJECT-STRUCTURE.md) để t
 
 | Tài liệu | Nội dung |
 |---|---|
+| [Bản nộp hackathon](guides/HACKATHON-SUBMISSION.md) | Xem demo trong 3 phút, tự chạy và kiểm tra dữ liệu lưu |
 | [Live Demo và Docker](guides/LIVE-DEMO-DEPLOYMENT.md) | Cấu hình triển khai, ổ dữ liệu và cách xác minh link demo |
 | [Bàn giao](guides/DEMO-HANDOVER.md) | Chức năng đã có, kết quả kiểm tra và giới hạn |
 | [Kịch bản BM](guides/BM-WORKFLOW-DEMO.md) | Điền dữ liệu, phối hợp chuyên gia và xác nhận báo cáo |

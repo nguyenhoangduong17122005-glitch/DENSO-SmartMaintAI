@@ -23,6 +23,7 @@
 | `.github/workflows/docker-smoke.yml` | Build và kiểm tra Docker trên GitHub Actions |
 | `scripts/ci/docker_smoke.py` | Kiểm tra HTTP, RAG mẫu và hồ sơ qua restart container |
 | `backend/serve.py` | Khởi tạo dữ liệu khi cần và chạy server một worker |
+| `docs/guides/HACKATHON-SUBMISSION.md` | Hướng dẫn cho giám khảo: xem nhanh, chạy bản nộp và phạm vi demo |
 | `backend/demo_knowledge.py` | Thêm một lần 3 bài học mô phỏng, báo cáo nguồn và tri thức đã xuất bản trên SQLite/Turso |
 | `fixtures/cases/cnc-knowledge-samples.json` | Nội dung 3 cặp bài học/tri thức, ghi rõ giới hạn mô phỏng |
 | `backend/tests/test_demo_knowledge.py` | Kiểm tra lưu bền, quyền, nguồn, tính nguyên tử và không ghi đè dữ liệu |
