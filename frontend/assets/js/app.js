@@ -5,12 +5,11 @@
   const roles={maintenance:'Người bảo trì',expert:'Chuyên gia',lead:'Chuyên gia trưởng'}, all=Object.keys(roles);
   const goBtn=(label,page,id=null,style='secondary',tab=null)=>`<button type="button" class="btn btn-${style}" data-action="navigate" data-page="${e(page)}" ${id?`data-id="${e(id)}"`:''} ${tab?`data-tab="${e(tab)}"`:''}>${e(label)}</button>`;
   const navs={
-    maintenance:[['dashboard','Tổng quan','grid'],['cases','Hồ sơ công việc','wrench'],['library','Kho tri thức','book'],['proposals','Đề xuất từ hồ sơ','file']],
+    maintenance:[['dashboard','Tổng quan','grid'],['cases','Ca bảo trì','wrench'],['library','Kho tri thức','book'],['proposals','Bài học từ ca','file']],
     expert:[['dashboard','Tổng quan','grid'],['assignments','Hỗ trợ hiện trường','users'],['cases','Hồ sơ tham gia','wrench'],['proposals','Tri thức của tôi','edit'],['library','Kho tri thức','book']],
     lead:[['dashboard','Tổng quan','grid'],['review','Kiểm duyệt tri thức','shield'],['library','Kho tri thức','book']]
   };
   const accountIds=['u-minh','u-hai','u-anh'];
-  Object.values(navs).forEach(items=>items.push(['cnc','Hồ sơ CNC & tra cứu','search'],['integration','Dữ liệu HozenDX','database']));
   const sidebarPreferenceKey='smartmaint-sidebar-collapsed';
   let sidebarCollapsed=false;
   try { sidebarCollapsed=sessionStorage.getItem(sidebarPreferenceKey)==='true'; } catch (_) { /* Keep the default layout when storage is unavailable. */ }
@@ -292,7 +291,7 @@
     const root=document.getElementById('app'),u=S.user();if(!u){root.innerHTML=login();return;}
     if(!S.allowed(S.ui.page))S.ui={...S.ui,page:'dashboard',id:null,tab:null};
     const page=S.pages[S.ui.page],unread=S.db.notifications.filter(n=>n.userId===u.id&&!n.read).length,pending=S.db.proposals.filter(p=>p.status==='pending'&&p.authorId!==u.id&&!(p.contributors||[]).includes(u.id)).length;
-    const active=({'case':'cases','db-case':'cases','local-case':'cases','local-cases':'cases','new-case':'cases','proposal':'proposals','knowledge-detail':'library','review-detail':'review'})[S.ui.page]||S.ui.page;
+    const active=({'case':'cases','db-case':'cases','cnc':'cases','local-case':'cases','local-cases':'cases','new-case':'cases','proposal':'proposals','knowledge-detail':'library','review-detail':'review'})[S.ui.page]||S.ui.page;
     root.innerHTML=`<div class="app-shell ${S.ui.menuOpen?'menu-open':''} ${sidebarCollapsed?'sidebar-collapsed':''}">
       <button class="sidebar-overlay" data-action="menu" aria-label="Đóng menu"></button>
       <div class="sidebar-brand"><button type="button" class="brand" data-action="navigate" data-page="dashboard" aria-label="DENSO SmartMaintAI · về Tổng quan" title="Về Tổng quan"><img class="sidebar-brand-logo" src="assets/images/logotachnen.png" alt=""><span class="brand-copy">SmartMaintAI<span>TRI THỨC & BẢO TRÌ</span></span></button></div>

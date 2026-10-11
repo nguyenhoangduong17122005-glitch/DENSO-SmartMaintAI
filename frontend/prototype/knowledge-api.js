@@ -18,10 +18,17 @@
   S.actions['knowledge-refresh']=()=>{if(S.guardLeave(()=>S.render()))S.render();};
   S.actions['k-open']=button=>S.go('knowledge-detail',button.dataset.id);
   S.actions['k-library']=()=>S.go('library');
-  const titles={library:'Kho tri thức đã duyệt',proposals:'Đề xuất từ báo cáo',proposal:'Chi tiết đề xuất',review:'Kiểm duyệt tri thức','review-detail':'Đối chiếu và duyệt','knowledge-detail':'Tri thức đã xuất bản'};
-  for(const page of pages) S.pages[page]={...S.pages[page],render:()=>`<div class="page-head"><div><div class="eyebrow">Tri thức · Database</div><h1>${titles[page]}</h1><p class="subtext">Nguồn từ báo cáo đã xác nhận, có phiên bản và người duyệt độc lập.</p></div><button type="button" class="btn btn-secondary" data-action="knowledge-refresh">Tải lại</button></div><div id="knowledge-api-view" class="stack" aria-live="polite">Đang tải database…</div>`};
+  const titles={library:'Kho tri thức',proposals:'Bài học từ ca',proposal:'Chi tiết đề xuất',review:'Kiểm duyệt tri thức','review-detail':'Đối chiếu và duyệt','knowledge-detail':'Tri thức đã xuất bản'};
+  for(const page of pages) S.pages[page]={...S.pages[page],render:()=>`<div class="page-head"><div><h1>${titles[page]}</h1></div><button type="button" class="btn btn-secondary" data-action="knowledge-refresh">Tải lại</button></div><div id="knowledge-api-view" class="stack" aria-live="polite">Đang tải database…</div>`};
   function contentView(content){return Object.entries(fields).map(([key,label])=>`<section><h3>${label}</h3><p class="workspace-copy">${h(content[key])}</p></section>`).join('');}
-  function proposalCard(p){return `<article class="card card-body stack"><div class="actions">${S.badge(labels[p.status]||p.status)}<span>${h(p.id)} · v${p.revision}</span></div><h2>${h(p.content.title)}</h2><p>${h(p.assetId)} · ${h(p.authorName)}</p><p>${h(p.rationale)}</p>${p.publication?`<p>${h(labels[p.publication.index_status])}</p>`:''}${nav('Mở đề xuất',S.user().role==='lead'?'review-detail':'proposal',p.id)}</article>`;}
+  let libraryItems=[],libraryQuery='';
+  const normalized=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  function libraryView(items){
+    const filtered=items.filter(k=>!libraryQuery||normalized([k.id,k.title,...(k.sections||[]).map(s=>s.text)].join(' ')).includes(normalized(libraryQuery)));
+    return `<form class="card library-search-panel" data-form="database-library-search"><div class="library-search-inner"><div class="library-search-bar-row"><div class="library-search-input-box"><span class="search-box-icon">${S.icon('search')}</span><input name="query" class="search-main-input" value="${h(libraryQuery)}" placeholder="Nhập từ khóa tra cứu (ví dụ: rung trục chính, model máy, mã lỗi...)" aria-label="Từ khóa tìm kiếm"></div><button type="submit" class="btn btn-primary">Tìm kiếm</button></div><p class="source-meta">Nguồn đã qua kiểm duyệt · CNC · Có phiên bản và căn cứ</p></div></form><section class="library-results"><div class="library-results-head"><div><h2>Nguồn có thể tham khảo</h2><p class="subtext">Nguồn đã qua kiểm duyệt, kèm điều kiện áp dụng và phiên bản.</p></div><span class="library-result-count">${filtered.length}<span>nguồn</span></span></div>${filtered.length?'<div class="library-grid">'+filtered.map(k=>S.visual.libraryCard({...k,kind:'case',family:'CNC',content:{symptom:k.sections?.[0]?.text||''},tags:k.keywords||[]})).join('')+'</div>':S.empty('Chưa có nguồn phù hợp','Tri thức xuất hiện sau khi được duyệt và xuất bản.')}</section>`;
+  }
+  S.forms['database-library-search']=form=>{libraryQuery=new FormData(form).get('query').trim();const target=document.querySelector('#knowledge-api-view');target.innerHTML=libraryView(libraryItems);};
+  function proposalCard(p){return S.visual.proposalRow({...p,...p.content,title:p.content.title,origin:'case',family:'CNC',version:p.revision},S.user().role==='lead');}
   function proposalView(p){
     const editable=p.authorId===S.user().id&&['draft','changes'].includes(p.status);
     const input=(name,label,value,max=8000,required=true)=>`<label class="field">${label}<textarea class="textarea" name="${name}" maxlength="${max}" ${required?'required':''} data-input="knowledge-dirty">${h(value)}</textarea></label>`;
@@ -37,11 +44,14 @@
       if(!current())return;
       if(verified.user.id!==userId||verified.user.id!==me.user.id)throw new Error('Tài khoản đã thay đổi. Tải lại dữ liệu.');
       let html;
-      if(page==='library')html='<p>Tri thức đã duyệt và xuất bản trong phạm vi máy. Bộ tài liệu CNC mẫu vẫn có trong phần tra cứu RAG của hồ sơ.</p>'+(data.items.length?`<div class="grid-2">${data.items.map(d=>`<article class="card card-body stack">${S.badge('Sẵn sàng RAG','green')}<h2>${h(d.title)}</h2><p>${h(d.id)} · v${h(d.version)} · ${h(d.assetIds.join(', '))}</p>${nav('Đọc tri thức','knowledge-detail',d.id)}</article>`).join('')}</div>`:S.empty('Chưa có tri thức được xuất bản','Tạo đề xuất từ báo cáo đã xác nhận, gửi duyệt rồi đưa vào RAG.'));
+      if(page==='library'){
+        libraryItems=data.items;
+        html=libraryView(data.items);
+      }
       else if(page==='knowledge-detail')html=`<div class="actions">${nav('Về kho tri thức','library')}${S.badge('Đã duyệt và xuất bản','green')}</div><h2>${h(data.title)}</h2><p>${h(data.id)}@${h(data.version)} · Nguồn: ${h(data.sourceReportId)} v${data.sourceReportRevision}</p>${data.sections.map(s=>`<article class="source-card"><h3>${h(s.heading)}</h3><small>${h(data.id)}@${h(data.version)}#${h(s.id)}</small><p class="workspace-copy">${h(s.text)}</p></article>`).join('')}`;
-      else if(['proposals','review'].includes(page)){const items=page==='review'?data.items.filter(p=>p.status==='pending'||p.publication&&!p.publication.active_version):data.items;html=items.length?`<div class="grid-2">${items.map(proposalCard).join('')}</div>`:S.empty(page==='review'?'Không có đề xuất chờ duyệt':'Chưa có đề xuất từ báo cáo','Mở hồ sơ có báo cáo đã xác nhận để tạo đề xuất tri thức.');}
+      else if(['proposals','review'].includes(page)){const items=page==='review'?data.items.filter(p=>p.status==='pending'||p.publication&&!p.publication.active_version):data.items;html=items.length?`<section class="card dashboard-card"><div class="card-scroll-body">${items.map(proposalCard).join('')}</div></section>`:S.empty(page==='review'?'Không có đề xuất chờ duyệt':'Chưa có đề xuất từ báo cáo','Mở hồ sơ có báo cáo đã xác nhận để tạo đề xuất tri thức.');}
       else html=proposalView(data);
-      target.innerHTML=`<p data-knowledge-loaded="${h(userId)}" class="save-state">Đã đọc SQLite · ${h(S.fmtDate(new Date().toISOString()))}</p>`+html;
+      target.innerHTML=`<p data-knowledge-loaded="${h(userId)}" class="save-state">Đã đọc máy chủ · ${h(S.fmtDate(new Date().toISOString()))}</p>`+html;
     }catch(error){if(current())target.innerHTML=`<div class="notice notice-warning">${h(error.message)}</div>`;}
   }
   S.inputs['knowledge-dirty']=()=>{dirty=true;};

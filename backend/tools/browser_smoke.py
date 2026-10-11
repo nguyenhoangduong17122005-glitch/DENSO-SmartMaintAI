@@ -118,7 +118,7 @@ def main():
                     wait("!window.smartMaintWorkspaceCanLeave||window.smartMaintWorkspaceCanLeave()")
                     evaluate("SM.login(" + json.dumps(role_id) + ")")
                 wait("!!document.querySelector('.sidebar')")
-                evaluate("document.querySelector('.nav-item[data-page=cnc]').click()")
+                evaluate("SM.go('cnc')")
                 wait("!!document.querySelector('#detail')")
                 assert evaluate("!!document.querySelector('.brand-copy')")
                 return
@@ -171,7 +171,15 @@ def main():
             evaluate("SM.closeModal()")
         evaluate("document.querySelector('[data-action=case]').click()")
         wait("!!document.querySelector('#context')")
+        if original_ui:
+            wait("!!document.querySelector('.case-workflow-stepper')")
+            assert evaluate("document.querySelector('#detail').getBoundingClientRect().width > document.querySelector('#main-content').getBoundingClientRect().width * 0.8"), 'Case detail must use the full content width'
+            evaluate("document.querySelector('[data-action=workspace-tab][data-tab=context]').click()")
+            assert evaluate("!document.querySelector('[data-case-panel=context]').hidden")
         documentation_screenshot('case-workspace.png')
+        if original_ui:
+            evaluate("document.querySelector('#context [name=symptom]').value='Draft retained between tabs';document.querySelector('[data-action=workspace-tab][data-tab=sources]').click();document.querySelector('[data-action=workspace-tab][data-tab=context]').click()")
+            assert evaluate("document.querySelector('#context [name=symptom]').value==='Draft retained between tabs'")
         evaluate("const box=document.querySelector('[name=symptom]'); box.value='Rung demo từ trình duyệt'; box.dispatchEvent(new Event('input',{bubbles:true})); document.querySelector('#context').requestSubmit()")
         wait("document.querySelector('#save-state')?.dataset.contextRevision==='2'")
         with connect(db_path) as db:
@@ -200,10 +208,16 @@ def main():
         assert evaluate("document.querySelector('#answer-results').textContent.includes('DEMO-CNC-003@1.0#applicability')")
         evaluate("document.querySelector('#answer-results [data-action=open-source]').click()")
         wait("!!document.querySelector('#answer-results .source-full:not([hidden])')")
+        if original_ui:
+            evaluate("document.querySelector('[data-action=workspace-tab][data-tab=sources]').click()")
         evaluate("document.querySelector('#answer-results').scrollIntoView({block:'start'})")
         documentation_screenshot('rag-answer.png')
         call("Emulation.setDeviceMetricsOverride", {"width": 390, "height": 844, "deviceScaleFactor": 1, "mobile": True})
         assert evaluate("document.documentElement.scrollWidth <= 390"), "Search page overflows on mobile"
+        if original_ui:
+            for tab in ['context', 'work', 'report', 'sources']:
+                evaluate("document.querySelector('[data-action=workspace-tab][data-tab=" + tab + "]').click()")
+                assert evaluate("document.documentElement.scrollWidth <= 390"), 'Case stage overflows on mobile: ' + tab
         call("Emulation.setDeviceMetricsOverride", {"width": 1280, "height": 900, "deviceScaleFactor": 1, "mobile": False})
         evaluate("document.querySelector('#source-search [name=query]').value='Vision camera không nhận sản phẩm'; document.querySelector('#source-search').requestSubmit()")
         wait("document.querySelector('#search-results').textContent.includes('Chưa tìm thấy nguồn phù hợp')")
@@ -257,7 +271,7 @@ def main():
             # The original case menu/form now persist through the API, not localStorage.
             sign_in('minh')
             navigate("SM.go('cases')")
-            wait("document.querySelector('#database-cases')?.textContent.includes('SQLite')")
+            wait("document.querySelector('#database-cases')?.textContent.includes('máy chủ')")
             evaluate("document.querySelector('[data-action=case-new]').click()")
             wait("!!document.querySelector('[data-form=case-create]')")
             evaluate("const f=document.querySelector('[data-form=case-create]');f.querySelector('[name=title]').value='Original form database persistence';f.querySelector('[name=symptom]').value='Rung sau thay dao';f.querySelector('[name=newReason]').value='Independent browser test';f.querySelector('[name=machineConfirmed]').checked=true;f.requestSubmit()")
@@ -303,6 +317,8 @@ def main():
             assert evaluate("Number(document.querySelector('[data-metric=open]').dataset.value)") == open_count
             assert evaluate("Number(document.querySelector('[data-metric=events]').dataset.value)") == note_count
             assert not evaluate("document.querySelector('#database-view').textContent.includes('BM-26031')")
+            assert evaluate("!!document.querySelector('.dashboard-grid .dashboard-card')"), 'Overview must use the reference two-column cards'
+            documentation_screenshot('dashboard.png')
             assert evaluate("!!document.querySelector('[data-storage=database][data-case=" + original_id + "]')")
             evaluate("document.querySelector('[data-storage=database][data-case=" + original_id + "]').click()")
             wait("!!document.querySelector('#context')")
@@ -371,9 +387,9 @@ def main():
             evaluate("const f=document.querySelector('#bm-report');for(const [key,value] of Object.entries({summary:'Rung sau thay dao',cause:'Chưa đủ bằng chứng kết luận',actions:'Kiểm tra lắp dao và chạy thử',result:'Chạy thử demo ổn định',followUp:'Theo dõi ca sau'})) f.querySelector('[name='+key+']').value=value;f.requestSubmit(f.querySelector('[value=submit]'))")
             wait("!!document.querySelector('#confirm-report')&&window.smartMaintWorkspaceCanLeave()")
             evaluate("const f=document.querySelector('#confirm-report');f.querySelector('[type=checkbox]').checked=true;f.requestSubmit()")
-            wait("document.querySelector('#bm-workflow')?.textContent.includes('Đã xác nhận')&&!document.querySelector('#confirm-report')&&window.smartMaintWorkspaceCanLeave()")
+            wait("document.querySelector('#detail')?.textContent.includes('Đã xác nhận')&&!document.querySelector('#confirm-report')&&window.smartMaintWorkspaceCanLeave()")
             call('Page.reload')
-            wait("document.querySelector('#bm-workflow')?.textContent.includes('Đã xác nhận')")
+            wait("document.querySelector('#detail')?.textContent.includes('Đã xác nhận')")
             with connect(db_path) as db:
                 finished=db.execute('SELECT work_state,machine_state,report_state FROM cases WHERE id=?',(original_id,)).fetchone()
                 assert tuple(finished)==('ended','restored','confirmed')
@@ -399,6 +415,11 @@ def main():
                 assert db.execute('SELECT active_version FROM knowledge WHERE id=?',(knowledge_id,)).fetchone()[0]==1
             navigate("SM.go('library')")
             wait("document.querySelector('#knowledge-api-view')?.textContent.includes('Zeta901 curated CNC knowledge')")
+            assert evaluate("!!document.querySelector('.library-card')"), 'Knowledge library must use the reference card layout'
+            evaluate("const f=document.querySelector('[data-form=database-library-search]');f.querySelector('[name=query]').value='not-a-matching-knowledge-title';f.requestSubmit()")
+            assert evaluate("document.querySelectorAll('.library-card').length===0")
+            evaluate("const f=document.querySelector('[data-form=database-library-search]');f.querySelector('[name=query]').value='';f.requestSubmit()")
+            assert evaluate("!!document.querySelector('.library-card')")
             documentation_screenshot('knowledge-library.png')
             sign_in('minh')
             navigate("SM.go('db-case',"+json.dumps(original_id)+")")

@@ -32,14 +32,11 @@
   const metric=(label,value,key)=>`<article class="stat-card" data-metric="${key}" data-value="${value}"><span class="metric-label">${h(label)}</span><div class="metric-value">${value}</div></article>`;
   const head=(title,description)=>`<div class="page-head"><div><div class="eyebrow">${h(roles[S.user()?.role])}</div><h1>${h(title)}</h1><p class="subtext">${h(description)}</p></div><div class="actions">${refresh()}</div></div>`;
   function shell(title,description) {return head(title,description)+'<div id="database-view" aria-live="polite"><p>Đang tải dữ liệu máy chủ…</p></div>';}
-  S.pages.dashboard={...S.pages.dashboard,render:()=>shell('Tổng quan công việc','Số liệu và hồ sơ trong phạm vi tài khoản đang chọn.')};
+  S.pages.dashboard={...S.pages.dashboard,render:()=>'<div id="database-view" aria-live="polite">Đang tải tổng quan…</div>'};
   S.pages.assignments={...S.pages.assignments,render:()=>shell('Hỗ trợ & xác nhận','Hồ sơ bạn đã được cấp quyền tham gia và các ghi nhận cần xác nhận.')};
   S.pages.integration={...S.pages.integration,render:()=>shell('Dữ liệu HozenDX','Dữ liệu máy đọc qua adapter của máy chủ; HozenDX hiện vẫn được mô phỏng.')};
-  function dashboard(items,assets) {
-    const open=items.filter(c=>c.workState!=='ended').length;
-    const notes=items.reduce((n,c)=>n+events(c).length,0);
-    const waiting=items.filter(c=>c.workState==='waiting').length;
-    return `<div class="stat-grid">${metric('Hồ sơ đang mở',open,'open')}${metric('Chờ / bàn giao',waiting,'waiting')}${metric('Ghi nhận đã lưu',notes,'events')}${metric('Máy được cấp quyền',assets.length,'assets')}</div><div class="actions">${S.user().role==='maintenance'?link('Mở công việc BM','new-case'):''}${S.user().role==='expert'?link('Hỗ trợ & xác nhận','assignments'):''}${link('Xem tất cả hồ sơ','cases')}${link('Dữ liệu máy','integration')}</div><section class="stack"><div class="section-title"><h2>Công việc của bạn</h2><span>${items.length} hồ sơ</span></div>${items.length?cards(items.slice(0,6)):S.empty('Chưa có hồ sơ được cấp quyền','Tài khoản này chưa được phân công hồ sơ trong database.')}</section>`;
+  function dashboard(items,assets,proposals,knowledge) {
+    return S.visual.dashboard({cases:items,proposals:proposals.map(p=>({...p,...p.content,title:p.content.title,family:'CNC',origin:'case',version:p.revision})),knowledge:knowledge.map(k=>({...k,status:'published',family:'CNC',kind:'case',content:{symptom:k.sections?.[0]?.text||''}}))});
   }
   function assignments(items) {
     const userId=S.user().id;
@@ -63,10 +60,12 @@
       const [cases,assets]=await Promise.all([S.backend.api('/api/cases'),S.backend.api('/api/assets')]);
       const support=page==='assignments'||page==='dashboard'?await S.backend.api('/api/support-requests'):{items:[]};
       const sources=page==='integration'?await Promise.all(assets.items.map(a=>S.backend.api('/api/integration/hozendx/assets/'+encodeURIComponent(a.id)))):[];
+      const proposals=page==='dashboard'?await S.backend.api('/api/knowledge-proposals'):{items:[]};
+      const knowledge=page==='dashboard'?await S.backend.api('/api/knowledge'):{items:[]};
       const verified=await S.backend.api('/api/auth/me');
       if(!current()) return;
       if(verified.user.id!==me.user.id||verified.user.id!==userId) throw new Error('Tài khoản máy chủ đã thay đổi. Tải lại dữ liệu để tiếp tục.');
-      target.innerHTML=`<p class="save-state" data-database-loaded="${h(userId)}">Đã đọc dữ liệu máy chủ · ${h(S.fmtDate(new Date().toISOString()))}</p>`+invitationCards(support.items)+(page==='dashboard'?dashboard(cases.items,assets.items):page==='assignments'?assignments(cases.items):integration(assets.items,sources,cases.items));
+      target.innerHTML=`<p class="save-state" data-database-loaded="${h(userId)}">Đã đọc dữ liệu máy chủ · ${h(S.fmtDate(new Date().toISOString()))}</p>`+invitationCards(support.items)+(page==='dashboard'?dashboard(cases.items,assets.items,proposals.items,knowledge.items):page==='assignments'?assignments(cases.items):integration(assets.items,sources,cases.items));
     } catch(error) {if(current()) target.innerHTML=`<div class="notice notice-warning" role="alert">${h(error.message)} ${refresh()}</div>`;}
   }
   // Prototype knowledge/review flows remain explicitly labelled until their backend workflow is implemented.

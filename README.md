@@ -8,7 +8,7 @@ DENSO SmartMaintAI hỗ trợ nhân viên bảo trì ghi nhận sự cố CNC, p
 
 **[Mở Live Demo DENSO SmartMaintAI](https://denso-smartmaint-demo.onrender.com/)** · **[Mã nguồn GitHub](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI)**
 
-Chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo** → mở **Hồ sơ công việc**. Không cần nhập mật khẩu trong chế độ trình diễn. Render Free có thể khởi động chậm sau thời gian không có truy cập; hãy mở website trước buổi thuyết trình.
+Chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo** → mở **Ca bảo trì**. Không cần nhập mật khẩu trong chế độ trình diễn. Render Free có thể khởi động chậm sau thời gian không có truy cập; hãy mở website trước buổi thuyết trình.
 
 Trong ứng dụng, mở **Hướng dẫn demo** để xem các bước theo vai trò và dùng nút thu gọn menu để mở rộng vùng làm việc. Nếu trình duyệt vẫn hiện giao diện cũ sau khi cập nhật, nhấn **Ctrl + F5**.
 
@@ -115,7 +115,7 @@ Hồ sơ có ba trạng thái riêng: **máy**, **tiến độ công việc** v�
 
 ## Giao diện demo
 
-Giao diện được tích hợp từ [Hoafng3107/Denso_SmartmaintAI](https://github.com/Hoafng3107/Denso_SmartmaintAI), gồm phong cách hiển thị, hình ảnh và menu thu gọn. Các màn hình hồ sơ, báo cáo, duyệt tri thức và RAG tiếp tục dùng API/database của dự án này. Hướng dẫn theo vai trò được điều chỉnh cho luồng BM đã triển khai; không sử dụng tiến độ giả lập của prototype để xác nhận dữ liệu đã lưu.
+Giao diện dựa trên [website mẫu](https://densosmartmaintai.netlify.app/) và mã nguồn [Hoafng3107/Denso_SmartmaintAI](https://github.com/Hoafng3107/Denso_SmartmaintAI). Tổng quan hai cột, thẻ ca bảo trì, bộ lọc trạng thái, thẻ máy và kho tri thức sử dụng bố cục của mẫu. Chi tiết ca chia thành bốn tab: **Bối cảnh & máy**, **Tra cứu & căn cứ**, **Xử lý & nhật ký**, **Báo cáo tổng kết**. Các thao tác nghiệp vụ tiếp tục dùng API/database của dự án này; số liệu và hồ sơ hiển thị theo dữ liệu, quyền truy cập thực tế. Hướng dẫn theo vai trò áp dụng cho luồng BM đã triển khai.
 
 Ảnh chụp từ ứng dụng chạy thực tế với dữ liệu mô phỏng. Ảnh trả lời sử dụng chế độ từ khóa/mẫu.
 
@@ -130,6 +130,12 @@ Chuyển giữa người bảo trì, chuyên gia và chuyên gia trưởng để
 ![Hồ sơ CNC](docs/assets/screenshots/case-workspace.png)
 
 Lưu bối cảnh, ghi nhận theo đợt, người thực hiện và bằng chứng; dữ liệu được đọc lại từ backend.
+
+**Tổng quan bảo trì**
+
+![Tổng quan với số liệu từ database](docs/assets/screenshots/dashboard.png)
+
+Các thẻ số liệu dẫn đến danh sách theo trạng thái; vùng công việc và tri thức mới cập nhật lấy dữ liệu từ máy chủ.
 
 **Tra cứu có trích dẫn nguồn**
 

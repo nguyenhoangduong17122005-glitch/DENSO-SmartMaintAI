@@ -250,6 +250,7 @@ def test_original_shell_and_workspace_routes(client):
     assert "/workspace.js" in client.get("/workspace").text
     assert client.get('/prototype/backend.js').status_code == 200
     assert client.get('/prototype/demo-guide.js').status_code == 200
+    assert client.get('/prototype/visual-templates.js').status_code == 200
     assert client.get('/backend/web/workspace.js').status_code == 200
     assert client.get('/backend/web/workspace.css').status_code == 200
     assert "frame-ancestors 'none'" in page.headers["content-security-policy"]

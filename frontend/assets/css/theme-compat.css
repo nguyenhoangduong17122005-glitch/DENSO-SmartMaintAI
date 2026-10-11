@@ -27,3 +27,18 @@
 @media(max-width:760px){.topbar-save-state { display: none; }.topbar-actions { gap: 8px; }}
 @media (max-width: 1000px) { .sidebar { padding-top: 12px; } }
 @media (max-width: 760px) { .demo-ribbon { padding: 10px 16px; }.breadcrumbs > span { display: none; }.topbar .breadcrumbs { min-width: 0; }.topbar .breadcrumbs strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+
+/* Server-backed detail uses the reference's four-stage presentation. */
+#backend-workspace .workspace-grid.reference-detail-grid { display:block; }
+.reference-detail-grid > aside { display:none; }
+.has-reference-case > .page-head, .has-reference-case > #account,
+.has-reference-case #backend-main > .page-head { display:none; }
+.has-reference-case .backend-embedded { padding-top:0; }
+.reference-case-detail { min-width:0; }
+.reference-case-panel[hidden] { display:none !important; }
+.reference-case-panel .card { min-width:0; }
+.reference-case-panel .source-card { min-width:0; }
+.reference-case-detail .case-workflow-stepper { margin-bottom:8px; }
+.reference-case-detail .workspace-muted { line-height:1.6; }
+#database-view > .save-state, #database-cases > .save-state, #knowledge-api-view > .save-state { font-size:11px; color:var(--muted); margin:0 0 12px; }
+@media(max-width:760px){.case-filters-segmented { flex-wrap:wrap; }.reference-case-detail .case-header-title { overflow-wrap:anywhere; }}
