@@ -22,6 +22,8 @@ class ProtocolServer:
         self.calls = 0
         self.fail_commit = False
         self.base_url = None
+        self.close_autocommit = False
+        self.drop_transaction_stream = False
 
     def pipeline(self, body):
         self.calls += 1
@@ -62,6 +64,9 @@ class ProtocolServer:
                 results.append({'type': 'error', 'error': {
                     'code': error.sqlite_errorname, 'message': str(error)}})
         self.number += 1
+        if db and ((self.close_autocommit and not db.in_transaction) or self.drop_transaction_stream):
+            db.close()
+            db = None
         baton = str(self.number) if db else None
         if db:
             self.streams[baton] = db
@@ -206,6 +211,43 @@ def test_lost_commit_response_never_retries_or_falls_back(protocol, tmp_path):
     protocol.fail_commit = False
     with connect(None) as db:
         assert db.execute('SELECT count(*) FROM sample').fetchone()[0] == 1
+
+
+def test_closed_autocommit_stream_bootstrap_persistence_and_rag(protocol, tmp_path, monkeypatch):
+    # Turso Cloud may acknowledge a successful SELECT/COMMIT with baton=null.
+    # Exercise first startup, transactions, app recreation and the full BM ->
+    # reviewed knowledge -> published RAG flow with that behavior enabled.
+    protocol.close_autocommit = True
+    test_remote_workflow_persists_across_app_recreation(protocol, tmp_path, monkeypatch)
+    assert not protocol.streams
+
+
+def test_new_transaction_stream_retains_foreign_keys(protocol):
+    protocol.close_autocommit = True
+    with connect(None) as db:
+        db.execute('CREATE TABLE parent(id INTEGER PRIMARY KEY)')
+        db.execute('CREATE TABLE child(parent_id INTEGER REFERENCES parent(id))')
+        assert db.execute('SELECT count(*) FROM parent').fetchone()[0] == 0
+        with pytest.raises(sqlite3.IntegrityError):
+            db.execute('INSERT INTO child VALUES(?)', (123,))
+    with connect(None) as db:
+        assert db.execute('SELECT count(*) FROM child').fetchone()[0] == 0
+
+
+@pytest.mark.parametrize('drop_after_begin', [False, True])
+def test_closed_transaction_stream_fails_without_retry(protocol, drop_after_begin):
+    db = Connection(*settings())
+    if drop_after_begin:
+        db.execute('BEGIN DEFERRED')
+    protocol.drop_transaction_stream = True
+    before = protocol.calls
+    with pytest.raises(RemoteDatabaseError, match='stream expired'):
+        db.execute('SELECT 1' if drop_after_begin else 'BEGIN DEFERRED')
+    assert db.broken and protocol.calls == before + 1
+    with pytest.raises(RemoteDatabaseError, match='unavailable'):
+        db.execute('SELECT 2')
+    assert protocol.calls == before + 1
+    db.close()
 
 
 def test_untrusted_server_routing_rejected(protocol):

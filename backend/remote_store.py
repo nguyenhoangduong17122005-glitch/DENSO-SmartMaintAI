@@ -114,7 +114,16 @@ class Connection:
     def _send(self, request):
         if self.closed or self.broken:
             raise RemoteDatabaseError('Remote database connection is unavailable')
-        body = json.dumps({'baton': self.baton, 'requests': [request]}, allow_nan=False).encode('utf-8')
+        sql = request.get('stmt', {}).get('sql', '')
+        verb = sql.lstrip().split(None, 1)[0].upper() if sql.strip() else ''
+        requests = [request]
+        if verb == 'BEGIN' and not self.baton:
+            # A successful autocommit read may close its stream. Configure the
+            # new write stream and BEGIN in the SAME pipeline so foreign-key
+            # enforcement cannot be lost between two HTTP requests.
+            requests.insert(0, {'type': 'execute', 'stmt': {
+                'sql': 'PRAGMA foreign_keys=ON', 'args': [], 'want_rows': False}})
+        body = json.dumps({'baton': self.baton, 'requests': requests}, allow_nan=False).encode('utf-8')
         try:
             if self.transport is None:
                 self.transport = http.client.HTTPSConnection(self.host, timeout=10)
@@ -138,20 +147,27 @@ class Connection:
                     self.transport.close()
                     self.transport = None
                     self.host = parts.hostname
-            result = payload['results'][0]
+            results = payload['results']
+            if len(results) != len(requests):
+                raise RemoteDatabaseError('Incomplete remote database response')
         except (OSError, http.client.HTTPException, ValueError, KeyError, IndexError, RemoteDatabaseError):
             self.broken = True
             raise RemoteDatabaseError('Remote database request failed; transaction outcome must be checked') from None
-        if result['type'] == 'error':
-            error = result.get('error', {})
-            code = error.get('code', '')
-            if code.startswith('SQLITE_CONSTRAINT'):
-                raise sqlite3.IntegrityError(error.get('message', 'Remote SQL constraint failed'))
-            raise RemoteDatabaseError('Remote SQL operation failed (' + code + ')')
-        if request['type'] != 'close' and not self.baton:
+        needs_stream = verb == 'BEGIN' or (
+            self.in_transaction and verb not in {'COMMIT', 'ROLLBACK', 'END'} and request['type'] != 'close')
+        if needs_stream and not self.baton:
             self.broken = True
             raise RemoteDatabaseError('Remote database stream expired')
-        return result['response']
+        for result in results:
+            if result['type'] == 'error':
+                error = result.get('error', {})
+                code = error.get('code', '')
+                if code.startswith('SQLITE_CONSTRAINT'):
+                    raise sqlite3.IntegrityError(error.get('message', 'Remote SQL constraint failed'))
+                raise RemoteDatabaseError('Remote SQL operation failed (' + code + ')')
+        # baton=null means CLOSED, not FAILED: completed autocommit queries and
+        # acknowledged COMMIT/ROLLBACK are valid. Never replay a request here.
+        return results[-1]['response']
 
     def execute(self, sql, parameters=()):
         verb = sql.lstrip().split(None, 1)[0].upper()
