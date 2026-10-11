@@ -441,10 +441,12 @@ def main():
             wait("!!document.querySelector('[data-page=proposal][data-id=DP-DEMO-CNC-003]')")
             for number in ['001', '002', '003']:
                 assert evaluate("!!document.querySelector('[data-page=proposal][data-id=DP-DEMO-CNC-"+number+"]')")
+            documentation_screenshot('case-lessons.png')
             navigate("SM.go('proposal','DP-DEMO-CNC-001')")
             wait("document.querySelector('#knowledge-api-view')?.textContent.includes('RP-DEMO-CNC-001')")
             navigate("SM.go('library')")
             wait("document.querySelectorAll('.library-card').length===4")
+            documentation_screenshot('knowledge-library.png')
             evaluate("const f=document.querySelector('[data-form=database-library-search]');f.querySelector('[name=query]').value='Alarm';f.requestSubmit()")
             assert evaluate("document.querySelectorAll('.library-card').length===1")
             assert evaluate("document.querySelector('.library-card').textContent.includes('nhiệt độ')")

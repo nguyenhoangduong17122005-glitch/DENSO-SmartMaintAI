@@ -4,6 +4,10 @@ Giao diện chính mở tại `/` qua FastAPI. Chạy `Chay-demo.cmd` từ gốc
 
 Thiết kế tham chiếu: [website Netlify](https://densosmartmaintai.netlify.app/) và [Hoafng3107/Denso_SmartmaintAI](https://github.com/Hoafng3107/Denso_SmartmaintAI), bản `87e755a`. Tổng quan, thẻ ca, thẻ máy và kho tri thức được nối với dữ liệu máy chủ của dự án này.
 
+Giao diện hiện dùng nền sáng, điểm nhấn đỏ DENSO và font Plus Jakarta Sans cục bộ. Người bảo trì có các mục **Tổng quan**, **Ca bảo trì**, **Kho tri thức**, **Bài học từ ca**. Menu chuyên gia có **Hỗ trợ hiện trường**, **Hồ sơ tham gia**, **Tri thức của tôi**; chuyên gia trưởng có **Kiểm duyệt tri thức**. Trên **Bài học từ ca**, tiêu đề phụ “Đề xuất của tôi” đã bỏ; tên các route nội bộ vẫn giữ để tương thích.
+
+Ba bài học/nguồn mẫu được tạo từ `fixtures/cases/cnc-knowledge-samples.json` qua `backend/demo_knowledge.py`, không khai báo thêm vào JavaScript. Chọn Nguyễn Minh để xem ba bài học của tác giả này. [Mã mẫu và cách nạp](../docs/guides/DENSO-DEMO-SAMPLE-DATA.md).
+
 ## Sửa file nào?
 
 | File/thư mục | Vai trò |

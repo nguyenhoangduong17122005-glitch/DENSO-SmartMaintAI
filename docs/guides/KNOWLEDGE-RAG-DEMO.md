@@ -15,6 +15,6 @@ Chạy `Chay-demo.cmd`, mở `http://127.0.0.1:8001/` và Ctrl + F5. Hoàn thàn
 8. Đổi lại **Nguyễn Minh**, mở hồ sơ CNC-04 → tab **Tra cứu & căn cứ**. Nếu dùng từ khóa, nhập `DEMO-RAG-KT04` để kiểm tra đúng nguồn. Nếu dùng vector, nhập câu đầy đủ, ví dụ `Case DEMO-RAG-KT04 rung CNC sau thay dao đã ghi nhận biện pháp và giới hạn gì?`; kết quả phụ thuộc mức tương đồng, có thể cần mô tả rõ hơn.
 9. Bấm **Trả lời từ nguồn**, kiểm tra nhãn Gemini/từ khóa dự phòng và mã trích dẫn `KN-...@1#...`. Bấm nguồn để đọc toàn văn, bao gồm giới hạn áp dụng. Kết quả của case nguồn không tự xác nhận nguyên nhân của hồ sơ đang tra cứu.
 
-SQLite lưu toàn bộ bản đề xuất, quyết định duyệt, nội dung tri thức và trạng thái xuất bản. `knowledge.active_version` chỉ được đặt khi xuất bản thành công. RAG chỉ lấy bản active, trạng thái ready và valid, đúng phạm vi máy/model. Bản đã xuất bản không sửa trực tiếp; cập nhật hoặc rút bản đã xuất bản nằm ngoài phạm vi bước demo này.
+Database nghiệp vụ (SQLite local hoặc Turso trên Live Demo) lưu bản đề xuất, quyết định duyệt, nội dung tri thức và trạng thái xuất bản. `knowledge.active_version` chỉ được đặt khi xuất bản thành công. RAG chỉ lấy bản active, trạng thái ready và valid, đúng phạm vi máy/model. Bản đã xuất bản không sửa trực tiếp; cập nhật hoặc rút bản đã xuất bản nằm ngoài phạm vi bước demo này.
 
 API và nguồn chính: `backend/knowledge.py`, `backend/rag/search.py`, `backend/rag/vectors.py`, `backend/rag/answers.py`; màn hình: `frontend/prototype/knowledge-api.js`. Các lệnh lập chỉ mục cũng đọc tri thức đã xuất bản từ SQLite.

@@ -117,6 +117,14 @@ Hồ sơ có ba trạng thái riêng: **máy**, **tiến độ công việc** v�
 
 Giao diện dựa trên [website mẫu](https://densosmartmaintai.netlify.app/) và mã nguồn [Hoafng3107/Denso_SmartmaintAI](https://github.com/Hoafng3107/Denso_SmartmaintAI). Tổng quan hai cột, thẻ ca bảo trì, bộ lọc trạng thái, thẻ máy và kho tri thức sử dụng bố cục của mẫu. Chi tiết ca chia thành bốn tab: **Bối cảnh & máy**, **Tra cứu & căn cứ**, **Xử lý & nhật ký**, **Báo cáo tổng kết**. Các thao tác nghiệp vụ tiếp tục dùng API/database của dự án này; số liệu và hồ sơ hiển thị theo dữ liệu, quyền truy cập thực tế. Hướng dẫn theo vai trò áp dụng cho luồng BM đã triển khai.
 
+Giao diện dùng **nền sáng, điểm nhấn đỏ DENSO, font Plus Jakarta Sans**, logo/ảnh/font lưu cục bộ trong `frontend/assets/`. Menu theo vai trò:
+
+| Vai trò | Các mục chính |
+|---|---|
+| Người bảo trì | Tổng quan · Ca bảo trì · Kho tri thức · Bài học từ ca |
+| Chuyên gia | Tổng quan · Hỗ trợ hiện trường · Hồ sơ tham gia · Tri thức của tôi · Kho tri thức |
+| Chuyên gia trưởng | Tổng quan · Kiểm duyệt tri thức · Kho tri thức |
+
 Ảnh chụp từ ứng dụng chạy thực tế với dữ liệu mô phỏng. Ảnh trả lời sử dụng chế độ từ khóa/mẫu.
 
 **Chọn vai trò**
@@ -148,6 +156,12 @@ Kết quả có mã nguồn, phiên bản và đoạn trích để người dùn
 ![Kho tri thức](docs/assets/screenshots/knowledge-library.png)
 
 Tri thức từ báo cáo chỉ xuất hiện sau khi chuyên gia trưởng độc lập duyệt và xuất bản thành công. Các ảnh minh họa được chụp trên môi trường kiểm thử, không phải ảnh chụp database Live Demo hiện tại.
+
+**Bài học từ ca**
+
+![Danh sách bài học từ ca trên giao diện mới](docs/assets/screenshots/case-lessons.png)
+
+Nguyễn Minh có sẵn **3 bài học mẫu và 3 nguồn tri thức tương ứng**: rung sau thay dao, nhiệt độ tăng kèm Alarm, rung sau thay đồ gá. Mỗi mẫu có báo cáo nguồn, phiên bản và quyết định duyệt mô phỏng. Chọn **Bài học từ ca** hoặc **Kho tri thức** để xem ngay; không cần tự thực hiện toàn bộ luồng trước. Xem [mã dữ liệu mẫu](docs/guides/DENSO-DEMO-SAMPLE-DATA.md).
 
 ## Chạy trên Windows
 
@@ -270,13 +284,12 @@ Chay-demo.cmd      Chạy ứng dụng
 
 | Kiểm chứng | Bằng chứng và giới hạn |
 | --- | --- |
-| Bộ kiểm thử trước bản sửa hosting | 170 bài đạt; gồm nghiệp vụ, phân quyền, revision và RAG |
-| Bản sửa Turso `0d5e02c` | 17 kiểm thử adapter đạt, gồm đóng luồng autocommit, giao dịch, lưu qua khởi động lại và luồng BM → tri thức → RAG |
-| Kiểm tra luồng với sơ đồ | 55 kiểm thử hồ sơ, nhật ký, báo cáo, tri thức và tìm kiếm đạt trong lần rà soát ngày 11/10/2026 |
+| Toàn bộ kiểm thử backend, 12/10/2026 | **178 passed**; SQLite, adapter libSQL, nghiệp vụ, quyền, revision, dữ liệu mẫu và RAG trên môi trường kiểm thử |
 | Tra cứu mẫu | 10/10 câu hỏi demo đạt; đây là kiểm tra chức năng, không phải benchmark chất lượng AI độc lập |
-| Giao diện mới | Browser smoke bằng Edge đạt trên database/profile riêng, gồm hướng dẫn theo vai trò, thu gọn menu và luồng BM → tri thức → RAG; 9 kiểm thử API/hosting liên quan đạt |
+| Giao diện mới | **Đạt** browser smoke bằng Edge trên database/profile riêng: bố cục, bốn tab, giữ nội dung nhập, điện thoại, BM → tri thức → RAG, 3 bài học mẫu, mở chi tiết và lọc kho tri thức |
+| Rà soát file, 12/10/2026 | 131 file nguồn/tài nguyên/tài liệu được kiểm kê; Python AST, JSON, YAML, CSV và 136 tham chiếu local trong Markdown/HTML/CSS hợp lệ. Không kiểm kê nội dung bí mật/database riêng |
 | Docker và libSQL | Đã kiểm tra build/chạy, lưu dữ liệu và luồng nghiệp vụ trong [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/workflows/docker-smoke.yml) |
-| Website công khai | Đã kiểm tra ngày 11/10/2026: trang chủ trả HTTP 200 và chứa giao diện SmartMaintAI mới cùng script hướng dẫn; `/api/health` trả `status: ok`. Các kiểm tra này chưa bao phủ mọi chức năng trên cloud |
+| Website công khai | Ngày 12/10/2026 xác minh qua API: đủ 3 bài học mẫu, 3 nguồn đã xuất bản và báo cáo nguồn đã xác nhận. Chưa kiểm thử mọi chức năng trên cloud |
 
 Chạy lại bộ kiểm thử:
 

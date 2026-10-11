@@ -26,11 +26,11 @@ Xem [cấu trúc dự án và vị trí các file](PROJECT-STRUCTURE.md) để t
 | [Mẫu nguồn thật](data/templates/CNC-REAL-SOURCES-TEMPLATE.csv) | CSV chỉ có header, cố ý để trống cho lần thu thập sau |
 | [Kiểm kê CNC](data/inventory/CNC-SOURCE-INVENTORY.csv) | 7 đối tượng demo được kiểm kê ban đầu; không phải corpus RAG đầy đủ hiện tại |
 | [Xác minh HozenDX](data/inventory/HOZENDX-VERIFICATION.csv) | Câu hỏi và thông tin đã/chưa xác minh |
-| `fixtures/cases/` | JSON hồ sơ mẫu để khởi tạo SQLite |
+| `fixtures/cases/` | JSON hồ sơ, bài học và tri thức mẫu để khởi tạo SQLite/Turso |
 | `fixtures/hozendx/` | Adapter mock đọc thông tin thiết bị |
 | `fixtures/rag/` | Tài liệu/câu hỏi mô phỏng phục vụ RAG và kiểm tra |
-| `.runtime/smartmaint.sqlite3` | Database đang dùng, giữ nguyên vị trí |
-| `.runtime/rag-vectors.sqlite3` | Chỉ mục vector đang dùng, giữ nguyên vị trí |
+| `.runtime/smartmaint.sqlite3` | Database Python local mặc định; Live Demo dùng Turso riêng |
+| `.runtime/rag-vectors.sqlite3` | Cache vector local khi bật chế độ vector |
 | `.runtime/reports/` | Kết quả kiểm tra và bản ghi sắp xếp file, không đưa lên GitHub |
 
 Các bản sao lưu migration giữ nguyên cạnh database vì đường dẫn đã được ghi trong `schema_migrations`. Không xóa hoặc chuyển chúng như cache.

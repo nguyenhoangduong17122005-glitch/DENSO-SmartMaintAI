@@ -28,7 +28,7 @@ Lệnh dùng cấu hình lưu trữ hiện tại trong `.env`. Trên Live Demo, 
 
 ### Bốn hồ sơ đang chờ xử lý
 
-Mở http://127.0.0.1:8001/, chọn Người bảo trì hoặc Chuyên gia, vào hệ thống. Nếu đang mở trang, tải lại để cập nhật danh sách hồ sơ. Các hồ sơ mới được cấp cho Nguyễn Minh và Trần Văn Hải. Giao diện prototype ở cổng 5500 dùng dữ liệu riêng trong trình duyệt, không tự nhận bộ hồ sơ backend này.
+Mở http://127.0.0.1:8001/, chọn Người bảo trì hoặc Chuyên gia, vào hệ thống rồi mở **Ca bảo trì** / **Hồ sơ tham gia**. Nếu đang mở trang, tải lại để cập nhật danh sách. Bốn hồ sơ đang chờ được cấp cho Nguyễn Minh và Trần Văn Hải. Dùng giao diện qua FastAPI để đọc/ghi database; không dùng Live Server ở cổng 5500 cho mục đích này.
 
 | Hồ sơ | Tình huống | Câu hỏi gợi ý | Nguồn |
 |---|---|---|---|

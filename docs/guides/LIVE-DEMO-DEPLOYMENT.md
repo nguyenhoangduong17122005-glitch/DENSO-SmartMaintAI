@@ -2,7 +2,7 @@
 
 Repo: [DENSO-SmartMaintAI](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI).
 
-**Trạng thái:** có adapter database từ xa và cấu hình hosting; chưa tạo service trong tài khoản của bạn, chưa có URL Live Demo được xác minh. Không cần mua Persistent Disk.
+**Live Demo:** [DENSO SmartMaintAI](https://denso-smartmaint-demo.onrender.com/), frontend mới và FastAPI trên Render, database dùng chung trên Turso. Ngày 12/10/2026 đã xác minh 3 bài học mẫu, 3 nguồn xuất bản và báo cáo nguồn qua API. Các bước dưới đây dành cho triển khai lại trên tài khoản khác.
 
 ## Kiến trúc
 
@@ -19,7 +19,7 @@ flowchart LR
 
 `SMARTMAINT_STORAGE=turso` chuyển dữ liệu nghiệp vụ sang libSQL qua HTTPS. App chỉ trả ghi thành công sau khi COMMIT từ xa thành công. Khi database online lỗi, app báo lỗi, không âm thầm ghi vào SQLite tạm.
 
-Render Free không có disk bền vững và mất file tạm khi restart/redeploy. Hồ sơ được lưu tại Turso; vector index có thể tạo lại từ tài liệu mẫu và tri thức đã xuất bản. **Database local không tự upload lên cloud**; lần đầu cloud trống được tạo với 5 hồ sơ mô phỏng. [Render Free](https://render.com/docs/free), [Turso Free](https://turso.tech/pricing).
+Render Free không có disk bền vững và mất file tạm khi restart/redeploy. Hồ sơ được lưu tại Turso; vector index có thể tạo lại từ tài liệu mẫu và tri thức đã xuất bản. **Database local không tự upload lên cloud**; cloud trống được tạo với 8 hồ sơ mô phỏng, gồm 3 ca làm nguồn cho bài học và tri thức đã xuất bản. [Render Free](https://render.com/docs/free), [Turso Free](https://turso.tech/pricing).
 
 ## 1. Tạo database Turso Free
 
@@ -46,7 +46,7 @@ Không thêm `--tursodb`: cờ đó chọn engine Turso mới. Lệnh token hi�
 2. Chọn **New → Blueprint**, repo trên, branch `main`. `render.yaml` đặt `plan: free`, runtime Docker, không có disk trả phí.
 3. Nhập `TURSO_DATABASE_URL` và `TURSO_AUTH_TOKEN` khi Render yêu cầu. Dán token trực tiếp trong Render; không commit giá trị vào YAML.
 4. Kiểm tra service ở gói **Free** rồi tạo Blueprint. Nếu dashboard chỉ hiển thị phương án có phí, dừng tạo và kiểm tra cấu hình/tài khoản.
-5. Chờ build/deploy. Lần đầu app tạo 5 hồ sơ và 5 tài khoản demo trong cloud trống; các lần sau giữ nguyên dữ liệu. Schema remote cũ/không tương thích phải backup và migration riêng, app không tự xóa.
+5. Chờ build/deploy. Lần đầu app tạo 8 hồ sơ và 5 tài khoản demo trong cloud trống; các lần sau giữ nguyên dữ liệu. Schema remote cũ/không tương thích phải backup và migration riêng, app không tự xóa.
 6. Mở URL HTTPS Render cấp. App tự nhận `RENDER_EXTERNAL_HOSTNAME`, kiểm tra host/origin và đặt cookie Secure.
 
 Nếu tạo **New → Web Service** thủ công: chọn Docker, branch `main`, gói Free, health check `/api/health`, nhập:
@@ -127,7 +127,7 @@ py -m backend.serve
 - Token hết hạn/hạn mức hết làm kết nối lỗi. Cập nhật token trong Render rồi deploy lại, không reset database để xử lý lỗi xác thực.
 - Bộ chọn vai trò dành cho dữ liệu mô phỏng; HozenDX vẫn mock. Chưa đưa dữ liệu nhà máy thực lên bản public này.
 - [Docker CI đã đạt](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/runs/38124622577): build/chạy image, chọn vai trò, trả lời mẫu, tạo hồ sơ và giữ hồ sơ sau restart container. [Bản cập nhật miễn phí cũng đã đạt CI](https://github.com/nguyenhoangduong17122005-glitch/DENSO-SmartMaintAI/actions/runs/38131288432), gồm 170 test và kiểm tra server libSQL thật: tạo lại ứng dụng vẫn giữ hồ sơ, báo cáo → duyệt → xuất bản → RAG có citation.
-- Chưa có database/token cloud của bạn, nên chưa xác minh Turso Cloud hoặc URL Render thật. Kiểm tra giao thức local không thay thế kiểm tra triển khai cloud.
+- Live Demo Render/Turso đã có URL nêu ở đầu tài liệu; đã xác minh đọc bài học, tri thức và báo cáo nguồn qua API ngày 12/10/2026. Người triển khai bản riêng cần tự kiểm tra database/token và lưu dữ liệu trên service của mình; kiểm tra giao thức local không thay thế kiểm tra cloud.
 
 ## Nếu tiếp tục dùng frontend Netlify
 

@@ -4,7 +4,7 @@ Bước 5 chốt bản demo: kiểm tra luồng nghiệp vụ, tài liệu sử 
 
 ## Nội dung đưa lên repo
 
-Đưa `backend/`, `frontend/`, `fixtures/`, `docs/`, các file `.cmd`, `.env.example`, `.gitignore` và `README.md` lên repo. Dữ liệu mẫu trong `fixtures/` là dữ liệu mô phỏng để người tải có thể tự khởi tạo database.
+Đưa `backend/`, `frontend/`, `fixtures/`, `docs/`, `scripts/`, `.github/`, các file `.cmd`, `.env.example`, `.gitignore`, `.dockerignore`, `Dockerfile`, `compose.yaml`, `render.yaml` và `README.md` lên repo. Giữ ảnh README, font cục bộ và giấy phép font. Dữ liệu mẫu trong `fixtures/` giúp người tải tự khởi tạo database, gồm 3 bài học và 3 nguồn xuất bản trên giao diện mới.
 
 Không đưa `.env`, `.runtime/`, `.venv/`, database SQLite, log, cache hoặc bản sao lưu lên repo. `.gitignore` đã loại chúng khi dùng Git; tải file trực tiếp bằng giao diện GitHub vẫn cần tự loại các file này. Người tải repo dùng API key và database riêng; dữ liệu đang lưu trên máy tác giả không được chuyển sang máy họ.
 
@@ -33,7 +33,7 @@ Thay `OWNER/REPOSITORY` bằng repo thực tế. Git có thể yêu cầu đăng
 4. Dùng kịch bản [BM](BM-WORKFLOW-DEMO.md), tiếp tục [đề xuất và duyệt tri thức](KNOWLEDGE-RAG-DEMO.md).
 5. Muốn Gemini thật, cấu hình API key riêng theo [hướng dẫn RAG](DENSO-RAG-VECTOR-GEMINI.md). Chạy file kiểm tra RAG sẽ dùng hạn mức API.
 
-GitHub lưu mã nguồn; địa chỉ `127.0.0.1` chạy trên máy của từng người. GitHub Pages không chạy backend Python/SQLite này. Nếu cần mọi người dùng chung một URL và một database, cần một bước triển khai máy chủ riêng.
+GitHub lưu mã nguồn; địa chỉ `127.0.0.1` chạy trên máy của từng người. GitHub Pages không chạy backend Python/SQLite này. Dự án đã có [Live Demo dùng chung](https://denso-smartmaint-demo.onrender.com/) trên Render với database Turso. Bản clone chạy local không tự đồng bộ dữ liệu với website; triển khai bản riêng theo [hướng dẫn hosting](LIVE-DEMO-DEPLOYMENT.md).
 
 ## Kiểm tra trước khi bàn giao
 
@@ -50,4 +50,4 @@ GitHub lưu mã nguồn; địa chỉ `127.0.0.1` chạy trên máy của từng
 .\.venv\Scripts\python.exe -m backend.tools.browser_smoke --original-ui
 ```
 
-Browser smoke cần trình duyệt Chrome/Edge trên máy. Kiểm tra Gemini thật là bước riêng, cần key và mạng; bộ test offline không chứng minh provider đang hoạt động.
+Browser smoke mặc định cần Edge; có thể chỉ định executable qua `SMARTMAINT_EDGE`. Kiểm tra Gemini thật là bước riêng, cần key và mạng; bộ test offline không chứng minh provider đang hoạt động.

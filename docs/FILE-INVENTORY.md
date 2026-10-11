@@ -33,6 +33,7 @@
 | `docs/assets/screenshots/case-workspace.png` | Ảnh thật hồ sơ CNC |
 | `docs/assets/screenshots/rag-answer.png` | Ảnh thật câu trả lời mẫu có citation |
 | `docs/assets/screenshots/knowledge-library.png` | Ảnh thật tri thức được duyệt/xuất bản |
+| `docs/assets/screenshots/case-lessons.png` | Ảnh giao diện Bài học từ ca, có 3 mẫu mô phỏng và dữ liệu kiểm thử |
 | `docs/assets/screenshots/dashboard.png` | Tổng quan hai cột với số liệu từ database |
 | `frontend/README.md` | Bản đồ module giao diện mới, thứ tự nạp và cách kiểm tra |
 | `frontend/prototype/visual-templates.js` | Mẫu hiển thị theo website Netlify, nhận dữ liệu từ API |

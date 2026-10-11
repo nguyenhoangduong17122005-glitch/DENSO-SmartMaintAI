@@ -17,6 +17,7 @@
 | Sửa tìm kiếm/trả lời | `backend/rag/` |
 | Sửa kết nối database | `backend/store.py`, `remote_store.py` |
 | Sửa dữ liệu mô phỏng | `fixtures/cases/`, `fixtures/hozendx/`, `fixtures/rag/` |
+| Sửa 3 bài học/tri thức mẫu | `fixtures/cases/cnc-knowledge-samples.json`, `backend/demo_knowledge.py` (không ghi đè mẫu đã tồn tại) |
 | Xem database local | `.runtime/smartmaint.sqlite3`, mở bằng SQLite Viewer |
 | Đổi cấu hình riêng | `.env` (không đưa lên GitHub) |
 | Chạy Docker / Render | `Dockerfile`, `compose.yaml` / `render.yaml` |

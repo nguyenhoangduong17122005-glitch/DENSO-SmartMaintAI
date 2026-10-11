@@ -8,7 +8,7 @@ Chạy `Chay-demo.cmd`, mở `http://127.0.0.1:8001/`, nhấn Ctrl + F5 sau cậ
    - Hiện tượng: `CNC-04 rung tăng sau thay dao; chưa xác định nguyên nhân. Dữ liệu mô phỏng.`
    - Xác nhận đúng máy demo và bấm tạo. Ghi lại mã hồ sơ.
 2. Mở tab **Bối cảnh & máy** để kiểm tra bối cảnh, bấm **Lưu bối cảnh** nếu có sửa. Chuyển sang **Xử lý & nhật ký**, bấm **Bắt đầu đợt tiếp theo** nếu chưa có đợt đang làm và thêm ghi nhận hiện tượng của Nguyễn Minh. Mở **Gửi yêu cầu hỗ trợ**, chọn Trần Văn Hải, nhập `Nhờ đối chiếu nhật ký và xác minh nguồn rung` và gửi.
-3. Đổi sang **Chuyên gia — Trần Văn Hải** bằng menu tài khoản. Mở **Hỗ trợ & xác nhận** hoặc **Tổng quan**, bấm **Nhận hỗ trợ**. Trước khi nhận lời mời, chuyên gia chưa được đọc nhật ký của hồ sơ mới. Từ chối lời mời không cấp quyền hồ sơ.
+3. Đổi sang **Chuyên gia — Trần Văn Hải** bằng menu tài khoản. Mở **Hỗ trợ hiện trường** hoặc **Tổng quan**, bấm **Nhận hỗ trợ**. Trước khi nhận lời mời, chuyên gia chưa được đọc nhật ký của hồ sơ mới. Từ chối lời mời không cấp quyền hồ sơ.
 4. Mở hồ sơ vừa nhận → **Xử lý & nhật ký**, thêm ghi nhận do Trần Văn Hải thực hiện: `Đã đối chiếu tình trạng lắp dao theo dữ liệu thử nghiệm`; kết quả `Cần chạy thử và theo dõi thêm`. Ở **Xác nhận phần mình thực hiện**, chọn các ghi nhận của Hải và xác nhận.
 5. Đổi lại Nguyễn Minh, mở đúng hồ sơ. **Kết thúc đợt và bàn giao**:
    - Tóm tắt: `Đã kiểm tra và đối chiếu nhật ký cùng chuyên gia`.
