@@ -249,6 +249,7 @@ def test_original_shell_and_workspace_routes(client):
     assert "prototype/backend.js" in page.text and 'id="app"' in page.text
     assert "/workspace.js" in client.get("/workspace").text
     assert client.get('/prototype/backend.js').status_code == 200
+    assert client.get('/prototype/demo-guide.js').status_code == 200
     assert client.get('/backend/web/workspace.js').status_code == 200
     assert client.get('/backend/web/workspace.css').status_code == 200
     assert "frame-ancestors 'none'" in page.headers["content-security-policy"]

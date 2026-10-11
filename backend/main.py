@@ -431,7 +431,7 @@ def create_app(db_path=None, adapter=None, secure_cookie=None, demo_role_selecti
     def prototype_demo():
         return FileResponse(ROOT / "frontend/index.html")
 
-    allowed_scripts = {"core.js", "data.js", "knowledge.js", "cases.js", "presentation.js", "presentation-engine.js", "backend.js", "database-views.js", "knowledge-api.js"}
+    allowed_scripts = {"core.js", "data.js", "knowledge.js", "cases.js", "presentation.js", "presentation-engine.js", "backend.js", "database-views.js", "knowledge-api.js", "demo-guide.js"}
 
     @app.get("/prototype/{filename}", include_in_schema=False)
     def prototype_script(filename: str):

@@ -113,6 +113,8 @@ Hồ sơ có ba trạng thái riêng: **máy**, **tiến độ công việc** v�
 
 ## Giao diện demo
 
+Giao diện được tích hợp từ [Hoafng3107/Denso_SmartmaintAI](https://github.com/Hoafng3107/Denso_SmartmaintAI), gồm phong cách hiển thị, hình ảnh và menu thu gọn. Các màn hình hồ sơ, báo cáo, duyệt tri thức và RAG tiếp tục dùng API/database của dự án này. Hướng dẫn theo vai trò được điều chỉnh cho luồng BM đã triển khai; không sử dụng tiến độ giả lập của prototype để xác nhận dữ liệu đã lưu.
+
 Ảnh chụp từ ứng dụng chạy thực tế với dữ liệu mô phỏng. Ảnh trả lời sử dụng chế độ từ khóa/mẫu.
 
 **Chọn vai trò**
