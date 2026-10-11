@@ -16,6 +16,8 @@ Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter H
 
 ## Kết quả kiểm tra
 
+Sau khi đổi giao diện theo Netlify: tổng quan hai cột, thẻ ca, bộ lọc, chi tiết bốn tab và kho tri thức dùng dữ liệu API. Browser smoke đã đạt với kiểm tra bố cục, chuyển tab giữ dữ liệu nhập, điện thoại và luồng BM → tri thức → RAG; 9 kiểm thử route/hosting liên quan đạt. Số 170 bên dưới là kết quả bộ test của lần bàn giao trước, không phải lần chạy lại sau mỗi thay đổi giao diện. Xem [bản đồ frontend](../../frontend/README.md).
+
 | Kiểm tra | Kết quả |
 |---|---|
 | Bộ test offline `py -m pytest backend/tests -q` | 170 passed (bổ sung hosting và remote storage) |

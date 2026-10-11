@@ -245,6 +245,10 @@ Hướng dẫn điền từng trường: [Kịch bản BM](docs/guides/BM-WORKFL
 
 ```text
 frontend/          Giao diện, hình ảnh, CSS và font
+  assets/          CSS, ảnh/logo, font cục bộ và khung điều hướng
+  prototype/       Mẫu hiển thị, adapter API và module tương thích
+  workspace/       Chi tiết ca bốn tab, biểu mẫu nghiệp vụ và RAG
+  README.md        Bản đồ module và thứ tự nạp frontend
 backend/           API, nghiệp vụ và kết nối database
   rag/             Tìm kiếm, embedding và trả lời
   tools/           Kiểm tra và xuất dữ liệu
@@ -260,7 +264,7 @@ Cai-dat-demo.cmd   Cài đặt lần đầu
 Chay-demo.cmd      Chạy ứng dụng
 ```
 
-`.env`, `.venv` và `.runtime` được tạo trên máy người dùng, không đưa lên GitHub. Xem [bản đồ file theo công việc](docs/PROJECT-STRUCTURE.md).
+`.env`, `.venv` và `.runtime` được tạo trên máy người dùng, không đưa lên GitHub. Xem [bản đồ file theo công việc](docs/PROJECT-STRUCTURE.md) và [hướng dẫn các module frontend](frontend/README.md).
 
 ## Kiểm thử và phạm vi demo
 

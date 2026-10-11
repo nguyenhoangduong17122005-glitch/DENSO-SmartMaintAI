@@ -29,7 +29,6 @@
   const refresh=()=>'<button type="button" class="btn btn-secondary" data-action="database-refresh">Tải lại dữ liệu</button>';
   const cards=items=>`<div class="grid-2">${items.map(c=>S.caseCard(c).replaceAll('data-action="case-open"','data-action="case-open" data-storage="database"')).join('')}</div>`;
   const events=c=>c.rounds.flatMap(r=>r.events);
-  const metric=(label,value,key)=>`<article class="stat-card" data-metric="${key}" data-value="${value}"><span class="metric-label">${h(label)}</span><div class="metric-value">${value}</div></article>`;
   const head=(title,description)=>`<div class="page-head"><div><div class="eyebrow">${h(roles[S.user()?.role])}</div><h1>${h(title)}</h1><p class="subtext">${h(description)}</p></div><div class="actions">${refresh()}</div></div>`;
   function shell(title,description) {return head(title,description)+'<div id="database-view" aria-live="polite"><p>Đang tải dữ liệu máy chủ…</p></div>';}
   S.pages.dashboard={...S.pages.dashboard,render:()=>'<div id="database-view" aria-live="polite">Đang tải tổng quan…</div>'};
@@ -68,11 +67,11 @@
       target.innerHTML=`<p class="save-state" data-database-loaded="${h(userId)}">Đã đọc dữ liệu máy chủ · ${h(S.fmtDate(new Date().toISOString()))}</p>`+invitationCards(support.items)+(page==='dashboard'?dashboard(cases.items,assets.items,proposals.items,knowledge.items):page==='assignments'?assignments(cases.items):integration(assets.items,sources,cases.items));
     } catch(error) {if(current()) target.innerHTML=`<div class="notice notice-warning" role="alert">${h(error.message)} ${refresh()}</div>`;}
   }
-  // Prototype knowledge/review flows remain explicitly labelled until their backend workflow is implemented.
-  for(const name of ['library','knowledge-detail','proposals','proposal','review','review-detail','notifications']) {
+  // Notifications still use browser data; knowledge-api.js provides the server knowledge pages.
+  for(const name of ['notifications']) {
     const page=S.pages[name];if(!page) continue;
     const render=page.render;
-    page.render=()=>'<div class="notice notice-info">Màn hình mô phỏng trên trình duyệt. Chức năng này chưa đồng bộ database; hồ sơ công việc và nhật ký dùng mục Hồ sơ công việc.</div>'+render();
+    page.render=()=>'<div class="notice notice-info">Thông báo mô phỏng trên trình duyệt. Mở Ca bảo trì để xem hồ sơ và nhật ký được lưu trên máy chủ.</div>'+render();
   }
   const render=S.render;
   S.render=()=>{

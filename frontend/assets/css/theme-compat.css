@@ -1,9 +1,5 @@
 /* Supplied visual theme adapted to the existing navigation and API screens. */
 .sidebar { inset: var(--topbar-height) auto 0 0; padding: 12px 14px 16px; }
-.sidebar > .brand { gap: 8px; padding: 0 0 22px; color: var(--ink); }
-.sidebar > .brand .sidebar-brand-logo { width: 92px; height: auto; }
-.sidebar > .brand .brand-copy { color: var(--ink); font-size: 17px; font-weight: 750; line-height: 1.25; }
-.sidebar > .brand .brand-copy > span { color: var(--muted); font-size: 9px; letter-spacing: .025em; }
 .sidebar-bottom > .user-card { width: 100%; color: var(--ink); }
 .sidebar-bottom > .user-card .source-meta { color: var(--muted); }
 .sidebar-bottom .user-copy { min-width: 0; text-align: left; }

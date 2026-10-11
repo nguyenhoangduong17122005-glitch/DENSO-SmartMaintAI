@@ -30,6 +30,10 @@
 | `docs/assets/screenshots/case-workspace.png` | Ảnh thật hồ sơ CNC |
 | `docs/assets/screenshots/rag-answer.png` | Ảnh thật câu trả lời mẫu có citation |
 | `docs/assets/screenshots/knowledge-library.png` | Ảnh thật tri thức được duyệt/xuất bản |
+| `docs/assets/screenshots/dashboard.png` | Tổng quan hai cột với số liệu từ database |
+| `frontend/README.md` | Bản đồ module giao diện mới, thứ tự nạp và cách kiểm tra |
+| `frontend/prototype/visual-templates.js` | Mẫu hiển thị theo website Netlify, nhận dữ liệu từ API |
+| `frontend/prototype/demo-guide.js` | Hướng dẫn luồng BM theo vai trò |
 
 Rà soát ngày 11/10/2026. Kiểm tra cấu trúc/tham chiếu và định dạng từng file; không phải cam kết đã review đầy đủ mọi nhánh logic.
 
@@ -130,7 +134,7 @@ Rà soát ngày 11/10/2026. Kiểm tra cấu trúc/tham chiếu và định dạ
 | `frontend/prototype/cases.js` | Màn hình nghiệp vụ và hồ sơ prototype | Phân loại/đối chiếu tham chiếu |
 | `frontend/prototype/core.js` | Khung giao diện và tiện ích dùng chung | Phân loại/đối chiếu tham chiếu |
 | `frontend/prototype/data.js` | Dữ liệu prototype/mock | Phân loại/đối chiếu tham chiếu |
-| `frontend/prototype/database-views.js` | Các màn hình đọc SQLite qua API | Phân loại/đối chiếu tham chiếu |
+| `frontend/prototype/database-views.js` | Tổng quan/hỗ trợ/HozenDX đọc database máy chủ qua API | Phân loại/đối chiếu tham chiếu |
 | `frontend/prototype/knowledge-api.js` | Đề xuất/kho/duyệt qua API | Phân loại/đối chiếu tham chiếu |
 | `frontend/prototype/knowledge.js` | Màn hình tri thức và prototype | Phân loại/đối chiếu tham chiếu |
 | `frontend/prototype/presentation-engine.js` | Điều khiển kịch bản trình bày | Phân loại/đối chiếu tham chiếu |

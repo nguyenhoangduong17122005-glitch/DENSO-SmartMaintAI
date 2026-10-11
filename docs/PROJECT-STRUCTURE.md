@@ -9,6 +9,9 @@
 | Đổi màu sắc, bố cục | `frontend/assets/css/styles.css`, `theme-compat.css` |
 | Đổi ảnh/logo, font | `frontend/assets/images/`, `frontend/assets/fonts/` |
 | Sửa màn hình nghiệp vụ | `frontend/prototype/` (tên lịch sử; các module vẫn được sử dụng) |
+| Sửa mẫu giao diện Netlify | `frontend/prototype/visual-templates.js` |
+| Sửa chi tiết ca và bốn tab | `frontend/workspace/workspace.js`, `workspace.css` |
+| Xem thứ tự nạp và vai trò từng module frontend | [Hướng dẫn frontend](../frontend/README.md) |
 | Sửa API/luồng BM | `backend/main.py`, `journal.py`, `workflow.py` |
 | Sửa duyệt/xuất bản tri thức | `backend/knowledge.py` |
 | Sửa tìm kiếm/trả lời | `backend/rag/` |

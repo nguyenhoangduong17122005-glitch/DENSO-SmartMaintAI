@@ -1,6 +1,6 @@
 # Demo RAG với Gemini Embedding, sqlite-vec và Gemini
 
-Giao diện SmartMaint gốc được giữ nguyên. Mục **Hồ sơ CNC & tra cứu** dùng cùng các API hiện có, nhưng có lựa chọn tìm kiếm vector và trả lời bằng Gemini.
+Giao diện SmartMaintAI dùng bố cục theo website Netlify tham chiếu. Mở **Ca bảo trì**, chọn hồ sơ CNC rồi vào tab **Tra cứu & căn cứ** để tìm kiếm vector và trả lời bằng Gemini qua API hiện có.
 
 ## Kích hoạt
 
@@ -8,7 +8,7 @@ Giao diện SmartMaint gốc được giữ nguyên. Mục **Hồ sơ CNC & tra 
 2. Mở `.env` ở thư mục dự án. Điền key vào `GEMINI_API_KEY=` trên máy; không gửi key vào chat, không đưa vào JavaScript. Nếu vừa chạy `Cai-dat-demo.cmd`, đổi `SMARTMAINT_ANSWER_MODE=gemini` và `SMARTMAINT_RETRIEVAL_MODE=vector` vì cài đặt mới mặc định chạy offline. File này đã được .gitignore loại trừ. Các giá trị môi trường đã đặt trong Terminal được ưu tiên hơn `.env`.
 3. Dừng máy chủ cũ bằng Ctrl+C trong cửa sổ đang chạy.
 4. Nhấp đúp `Chay-demo.cmd`. Nếu chưa có chỉ mục hoặc nguồn/model đổi, launcher tạo embedding trước khi mở máy chủ. Khi chỉ mục không đổi, không gọi lại embedding cho tài liệu.
-5. Vào **Hồ sơ CNC & tra cứu**, mở BM-26028. Dòng trạng thái cho biết chỉ mục đã sẵn sàng hay chưa và Gemini đã có cấu hình hay chưa.
+5. Vào **Ca bảo trì**, mở BM-26028 → **Tra cứu & căn cứ**. Dòng trạng thái cho biết chỉ mục đã sẵn sàng hay chưa và Gemini đã có cấu hình hay chưa.
 6. Nhập câu hỏi, bấm **Tra cứu tài liệu** để gọi embedding câu hỏi và tìm vector. Bấm **Trả lời từ nguồn** để thực hiện truy xuất rồi gọi Gemini. Nhãn trên kết quả mới xác nhận chế độ đã thực sự dùng; có cấu hình không đồng nghĩa gọi thành công.
 
 Chỉ mục có thể tạo riêng bằng `scripts/windows/Tao-chi-muc-RAG.cmd`, hoặc:

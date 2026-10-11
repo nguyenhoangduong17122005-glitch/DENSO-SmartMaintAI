@@ -9,6 +9,7 @@ Xem [cấu trúc dự án và vị trí các file](PROJECT-STRUCTURE.md) để t
 | [Live Demo và Docker](guides/LIVE-DEMO-DEPLOYMENT.md) | Cấu hình triển khai, ổ dữ liệu và cách xác minh link demo |
 | [Bàn giao](guides/DEMO-HANDOVER.md) | Chức năng đã có, kết quả kiểm tra và giới hạn |
 | [Kịch bản BM](guides/BM-WORKFLOW-DEMO.md) | Điền dữ liệu, phối hợp chuyên gia và xác nhận báo cáo |
+| [Frontend mới](../frontend/README.md) | Bố cục theo Netlify, vai trò các file và kiểm tra sau chỉnh sửa |
 | [Tri thức/RAG](guides/KNOWLEDGE-RAG-DEMO.md) | Đề xuất, duyệt, xuất bản và kiểm tra trích dẫn |
 | [Gemini/vector](guides/DENSO-RAG-VECTOR-GEMINI.md) | Cấu hình key và kiểm tra provider thật |
 | [Dữ liệu mẫu](guides/DENSO-DEMO-SAMPLE-DATA.md) | Hồ sơ CNC và câu hỏi demo |

@@ -1,4 +1,4 @@
-/* Keep the original SmartMaint shell; mount the API workspace in one page. */
+/* Server sessions, case lists, creation and legacy imports for the SmartMaintAI shell. */
 (function () {
   'use strict';
   const S=window.SM;
@@ -22,7 +22,7 @@
     if(S.user()?.id!==user.id) throw new Error('Tài khoản đã thay đổi.');
     const options=await api('/api/auth/options');
     if(S.user()?.id!==user.id) throw new Error('Tài khoản đã thay đổi.');
-    if(!options.demoRoleSelection) throw new Error('Phiên backend chưa đúng tài khoản. Đăng nhập tại mục Hồ sơ CNC & tra cứu trước.');
+    if(!options.demoRoleSelection) throw new Error('Phiên máy chủ chưa đúng tài khoản. Mở /workspace để đăng nhập lại.');
     const me=await api('/api/auth/demo-role',{method:'POST',body:JSON.stringify({role:user.role})});
     if(me.user.id!==user.id) throw new Error('Phiên backend chưa đúng tài khoản đang chọn.');
     return me;
@@ -38,7 +38,7 @@
   function ownedLocal() {return S.db.cases.filter(c=>c.ownerId===S.user()?.id&&c.type==='BM'&&c.assetId==='CNC-04');}
   S.backend={api,session,isWriting:()=>writing};
   S.pages['local-cases']={...localCases,title:'Hồ sơ trên trình duyệt',render:()=>'<div class="notice notice-warning">Bản cũ lưu trên trình duyệt này. Hồ sơ CNC BM có thể chuyển vào database bằng nút bên dưới.</div>'+ownedLocal().map(c=>button(`Chuyển ${h(c.id)} vào database`,'import-browser-case',`data-case="${h(c.id)}"`)).join(' ')+localCases.render().replaceAll('data-action="case-open"','data-action="case-open" data-storage="browser"')};
-  S.pages.cases={...localCases,render:()=>`<div class="page-head"><div><div class="eyebrow">CÔNG VIỆC BẢO TRÌ</div><h1>Ca bảo trì</h1></div>${S.user()?.role==='maintenance'?S.button('Tạo ca mới','case-new','primary'):''}</div><div id="database-cases" aria-live="polite">Đang tải database…</div>`};
+  S.pages.cases={...localCases,title:'Ca bảo trì',render:()=>`<div class="page-head"><div><div class="eyebrow">CÔNG VIỆC BẢO TRÌ</div><h1>Ca bảo trì</h1></div>${S.user()?.role==='maintenance'?S.button('Tạo ca mới','case-new','primary'):''}</div><div id="database-cases" aria-live="polite">Đang tải database…</div>`};
   S.actions['visual-machine']=()=>S.go('integration');
   S.actions['database-refresh']=()=>S.render();
   S.actions['database-legacy']=()=>S.go('local-cases');
@@ -99,11 +99,11 @@
     return (c?`<div class="notice notice-warning">Bản lưu cũ trên trình duyệt · chỉ xem. ${ownedLocal().some(x=>x.id===c.id)?button('Chuyển vào database','import-browser-case',`data-case="${h(c.id)}"`):''}</div><div class="actions">${[['context','Bối cảnh'],['work','Nhật ký'],['report','Báo cáo cũ']].map(([tab,label])=>button(label,'archive-tab',`data-case="${h(c.id)}" data-tab="${tab}"`)).join('')}</div>`:'')+'<fieldset disabled class="archive-readonly">'+localCase()+'</fieldset>';
   }};
   S.actions['archive-tab']=el=>S.go('local-case',el.dataset.case,el.dataset.tab);
-  S.pages.cnc={title:'Hồ sơ CNC & tra cứu',roles:['maintenance','expert','lead'],render:()=>
+  S.pages.cnc={title:'Ca bảo trì',roles:['maintenance','expert','lead'],render:()=>
     `<section id="backend-workspace"><div class="page-head"><div><div class="eyebrow">CNC · Dữ liệu demo</div><h1>Hồ sơ CNC & tra cứu</h1><p class="subtext">Hồ sơ, nhật ký và tra cứu nguồn lưu ở máy chủ. Tổng quan và danh sách công việc đọc cùng database.</p></div></div><div id="account" class="actions"></div><div id="backend-main" class="workspace-main backend-embedded"><p>Đang tải hồ sơ CNC…</p></div><div id="message" class="workspace-message" role="status" aria-live="polite" hidden></div></section>`};
   const guard=S.guardLeave;
   S.guardLeave=next=>{if(writing) {S.toast('Đang lưu vào database. Vui lòng chờ.','info');return false;}return window.smartMaintWorkspaceCanLeave()&&guard(next);};
-  S.pages['db-case']={...S.pages.cnc,title:'Chi tiết hồ sơ CNC'};
+  S.pages['db-case']={...S.pages.cnc,title:'Chi tiết ca bảo trì'};
   S.pages.case={...S.pages['db-case']};
   const render=S.render;
   S.render=()=>{
