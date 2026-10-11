@@ -10,6 +10,12 @@ HozenDX hiện dùng mock, dữ liệu mẫu là mô phỏng. Xem [tình trạng
 
 **Live Demo:** chưa xuất bản. Link truy cập sẽ được gắn tại đây sau khi hosting triển khai thành công và luồng lưu dữ liệu/RAG được kiểm tra trên URL thật. `127.0.0.1` bên dưới chỉ là địa chỉ chạy local.
 
+## Live Demo với hosting miễn phí
+
+`render.yaml` dùng **Render Free + Turso Free (engine libSQL)**, không có disk trả phí. Hồ sơ, nhật ký, báo cáo và tri thức lưu ở Turso; chỉ mục vector trên Render là cache có thể tạo lại. Chạy local/Docker mặc định vẫn dùng SQLite. Cần tạo database Turso và đặt URL/token riêng trong Render trước khi deploy; chưa có URL Live Demo được xác minh.
+
+Đọc [hướng dẫn triển khai miễn phí](docs/guides/LIVE-DEMO-DEPLOYMENT.md) để tạo database, kết nối repo và kiểm tra hồ sơ còn sau restart. Mặc định cloud dùng từ khóa/trả lời mẫu; Gemini cần cấu hình key/hạn mức riêng. Render Free có thể ngủ khi không hoạt động. [Render Free](https://render.com/docs/free), [Turso Free](https://turso.tech/pricing).
+
 ## Kiến trúc hệ thống
 
 ```mermaid
@@ -17,7 +23,7 @@ flowchart LR
     U[Người bảo trì / Chuyên gia / Chuyên gia trưởng] --> UI[SmartMaint HTML / CSS / JavaScript]
     UI -->|HTTP API cùng origin, cookie và CSRF| API[FastAPI]
     API --> BM[Hồ sơ BM / Nhật ký / Báo cáo]
-    BM --> DB[(SQLite nghiệp vụ)]
+    BM --> DB[(SQLite local / Turso libSQL khi deploy miễn phí)]
     API --> KN[Đề xuất / Duyệt độc lập / Xuất bản]
     KN --> DB
     API --> HZ[HozenDX adapter mock]
@@ -31,7 +37,7 @@ flowchart LR
     RAG -->|Không có key hoặc provider lỗi| OFF[Tìm từ khóa / Trả lời mẫu]
 ```
 
-Frontend và backend được phục vụ cùng origin khi chạy local, Docker hoặc toàn bộ ứng dụng trên Render. SQLite nghiệp vụ và chỉ mục vector nằm trên ổ lưu trữ riêng; API key chỉ ở backend. Phân quyền được kiểm tra khi đọc/ghi và khi truy xuất nguồn.
+Frontend và backend được phục vụ cùng origin khi chạy local, Docker hoặc toàn bộ ứng dụng trên Render. Chạy local dùng SQLite; hosting miễn phí lưu nghiệp vụ ở Turso, chỉ mục vector là cache trên Render. API key chỉ ở backend. Phân quyền được kiểm tra khi đọc/ghi và khi truy xuất nguồn.
 
 ## Luồng dữ liệu
 
@@ -82,7 +88,7 @@ Có thể tạo lại ảnh bằng lệnh kiểm thử: `.\.venv\Scripts\python.
 
 Cần Docker Engine/Docker Desktop và Docker Compose. Chạy từ thư mục dự án:
 
-Phần khởi tạo container và cấu hình HTTPS đã được kiểm thử bằng Python. Máy phát triển chưa có Docker CLI nên chưa xác minh build/chạy image thực tế; cần chạy các lệnh dưới đây trên máy có Docker trước khi dùng để bàn giao chính thức.
+Docker đã được build và chạy thành công trên [GitHub Actions](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): chọn vai trò, trả lời có nguồn, tạo hồ sơ và giữ hồ sơ sau restart container. Bản cập nhật lưu trữ miễn phí còn được kiểm tra với server libSQL riêng trong workflow; xem Actions của commit mới nhất.
 
 ```bash
 git clone https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph.git
@@ -217,7 +223,7 @@ demo/
 ├── Dockerfile                Đóng gói frontend và backend Python
 ├── compose.yaml              Chạy Docker local, lưu database bằng volume
 ├── .dockerignore             Loại cấu hình riêng khỏi Docker image
-├── render.yaml               Phương án Live Demo Render có Persistent Disk
+├── render.yaml               Render Free + Turso libSQL, không có disk trả phí
 └── README.md                 Hướng dẫn bắt đầu
 ```
 

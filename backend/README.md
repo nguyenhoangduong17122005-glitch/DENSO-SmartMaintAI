@@ -117,3 +117,9 @@ py -m backend.browser_smoke
 Lệnh này tự chạy backend tạm và Edge headless, dùng DB/profile riêng trong `.runtime/browser-smoke-*`; kiểm tra luồng đăng nhập, lưu, phục hồi phiên, tạo hồ sơ và phân quyền, rồi dừng hai process. Screenshot lưu cùng thư mục. Không dùng hoặc đổi dữ liệu demo mặc định. Có thể cấu hình đường dẫn Edge bằng `SMARTMAINT_EDGE`.
 
 Bộ test dùng SQLite tạm và TestClient, kiểm tra quyền, session/thu hồi, cookie/CSRF, revision, chống gửi lặp, snapshot, persistence và file private. Theo [tài liệu FastAPI Testing](https://fastapi.tiangolo.com/tutorial/testing/), TestClient gọi ứng dụng ASGI trực tiếp; cần thêm kiểm tra chạy HTTP/browser thực tế để đánh giá giao diện đầy đủ.
+
+## Database từ xa cho demo miễn phí
+
+Mặc định `SMARTMAINT_STORAGE=sqlite`. Khi đặt `SMARTMAINT_STORAGE=turso`, `TURSO_DATABASE_URL` và `TURSO_AUTH_TOKEN`, các module nghiệp vụ dùng `store.connect` → adapter libSQL HTTP v2. Không fallback ghi vào file tạm. Database remote mới được seed một lần; database hiện có phải ở schema v5. SQLite local vẫn dùng migration/backup cũ.
+
+Chạy `python -m backend.check_storage` để đọc trạng thái kết nối/schema và đếm dữ liệu. `export_cases` vẫn là công cụ SQLite local. Vector index vẫn là cache sqlite-vec local và có thể tạo lại từ nguồn đã xuất bản. Hướng dẫn: [Live Demo miễn phí](../docs/guides/LIVE-DEMO-DEPLOYMENT.md).

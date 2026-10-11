@@ -7,7 +7,7 @@
 | `Dockerfile` | Đóng gói frontend/backend và thư viện Python |
 | `.dockerignore` | Không đưa key, database, cache hoặc file riêng vào image |
 | `compose.yaml` | Chạy local bằng Docker với volume giữ database |
-| `render.yaml` | Blueprint triển khai Render tùy chọn; cần xác nhận chi phí |
+| `render.yaml` | Blueprint Render Free + Turso libSQL; không có disk trả phí |
 | `.github/workflows/docker-smoke.yml` | Build và kiểm tra Docker trên GitHub Actions |
 | `scripts/docker_smoke.py` | Kiểm tra HTTP, RAG mẫu và hồ sơ qua restart container |
 | `backend/serve.py` | Khởi tạo dữ liệu khi cần và chạy server một worker |
@@ -137,3 +137,13 @@ Giữ `.env`, hai database hiện dùng, các backup migration, bản xuất h�
 Đã chuyển tài liệu sử dụng vào `guides/`, thiết kế vào `design/`, lịch sử vào `history/`; CSV được tách `data/templates/` và `data/inventory/`. Báo cáo STEP9 đã ra khỏi docs và không còn được đưa vào gói mã nguồn.
 
 Không phát hiện file trùng nội dung trong danh sách sau phân loại.
+
+## Bổ sung lưu trữ miễn phí
+
+| File | Công dụng |
+|---|---|
+| `backend/remote_store.py` | Adapter libSQL HTTP v2, transaction/commit/rollback và bootstrap cloud trống |
+| `backend/check_storage.py` | Đọc trạng thái kết nối/schema và đếm hồ sơ/tri thức, không in bí mật |
+| `backend/tests/test_remote_store.py` | Giao thức trên SQLite thật, lỗi mạng, lưu dữ liệu, BM/báo cáo/tri thức/RAG; có chế độ kiểm tra server libSQL trong CI |
+| `render.yaml` | Render Free, yêu cầu database Turso; không có disk trả phí |
+

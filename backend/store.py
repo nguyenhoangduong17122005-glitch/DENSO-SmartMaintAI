@@ -2,18 +2,33 @@
 import json
 import sqlite3
 from contextlib import contextmanager
+from contextvars import ContextVar
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DB = ROOT / ".runtime" / "smartmaint.sqlite3"
+_local_storage = ContextVar('smartmaint_local_storage', default=False)
+
+
+@contextmanager
+def local_storage():
+    """Private bootstrap scope: a temporary SQLite seed must never use remote data."""
+    token = _local_storage.set(True)
+    try:
+        yield
+    finally:
+        _local_storage.reset(token)
 
 
 @contextmanager
 def connect(path):
-    db = sqlite3.connect(path, timeout=10)
-    db.row_factory = sqlite3.Row
-    db.execute("PRAGMA foreign_keys=ON")
+    from .remote_store import Connection, settings
+    remote = None if _local_storage.get() else settings()
+    db = Connection(*remote) if remote else sqlite3.connect(path, timeout=10)
+    if not remote:
+        db.row_factory = sqlite3.Row
     try:
+        db.execute("PRAGMA foreign_keys=ON")
         yield db
         db.commit()
     except Exception:
@@ -24,6 +39,10 @@ def connect(path):
 
 
 def initialize(path):
+    from .remote_store import initialize_demo_remote, settings
+    if not _local_storage.get() and settings():
+        initialize_demo_remote()
+        return
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with connect(path) as db:
         db.executescript("""

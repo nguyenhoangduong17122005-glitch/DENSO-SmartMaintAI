@@ -1,17 +1,18 @@
-# Optional Render deployment. A service with a persistent disk is paid.
-# Review cost in Render before creating this Blueprint.
+# Free demo: remote libSQL database is required. No paid disk/service.
 services:
   - type: web
     name: denso-smartmaint-demo
     runtime: docker
-    plan: starter
+    plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
-    disk:
-      name: smartmaint-data
-      mountPath: /data
-      sizeGB: 1
     envVars:
+      - key: SMARTMAINT_STORAGE
+        value: turso
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
       - key: SMARTMAINT_SECURE_COOKIE
         value: "1"
       - key: SMARTMAINT_DEMO_ROLE_SELECTION

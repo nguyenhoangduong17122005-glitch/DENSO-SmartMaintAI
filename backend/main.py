@@ -88,6 +88,11 @@ def create_app(db_path=None, adapter=None, secure_cookie=None, demo_role_selecti
     allowed_hosts, public_origin = hosting_settings()
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
     dummy_password = password_hash(secrets.token_urlsafe(20))
+    from .remote_store import RemoteDatabaseError
+
+    @app.exception_handler(RemoteDatabaseError)
+    async def remote_database_error(request: Request, error: RemoteDatabaseError):
+        return JSONResponse({'detail': 'Không kết nối được database online. Hãy tải lại hồ sơ để kiểm tra kết quả trước khi gửi lại.'}, status_code=503)
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, error: RequestValidationError):
@@ -185,6 +190,10 @@ def create_app(db_path=None, adapter=None, secure_cookie=None, demo_role_selecti
 
     @app.get("/api/health")
     def health():
+        from .remote_store import settings
+        if settings():
+            with connect(path) as db:
+                db.execute('SELECT 1').fetchone()
         return {"status": "ok", "environment": "demo", "adapter": "mock", "liveHozenDX": False}
 
     @app.post("/api/auth/login")

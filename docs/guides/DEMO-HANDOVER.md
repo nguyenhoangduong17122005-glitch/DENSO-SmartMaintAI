@@ -2,7 +2,9 @@
 
 Ngày kiểm tra: 11/10/2026. Bước 5 hoàn tất trong phạm vi demo chạy local và chuẩn bị mã nguồn để chia sẻ. Link Live Demo vẫn cần được xác minh sau khi triển khai hosting.
 
-Bổ sung hồ sơ nộp dự án cùng ngày: README có kiến trúc/luồng dữ liệu Mermaid, 4 ảnh chụp thực tế và hướng dẫn Docker. Đã thêm Dockerfile, Compose, Blueprint Render tùy chọn và cấu hình host/origin HTTPS. Bộ test sau bổ sung: **157 passed**; browser smoke với ảnh README đạt. Chưa chạy Docker thực tế vì máy chưa có Docker CLI; chưa có URL Live Demo đã xuất bản. Repo đích hiện đã được cung cấp: [DENSO_Knowledge_Graph](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph).
+Bổ sung hồ sơ nộp dự án cùng ngày: README có kiến trúc/luồng dữ liệu Mermaid, 4 ảnh chụp thực tế và hướng dẫn Docker. Đã thêm Dockerfile, Compose, Blueprint Render tùy chọn và cấu hình host/origin HTTPS. Bộ test sau bổ sung: **170 passed**; browser smoke với ảnh README đạt. Docker build/chạy và giữ dữ liệu sau restart đã [đạt trên CI](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577); chưa có URL Live Demo đã xuất bản. Repo đích hiện đã được cung cấp: [DENSO_Knowledge_Graph](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph).
+
+Bổ sung phương án miễn phí: Render Free + Turso Free (libSQL), adapter HTTPS và kiểm thử lưu/rollback/chống lặp, báo cáo → duyệt → xuất bản → RAG. Database cloud cần được tạo và cấu hình riêng; chưa xác minh triển khai cloud. Xem [hướng dẫn Live Demo](LIVE-DEMO-DEPLOYMENT.md).
 
 ## Năm bước đã thực hiện
 
@@ -16,7 +18,7 @@ Bổ sung hồ sơ nộp dự án cùng ngày: README có kiến trúc/luồng d
 
 | Kiểm tra | Kết quả |
 |---|---|
-| Bộ test offline `py -m pytest backend/tests -q` | 149 passed |
+| Bộ test offline `py -m pytest backend/tests -q` | 170 passed (bổ sung hosting và remote storage) |
 | Kiểm tra giao diện bằng Edge `py -m backend.browser_smoke --original-ui` | Đạt, dùng database/profile riêng |
 | Bản sao mới không có `.env`/database | Tạo cấu hình offline, 5 tài khoản và 5 hồ sơ mẫu |
 | Chạy khởi tạo lần hai | Không tạo dữ liệu trùng; không thay cấu hình, mật khẩu hoặc hồ sơ đã có |

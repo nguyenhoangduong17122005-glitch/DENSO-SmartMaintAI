@@ -8,10 +8,11 @@ def prepare():
     from .hosting import hosting_settings
     from .setup_demo import initialize_demo
     from .store import DEFAULT_DB
+    from .remote_store import initialize_demo_remote, settings
     load_config()
     hosting_settings()  # Fail on invalid public configuration before serving.
     path = Path(os.getenv('SMARTMAINT_DB', str(DEFAULT_DB)))
-    result = initialize_demo(path)
+    result = initialize_demo_remote() if settings() else initialize_demo(path)
     print('Demo data ready:', result['usersCreated'], 'new users,', result['samplesAdded'], 'new sample cases.')
     if os.getenv('SMARTMAINT_RETRIEVAL_MODE') == 'vector' and os.getenv('GEMINI_API_KEY', '').strip():
         import sqlite3

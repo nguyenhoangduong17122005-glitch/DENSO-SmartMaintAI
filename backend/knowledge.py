@@ -97,7 +97,8 @@ def knowledge_documents(db, extra_ids=()):
 def published_documents(path=None, extra_ids=()):
     from pathlib import Path
     path=Path(path or os.getenv('SMARTMAINT_DB',DEFAULT_DB))
-    if not path.exists(): return []
+    from .remote_store import settings
+    if not settings() and not path.exists(): return []
     with connect(path) as db:
         if not db.execute("SELECT 1 FROM sqlite_master WHERE name='knowledge'").fetchone(): return []
         return knowledge_documents(db,extra_ids)

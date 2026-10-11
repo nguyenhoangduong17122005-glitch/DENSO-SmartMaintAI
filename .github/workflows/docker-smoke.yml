@@ -10,6 +10,36 @@ permissions:
   contents: read
 
 jobs:
+  libsql-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SMARTMAINT_STORAGE: sqlite
+      SMARTMAINT_ANSWER_MODE: template
+      SMARTMAINT_RETRIEVAL_MODE: keyword
+      GEMINI_API_KEY: ""
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install test dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+      - name: Start isolated libSQL server
+        run: docker run --name libsql-test -d -p 127.0.0.1:8080:8080 -e SQLD_NODE=primary ghcr.io/tursodatabase/libsql-server:3ec6803
+      - name: Wait for libSQL
+        run: curl --retry 20 --retry-delay 2 --retry-connrefused --fail http://127.0.0.1:8080/health
+      - name: Run unit tests
+        run: python -m pytest backend/tests -q
+      - name: Verify real libSQL persistence, BM and RAG
+        env:
+          SMARTMAINT_TEST_LIBSQL_URL: http://127.0.0.1:8080
+        run: python -m pytest backend/tests/test_remote_store.py::test_remote_workflow_persists_across_app_recreation -q
+      - name: libSQL logs
+        if: always()
+        run: docker logs libsql-test
   docker-demo:
     runs-on: ubuntu-latest
     timeout-minutes: 15

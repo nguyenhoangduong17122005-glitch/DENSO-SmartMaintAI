@@ -16,6 +16,10 @@ GEMINI_API_KEY=
 
 
 def initialize_demo(path):
+    from .remote_store import initialize_demo_remote, settings
+    from .store import _local_storage
+    if not _local_storage.get() and settings():
+        return initialize_demo_remote()
     from .manage import add_demo_samples, seed_demo
     # The role picker does not need passwords. Do not print generated credentials.
     issued = seed_demo(path)

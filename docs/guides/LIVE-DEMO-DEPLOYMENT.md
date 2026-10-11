@@ -1,61 +1,134 @@
-# Triển khai Live Demo
+﻿# Live Demo miễn phí: Render + Turso
 
 Repo: [DENSO_Knowledge_Graph](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph).
 
-**Tình trạng:** mã cấu hình đã được chuẩn bị; chưa có URL hosting được triển khai/xác minh. Không dùng một URL ví dụ làm link Live Demo trong README.
+**Trạng thái:** có adapter database từ xa và cấu hình hosting; chưa tạo service trong tài khoản của bạn, chưa có URL Live Demo được xác minh. Không cần mua Persistent Disk.
 
-## Phương án phục vụ toàn bộ ứng dụng trên Render
+## Kiến trúc
 
-`render.yaml` là phương án tùy chọn chạy Docker, phục vụ frontend và backend cùng origin, lưu SQLite/vector tại `/data`. Cách này dùng các API và cookie hiện có, không đi qua giới hạn thời gian proxy Netlify.
+```mermaid
+flowchart LR
+    B[Trình duyệt] -->|HTTPS cùng origin| R[Render Free: frontend + FastAPI]
+    R -->|SQL qua HTTPS, token phía server| T[(Turso Free / libSQL)]
+    T --> D[Hồ sơ, nhật ký, báo cáo, đề xuất, tri thức và phiên đăng nhập]
+    R --> V[(sqlite-vec: cache tạm)]
+    T -->|Tri thức đã xuất bản| V
+    F[Tài liệu mẫu trong repo] --> V
+    R -->|Nếu cấu hình key| G[Gemini / Embedding]
+```
 
-**Chi phí:** Render yêu cầu service có phí để gắn Persistent Disk. Blueprint có `plan: starter` và disk 1 GB; kiểm tra giá hiển thị trong dashboard trước khi tạo. Chưa có dịch vụ trả phí nào được tạo tự động. Không bỏ disk rồi coi dữ liệu là bền vững: filesystem mặc định của Render là tạm thời, có thể mất dữ liệu khi restart/deploy.
+`SMARTMAINT_STORAGE=turso` chuyển dữ liệu nghiệp vụ sang libSQL qua HTTPS. App chỉ trả ghi thành công sau khi COMMIT từ xa thành công. Khi database online lỗi, app báo lỗi, không âm thầm ghi vào SQLite tạm.
 
-1. Đưa các file Docker, `backend/serve.py`, `backend/hosting.py`, README và ảnh chụp lên repo. Không đưa `.env`, `.runtime`, database hoặc API key.
-2. Trong Render, chọn **New → Blueprint**, kết nối repo trên và kiểm tra cấu hình `render.yaml`.
-3. Xác nhận chi phí/disk rồi tạo service nếu bạn chọn phương án này. Docker image tự cài thư viện và khởi tạo dữ liệu khi chạy lần đầu. Các lần sau giữ database trên disk.
-4. Chờ build/deploy thành công; mở URL `https://<tên-thực-tế>.onrender.com` mà Render cấp. App tự nhận `RENDER_EXTERNAL_HOSTNAME`, chấp nhận đúng host đó và dùng origin HTTPS; cookie đặt Secure theo Blueprint.
-5. Kiểm tra `/api/health` trả `status: ok`, chọn vai trò, tạo hồ sơ tên riêng, tải lại và restart service để kiểm tra hồ sơ vẫn còn.
-6. Thử kịch bản BM → báo cáo → đề xuất → duyệt → xuất bản → tra cứu. Gemini chưa được bật trong cấu hình mặc định; demo dùng từ khóa/trả lời mẫu.
-7. Khi muốn bật Gemini, thêm API key qua **Render → Environment**, không đưa vào repo. Đặt các biến dưới đây rồi deploy lại. Model có thể đổi theo quyền API key của bạn.
+Render Free không có disk bền vững và mất file tạm khi restart/redeploy. Hồ sơ được lưu tại Turso; vector index có thể tạo lại từ tài liệu mẫu và tri thức đã xuất bản. **Database local không tự upload lên cloud**; lần đầu cloud trống được tạo với 5 hồ sơ mô phỏng. [Render Free](https://render.com/docs/free), [Turso Free](https://turso.tech/pricing).
+
+## 1. Tạo database Turso Free
+
+1. Mở [Turso](https://turso.tech/), đăng ký/đăng nhập và chọn **Free**. Giữ trong hạn mức miễn phí; không bật nâng cấp hoặc trả tiền vượt hạn mức.
+2. Tạo database `denso-smartmaint-demo`, chọn engine **libSQL**, vùng gần vùng Render dự định dùng. Adapter sử dụng SQLite schema/trigger và libSQL HTTP v2; chưa hỗ trợ engine Turso mới.
+3. Sao chép **Database URL**, dạng `libsql://...turso.io`.
+4. Tạo **database token đọc/ghi**, lưu riêng. Đây là database token, không phải Platform API token. Không gửi token vào chat/GitHub hoặc đặt trong frontend.
+5. Giữ database trống; không tạo bảng mẫu `users` theo tutorial khác. App tự khởi tạo schema và dữ liệu demo một lần.
+
+Nếu dùng CLI trên WSL/macOS/Linux, làm theo [Turso Quickstart](https://docs.turso.tech/quickstart), rồi chạy:
+
+```bash
+turso auth login
+turso db create denso-smartmaint-demo
+turso db show denso-smartmaint-demo --url
+turso db tokens create denso-smartmaint-demo
+```
+
+Không thêm `--tursodb`: cờ đó chọn engine Turso mới. Lệnh token hiển thị bí mật trong terminal của bạn; không chụp ảnh đầu ra. Xem [tạo database](https://docs.turso.tech/cli/db/create) và [SQL qua HTTP](https://docs.turso.tech/sdk/http/reference).
+
+## 2. Tạo Render Web Service miễn phí
+
+1. Đăng nhập [Render](https://dashboard.render.com/), kết nối GitHub.
+2. Chọn **New → Blueprint**, repo trên, branch `main`. `render.yaml` đặt `plan: free`, runtime Docker, không có disk trả phí.
+3. Nhập `TURSO_DATABASE_URL` và `TURSO_AUTH_TOKEN` khi Render yêu cầu. Dán token trực tiếp trong Render; không commit giá trị vào YAML.
+4. Kiểm tra service ở gói **Free** rồi tạo Blueprint. Nếu dashboard chỉ hiển thị phương án có phí, dừng tạo và kiểm tra cấu hình/tài khoản.
+5. Chờ build/deploy. Lần đầu app tạo 5 hồ sơ và 5 tài khoản demo trong cloud trống; các lần sau giữ nguyên dữ liệu. Schema remote cũ/không tương thích phải backup và migration riêng, app không tự xóa.
+6. Mở URL HTTPS Render cấp. App tự nhận `RENDER_EXTERNAL_HOSTNAME`, kiểm tra host/origin và đặt cookie Secure.
+
+Nếu tạo **New → Web Service** thủ công: chọn Docker, branch `main`, gói Free, health check `/api/health`, nhập:
+
+| Biến | Giá trị |
+|---|---|
+| `SMARTMAINT_STORAGE` | `turso` |
+| `TURSO_DATABASE_URL` | Database URL thực tế |
+| `TURSO_AUTH_TOKEN` | Database token đọc/ghi riêng |
+| `SMARTMAINT_SECURE_COOKIE` | `1` |
+| `SMARTMAINT_DEMO_ROLE_SELECTION` | `1` |
+| `SMARTMAINT_ANSWER_MODE` | `template` |
+| `SMARTMAINT_RETRIEVAL_MODE` | `keyword` |
+
+Dockerfile đã có start command `python -m backend.serve`; không cần Build/Start Command kiểu Python.
+
+## 3. Xác nhận dữ liệu còn sau restart
+
+1. Mở `/api/health`: phải trả `status: ok`; chế độ Turso kiểm tra kết nối database thật.
+2. Mở giao diện → chọn **Người bảo trì — Nguyễn Minh** → **Vào bản demo**.
+3. Tạo hồ sơ **CLOUD-KT01: Kiểm tra lưu sau restart**, máy `CNC-04`, hiện tượng **Rung tại trục chính sau thay dao; chưa kết luận nguyên nhân**. Xác nhận máy mô phỏng, điền lý do tạo hồ sơ riêng nếu biểu mẫu yêu cầu.
+4. Tải lại trang, mở hồ sơ và ghi lại mã BM.
+5. Restart service trong Render, chờ sẵn sàng, chọn lại vai trò và tìm mã BM.
+6. Trong Turso database shell, đối chiếu:
+
+```sql
+SELECT id, title, work_state, updated_at
+FROM cases
+WHERE title LIKE '%CLOUD-KT01%'
+ORDER BY updated_at DESC;
+```
+
+7. Thử BM → nhật ký → kết thúc → báo cáo đã xác nhận → đề xuất → duyệt độc lập → xuất bản → tra cứu có citation. Restart và xác nhận tri thức vẫn xuất hiện.
+8. Sau khi đạt, gửi **URL giao diện công khai** để kiểm tra/cập nhật link Live Demo trong README. Không gửi token.
+
+## 4. Gemini và vector trên hosting miễn phí
+
+Mặc định dùng từ khóa/trả lời mẫu, không cần API key. Muốn bật Gemini, đặt riêng trong Render:
 
 ```dotenv
 SMARTMAINT_ANSWER_MODE=gemini
 SMARTMAINT_RETRIEVAL_MODE=vector
-SMARTMAINT_GEMINI_MODEL=gemini-3.8-flash
+SMARTMAINT_GEMINI_MODEL=<model bạn có quyền dùng>
 SMARTMAINT_EMBEDDING_MODEL=gemini-embedding-001
 SMARTMAINT_EMBEDDING_DIMENSIONS=768
 SMARTMAINT_VECTOR_MIN_SCORE=0.45
-GEMINI_API_KEY=
+GEMINI_API_KEY=<điền riêng trong Render>
 ```
 
-`GEMINI_API_KEY=` chỉ minh họa tên biến; điền giá trị trong dashboard. Gemini và embedding dùng hạn mức của chủ key. Bản demo cho phép chọn vai trò, nên chỉ đưa dữ liệu mô phỏng và chia sẻ cho nhóm thử nghiệm; cấu hình này chưa thay thế xác thực production.
+Gemini sử dụng hạn mức API của bạn; chỉ bật khi project có hạn mức phù hợp yêu cầu miễn phí. Cold start có thể tạo lại embedding do cache bị xóa, tiêu thụ hạn mức. Nếu index lỗi, app báo fallback; chưa thể coi vector/Gemini đã hoạt động. Xem [hướng dẫn Gemini](DENSO-RAG-VECTOR-GEMINI.md).
 
-8. Chỉ sau khi kiểm tra thành công, thay dòng **Live Demo: chưa xuất bản** đầu README bằng link URL thực tế. Không gắn `/api/health` thay cho URL giao diện.
+## 5. Kiểm tra từ máy local (tùy chọn)
 
-### Domain riêng hoặc hosting Docker khác
-
-Khởi chạy `python -m backend.serve`; nền tảng cung cấp `PORT`. Chạy một worker/instance với ổ dữ liệu gắn tại `/data`. Cấu hình:
+Thêm riêng vào `.env` (không đưa lên GitHub):
 
 ```dotenv
-SMARTMAINT_DB=/data/smartmaint.sqlite3
-SMARTMAINT_VECTOR_DB=/data/rag-vectors.sqlite3
-SMARTMAINT_ALLOWED_HOSTS=smartmaint.example.com
-SMARTMAINT_PUBLIC_ORIGIN=https://smartmaint.example.com
-SMARTMAINT_SECURE_COOKIE=1
+SMARTMAINT_STORAGE=turso
+TURSO_DATABASE_URL=libsql://<database-thực-tế>.turso.io
+TURSO_AUTH_TOKEN=<database-token-riêng>
 ```
 
-Thay domain ví dụ bằng domain thực. Không dùng wildcard host/origin. Giữ backup SQLite bằng SQLite backup API; các backup migration nằm cạnh database trên disk.
+Chạy từ thư mục dự án:
+
+```powershell
+py -m backend.check_storage
+py -m backend.serve
+```
+
+`check_storage` chỉ đọc, hiển thị kết nối/schema và số hồ sơ/tri thức; database mới có `schemaReady: false` đến lần khởi tạo. Dừng server cũ trước khi dùng cùng cổng 8001. Có thể dùng `docker compose up --build -d`: Compose chuyển tiếp cấu hình Turso.
+
+Đổi `SMARTMAINT_STORAGE=sqlite` để dùng file local cũ, vẫn được giữ nguyên. Dữ liệu cloud và local là hai nguồn độc lập. `backend.export_cases` chỉ xuất SQLite local; để xem cloud dùng giao diện hoặc Turso shell.
+
+## Giới hạn và bằng chứng kiểm tra
+
+- Render Free ngủ khi không hoạt động, lần truy cập sau có thể phải chờ khởi động. Đây là bản demo, không phải SLA production.
+- libSQL giới hạn thời gian transaction. Khởi tạo schema/dữ liệu được gộp thành một sequence; chọn vùng gần backend, giữ dữ liệu nhỏ và một instance. Cần kiểm tra luồng thật trên cloud trước khi bàn giao.
+- Khi mất phản hồi COMMIT, database có thể đã ghi nhưng app nhận lỗi 503. Tải lại hồ sơ trước khi gửi lại; API ghi vẫn có khóa chống lặp. Adapter không tự retry ghi.
+- Token hết hạn/hạn mức hết làm kết nối lỗi. Cập nhật token trong Render rồi deploy lại, không reset database để xử lý lỗi xác thực.
+- Bộ chọn vai trò dành cho dữ liệu mô phỏng; HozenDX vẫn mock. Chưa đưa dữ liệu nhà máy thực lên bản public này.
+- [Docker CI đã đạt](https://github.com/nguyenhoangduong17122005-glitch/DENSO_Knowledge_Graph/actions/runs/38124622577): build/chạy image, chọn vai trò, trả lời mẫu, tạo hồ sơ và giữ hồ sơ sau restart container. Workflow hiện bổ sung kiểm tra với server libSQL riêng trong CI; xem kết quả commit mới nhất trong Actions.
+- Chưa có database/token cloud của bạn, nên chưa xác minh Turso Cloud hoặc URL Render thật. Kiểm tra giao thức local không thay thế kiểm tra triển khai cloud.
 
 ## Nếu tiếp tục dùng frontend Netlify
 
-Yêu cầu trước đó là frontend Netlify và backend riêng. Phương án này **chưa được xuất bản hoặc cấu hình đầy đủ** trong bản bàn giao hiện tại. Render ở trên là lựa chọn triển khai toàn bộ ứng dụng để có Live Demo cùng origin; không phải frontend đã được đưa lên Netlify.
-
-Để dùng Netlify vẫn cần URL backend HTTPS, cấu hình proxy, kiểm tra cookie/CSRF và xử lý tác vụ Gemini/index dài. Proxy Netlify có giới hạn 26 giây, trong khi các tác vụ provider có thể lâu hơn; cần cơ chế chạy nền và polling trước khi coi toàn bộ RAG hoạt động ổn định qua proxy. Không chỉ upload thư mục `frontend` rồi coi database/RAG đã hoạt động.
-
-## Kiểm tra đã thực hiện và giới hạn
-
-Các bài kiểm thử Python kiểm tra hostname/origin HTTPS, cookie Secure, CSRF, chặn domain ngoài và khởi tạo dữ liệu lặp lại. Browser smoke kiểm tra giao diện trên database riêng và tạo ảnh thật cho README. Máy phát triển hiện chưa có Docker CLI, vì vậy chưa xác minh `docker compose build/up` trong môi trường Docker thực. Chưa kiểm tra URL live vì service chưa được tạo.
-
-Workflow `.github/workflows/docker-smoke.yml` sẽ build/chạy Docker khi đẩy lên `main`, thử trả lời theo mẫu, tạo hồ sơ và kiểm tra hồ sơ còn sau restart. Xem kết quả trong tab **Actions** của repo; chỉ coi Docker được xác minh sau khi lần chạy tương ứng đạt. Workflow không dùng Gemini API key.
-
-Tài liệu chính thức: [Docker Compose](https://docs.docker.com/reference/compose-file/services/), [Render Docker](https://render.com/docs/docker), [Render Blueprint](https://render.com/docs/blueprint-spec), [Render Persistent Disks](https://render.com/docs/disks), [Netlify proxy và giới hạn](https://docs.netlify.com/manage/routing/redirects/rewrites-proxies/).
+Render trên phục vụ cả frontend/backend cùng origin. **Chưa triển khai frontend Netlify riêng.** Netlify cần backend HTTPS, proxy cookie/CSRF và xử lý tác vụ Gemini/index dài: [proxy Netlify giới hạn 26 giây](https://docs.netlify.com/manage/routing/redirects/rewrites-proxies/). Chỉ upload `frontend` chưa làm database/RAG hoạt động.
