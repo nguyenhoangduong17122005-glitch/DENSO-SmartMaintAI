@@ -1,0 +1,29 @@
+id,topic,question,priority,status,answer,evidence,owner,verified_at
+HZ-01,contact,Đơn vị nào quản lý HozenDX và đầu mối cấp tài liệu tích hợp là ai?,required,unknown,,,,
+HZ-02,access_method,Có API chính thức hoặc phương thức xuất file được cấp quyền không?,required,unknown,,,,
+HZ-03,documentation,Có đặc tả API hoặc file xuất mẫu và phiên bản định dạng không?,required,unknown,,,,
+HZ-04,identity,Mã máy có duy nhất theo nhà máy không và đối chiếu model máy thế nào?,required,unknown,,,,
+HZ-05,authentication,Cơ chế xác thực và cách cấp quyền đọc trong môi trường thử nghiệm là gì?,required,unknown,,,,
+HZ-06,authorization,Quyền giới hạn theo nhân viên hoặc nhà máy hoặc máy hoặc tài liệu như thế nào?,required,unknown,,,,
+HZ-07,network,Có sandbox và yêu cầu VPN hoặc mạng nội bộ hoặc allowlist không?,required,unknown,,,,
+HZ-08,assets,Các trường lý lịch máy được cung cấp và trường bắt buộc là gì?,required,unknown,,,,
+HZ-09,history,Lấy BM/PM và báo cáo bằng cách nào và có ID cùng revision cùng trạng thái duyệt không?,required,unknown,,,,
+HZ-10,documents,Có toàn văn SOP/manual/tiêu chuẩn và phiên bản cùng hiệu lực cùng quyền dùng cho RAG không?,required,unknown,,,,
+HZ-11,pm,Có checklist hoặc chế độ PM không và lịch hoặc phân công có thực sự được cấp không?,important,unknown,,,,
+HZ-12,freshness,Thời điểm cập nhật nguồn và múi giờ có được cung cấp không; có delta hoặc webhook không?,required,unknown,,,,
+HZ-13,limits,API có phân trang hoặc rate limit hoặc giới hạn dung lượng hoặc mã lỗi nào?,important,unknown,,,,
+HZ-14,revocation,Tài liệu thu hồi hoặc bản ghi xóa hoặc thay quyền được thông báo và đồng bộ thế nào?,required,unknown,,,,
+HZ-15,usage,Dữ liệu nào được sao chép vào SmartMaint và tạo embedding hoặc gửi cloud model?,required,unknown,,,,
+HZ-16,writeback,Có API ghi báo cáo và quyền được cấp không; hỗ trợ chống gửi lặp thế nào?,later,unknown,,,,
+HZ-17,existing_system,Có hệ thống quản lý thiết bị và lý lịch thiết bị không?,required,reported_by_user_images,Có theo trích đoạn câu 12 và 16; tên trong ảnh lần lượt là HzenDX và HozenDX,Ảnh người dùng cung cấp trong chat; câu 12 và 16,,2026-10-09
+HZ-18,existing_chatbot,Có chatbot Hozen để truy cứu nhanh không?,important,reported_by_user_images,Có theo trích đoạn câu 16; chưa biết API hoặc kiến trúc hoặc nguồn dữ liệu,Ảnh người dùng cung cấp trong chat; câu 16,,2026-10-09
+HZ-19,reported_asset_fields,Có thể tra cứu maker và model và năm lắp đặt và thông số kỹ thuật không?,required,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa có schema hoặc mẫu dữ liệu CNC,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-20,reported_structure,Có thể tra cứu cấu trúc thiết bị và danh mục linh kiện và chế độ bảo dưỡng không?,important,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa xác minh cách lấy hoặc độ bao phủ CNC,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-21,reported_bm,Có thể tra cứu lịch sử hỏng hóc BM không?,required,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa nhận báo cáo hoặc trạng thái duyệt từng case,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-22,reported_repairs,Có thể tra cứu nội dung sửa chữa và biện pháp đã thực hiện không?,required,reported_by_user_images,Có theo mô tả nghiệp vụ; kết quả và bằng chứng từng case cần kiểm tra,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-23,reported_pm,Có thể tra cứu kết quả PM và bất thường đã phát hiện không?,required,reported_by_user_images,Có theo mô tả nghiệp vụ; không xác nhận lịch hoặc phân công PM,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-24,reported_documents,Có thể tra cứu SOP và DAS và tiêu chuẩn bảo dưỡng không?,required,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa xác minh toàn văn hoặc quyền tải hoặc hiệu lực từng bản,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-25,reported_drawings,Có thể tra cứu bản vẽ điện và cơ khí không?,important,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa biết định dạng hoặc revision hoặc quyền lấy file,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-26,reported_modifications,Có thể tra cứu hồ sơ cải tạo và thay đổi thiết bị không?,important,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa xác minh lịch sử cho máy pilot,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-27,reported_inventory,Có thể tra cứu danh sách linh kiện và tồn kho liên quan không?,later,reported_by_user_images,Có theo mô tả nghiệp vụ; chưa biết độ mới hoặc API hoặc quyền truy cập,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09
+HZ-28,chatbot_aiho,Có mô tả chatbot AIHO hỗ trợ tra cứu để điều tra và xử lý sự cố không?,important,reported_by_user_images,Có; chưa biết quan hệ với tên chatbot Hozen hoặc kiến trúc hoặc API,Ảnh bổ sung Câu số 1 do người dùng cung cấp,,2026-10-09

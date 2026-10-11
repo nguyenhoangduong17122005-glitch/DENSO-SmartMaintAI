@@ -1,0 +1,33 @@
+name: Docker smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docker-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SMARTMAINT_ANSWER_MODE: template
+      SMARTMAINT_RETRIEVAL_MODE: keyword
+      GEMINI_API_KEY: ""
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build and start demo
+        run: docker compose up --build -d
+      - name: Check API, RAG and database persistence
+        run: python3 scripts/docker_smoke.py
+      - name: Container logs
+        if: always()
+        run: docker compose logs --no-color
+      - name: Stop demo
+        if: always()
+        run: docker compose down

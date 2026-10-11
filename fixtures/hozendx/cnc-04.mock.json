@@ -1,0 +1,89 @@
+{
+  "contractVersion": "0.1-draft",
+  "environment": "demo",
+  "adapterMode": "mock",
+  "isSimulated": true,
+  "status": "partial",
+  "connectionStatus": "not_connected",
+  "syncStatus": "not_synced",
+  "provenance": {
+    "sourceSystem": "SmartMaint demo fixtures",
+    "intendedIntegration": "HozenDX",
+    "sourceRecordId": "CNC-04",
+    "sourceVersion": null,
+    "sourceUpdatedAt": null,
+    "acquiredAt": null,
+    "acquisitionMethod": "local_fixture",
+    "fixturePreparedOn": "2026-10-09",
+    "localSeedPaths": ["prototype/data.js"]
+  },
+  "capabilities": {
+    "vendorApi": "unknown",
+    "vendorFileExport": "unknown",
+    "vendorPmSchedule": "unknown",
+    "vendorLiveMachineState": "unknown",
+    "vendorWriteBack": "unknown",
+    "writeBackEnabled": false
+  },
+  "data": {
+    "asset": {
+      "id": "CNC-04",
+      "name": "Máy gia công CNC",
+      "machineFamily": "CNC",
+      "machineModel": "MC-400",
+      "maker": "Nhà chế tạo B (mô phỏng)",
+      "year": 2019,
+      "line": "Line B · Khu gia công",
+      "plantId": null,
+      "observedMachineState": null,
+      "identityVerification": "demo_unconfirmed"
+    },
+    "history": [
+      {
+        "id": "HZ-BM-0786",
+        "version": null,
+        "type": "BM",
+        "occurredAt": "2026-09-24T03:00:00Z",
+        "summary": "Ghi nhận rung bất thường trong quá trình gia công; hồ sơ thô chưa qua kiểm duyệt tri thức.",
+        "sourceUpdatedAt": null,
+        "knowledgeApprovalStatus": "not_approved",
+        "sharedRagEligible": false
+      }
+    ],
+    "documentReferences": [
+      {
+        "id": "SOP-CNC-04",
+        "version": "3.0",
+        "title": "Quy trình bảo trì CNC",
+        "type": "SOP",
+        "summary": "Tham chiếu mô phỏng. Quy trình, quyền thao tác và điều kiện an toàn phải được xác minh tại nhà máy; không sử dụng mẫu demo như chỉ dẫn vận hành.",
+        "sourceUpdatedAt": null,
+        "effectiveFrom": null,
+        "effectiveTo": null,
+        "approvalStatus": "unknown",
+        "contentCompleteness": "summary_only",
+        "fullTextAvailable": false,
+        "sharedRagEligible": false
+      }
+    ],
+    "pmTemplate": {
+      "id": "PM-CNC-01",
+      "version": 1,
+      "sourceUpdatedAt": null,
+      "approvalStatus": "configured_demo",
+      "name": "Kiểm tra định kỳ CNC · mẫu nội bộ demo",
+      "scheduledWorkId": null,
+      "items": [
+        {"id": "visual", "label": "Quan sát tình trạng cụm máy", "criterion": "Ghi bất thường theo checklist của máy đã xác minh.", "result": null},
+        {"id": "lubrication", "label": "Tình trạng hệ thống bôi trơn", "criterion": "Đối chiếu tiêu chuẩn bảo trì đúng model máy.", "result": null},
+        {"id": "run", "label": "Kết quả kiểm tra theo quy trình", "criterion": "Người có thẩm quyền xác nhận điều kiện kiểm tra và tiêu chí đạt.", "result": null}
+      ]
+    }
+  },
+  "warnings": [
+    "Dữ liệu mô phỏng, chưa kết nối hoặc đồng bộ HozenDX.",
+    "Chưa xác minh máy thật, quyền truy cập hoặc thời điểm cập nhật nguồn.",
+    "Không có toàn văn SOP hoặc tiêu chuẩn rung/nhiệt độ được xác minh.",
+    "Không dùng dữ liệu này trong kho RAG production."
+  ]
+}

@@ -1,0 +1,519 @@
+{
+  "schemaVersion": "1.0",
+  "environment": "demo",
+  "isSimulated": true,
+  "preparedOn": "2026-10-10",
+  "notice": "Nội dung tự soạn cho demo, không phải tài liệu DENSO, HozenDX hoặc nhà chế tạo. Không dùng làm quy trình vận hành hay tiêu chuẩn bảo trì thực tế.",
+  "provenance": "synthetic_for_demo",
+  "documents": [
+    {
+      "id": "DEMO-CNC-001",
+      "version": "1.0",
+      "title": "Lý lịch máy CNC-04 — mô phỏng",
+      "type": "asset_reference",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "context"
+      ],
+      "keywords": [
+        "lý lịch",
+        "thiết bị",
+        "model",
+        "model máy",
+        "model sản phẩm",
+        "máy",
+        "CNC-04",
+        "MC-400",
+        "HozenDX"
+      ],
+      "sections": [
+        {
+          "id": "identity",
+          "heading": "Nhận diện máy mẫu",
+          "text": "CNC-04 là mã máy gia công CNC dùng trong demo; model máy là MC-400. Fixture HozenDX mô phỏng ghi nhà chế tạo là Nhà chế tạo B (mô phỏng), vị trí Line B · Khu gia công. Các thông tin này chưa được đối chiếu với máy thật. Model máy khác với model sản phẩm đang gia công."
+        },
+        {
+          "id": "availability",
+          "heading": "Thông tin đã có và còn thiếu",
+          "text": "Có mã máy, model máy và vị trí mẫu để lọc phạm vi tra cứu. Chưa có toàn văn manual, bản vẽ, tiêu chuẩn rung hoặc nhiệt độ được xác minh. Chưa xác định năm lắp đặt; trường year trong fixture không được tự diễn giải thành năm lắp đặt. HozenDX hiện là mock, không có đồng bộ hoặc tồn kho thời gian thực."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-002",
+      "version": "1.0",
+      "title": "Mẫu ghi nhận rung bất thường — mô phỏng",
+      "type": "intake_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "vibration"
+      ],
+      "keywords": [
+        "rung",
+        "rung bất thường",
+        "trục chính",
+        "gia công",
+        "tốc độ",
+        "đồ gá",
+        "5M1E"
+      ],
+      "sections": [
+        {
+          "id": "observations",
+          "heading": "Thông tin cần ghi nhận",
+          "text": "Với câu hỏi CNC-04 rung bất thường, mẫu ghi nhận gồm: vị trí xuất hiện rung; xuất hiện khi gia công hay ở chế độ khác; thời điểm bắt đầu; rung liên tục hay gián đoạn; Alarm nếu có; tốc độ và điều kiện đã quan sát nếu biết. Ghi thêm việc vừa đổi đồ gá, dao, vật liệu, chương trình hoặc model sản phẩm nếu có. Những trường chưa biết để là chưa rõ."
+        },
+        {
+          "id": "measurements",
+          "heading": "Số đo và giới hạn kết luận",
+          "text": "Nếu đã có số đo rung từ người có thẩm quyền, lưu giá trị cùng đơn vị, vị trí đo, cách đo và điều kiện vận hành lúc đo. Chưa có số đo thì không tự tạo số đo hoặc yêu cầu chạy máy chỉ để hoàn thiện demo. Mẫu này không chứa ngưỡng rung, cách tháo kiểm tra hay tiêu chuẩn kết luận hỏng ổ trục. Hiện tượng rung chưa đủ để xác nhận nguyên nhân."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-003",
+      "version": "1.0",
+      "title": "Case rung sau thay đồ gá — mô phỏng đã khép lại",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "vibration",
+        "fixture_change"
+      ],
+      "keywords": [
+        "rung",
+        "thay đồ gá",
+        "gá đặt",
+        "setup",
+        "đổi sản phẩm",
+        "case tương tự"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Hiện tượng và điều kiện của case hư cấu",
+          "text": "Trong kịch bản hư cấu, CNC-04 xuất hiện rung khi gia công sau khi đổi đồ gá cho sản phẩm mẫu. Bản ghi trước thời điểm đổi đồ gá không mô tả hiện tượng này. Kỹ thuật viên ghi nhận mối liên hệ về thời điểm; đây mới là dấu hiệu để đối chiếu, chưa phải bằng chứng nguyên nhân. Case không có số đo rung hoặc mã Alarm."
+        },
+        {
+          "id": "outcome",
+          "heading": "Việc đã làm và kết quả trong kịch bản",
+          "text": "Kịch bản mô phỏng ghi rằng chuyên gia đã đối chiếu bản setup và phát hiện điều kiện gá khác bản setup được dùng trong kịch bản. Người có thẩm quyền đã khôi phục điều kiện gá theo quy trình giả định của kịch bản; lần kiểm tra sau đó không còn ghi nhận rung. Đây là kết quả được tác giả đặt ra để trình bày demo, không phải sửa chữa đã xảy ra tại DENSO. Không có toàn văn bản setup hoặc hướng dẫn thao tác để áp dụng vào máy thật."
+        },
+        {
+          "id": "applicability",
+          "heading": "Điểm dùng để so sánh",
+          "text": "Case phù hợp để tham khảo khi câu hỏi cũng nêu rung sau thay đồ gá hoặc đổi sản phẩm. Khi hiện tượng xuất hiện từ trước, không có thay đổi gá hoặc khác chế độ, phải nêu các điểm khác thay vì kết luận cùng nguyên nhân. Không biến kết quả của case hư cấu thành yêu cầu chỉnh đồ gá cho hồ sơ hiện tại."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-004",
+      "version": "1.0",
+      "title": "Case rung gián đoạn chưa rõ nguyên nhân — mô phỏng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "vibration",
+        "incomplete_case"
+      ],
+      "keywords": [
+        "rung",
+        "gián đoạn",
+        "lúc có lúc không",
+        "chưa rõ nguyên nhân",
+        "trục chính",
+        "chờ"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Diễn biến hư cấu",
+          "text": "Trong case mẫu, người bảo trì ghi nhận CNC-04 rung gián đoạn tại vùng trục chính. Đợt đầu ghi hiện tượng nhưng chưa biết tốc độ, tải và thời điểm lặp lại. Đợt sau bổ sung rằng chưa có số đo hoặc nguồn tiêu chuẩn để đối chiếu. Đây là case được soạn mới, không phải bản đầy đủ của BM-26028 hay lịch sử HZ-BM-0786."
+        },
+        {
+          "id": "handover",
+          "heading": "Kết quả và bàn giao mẫu",
+          "text": "Kết quả mô phỏng là chưa xác định nguyên nhân và chưa xác nhận phục hồi. Công việc chuyển sang chờ bổ sung điều kiện xuất hiện rung, dữ liệu đo nếu có và nhận xét chuyên gia. Hồ sơ có thể tiếp tục ở đợt sau với cùng caseId. Kết thúc một đợt ghi nhận không đồng nghĩa máy đã sửa xong, không chứng minh cần thay linh kiện và không tự tạo kết luận hỏng cụm truyền động."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-005",
+      "version": "1.0",
+      "title": "Mẫu ghi nhận nhiệt độ bất thường — mô phỏng",
+      "type": "intake_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "temperature"
+      ],
+      "keywords": [
+        "nhiệt độ",
+        "nóng",
+        "nóng bất thường",
+        "tăng nhiệt",
+        "trục chính",
+        "nhiệt kế",
+        "ngưỡng"
+      ],
+      "sections": [
+        {
+          "id": "observations",
+          "heading": "Dữ kiện cần bổ sung",
+          "text": "Mẫu hỏi về nhiệt độ CNC-04 cần phân biệt cảm giác nóng với nhiệt độ đã đo. Ghi bộ phận và vị trí quan sát; thời điểm xuất hiện; thời gian vận hành đã biết; chế độ hoặc tải đã quan sát; Alarm nếu có. Nếu có số đo, lưu giá trị, đơn vị, vị trí đo, cách đo và thời điểm đo. Không tự chuyển mô tả nóng hơn bình thường thành một giá trị nhiệt độ."
+        },
+        {
+          "id": "limits",
+          "heading": "Chưa có ngưỡng cho phép",
+          "text": "Bộ nguồn demo không có tiêu chuẩn nhiệt độ được xác minh cho trục chính, động cơ hay ổ trục của MC-400. Vì vậy không trả lời một số độ C là ngưỡng an toàn hoặc kết luận một giá trị đã vượt chuẩn. Cần nguồn đúng model, bộ phận và điều kiện áp dụng để đánh giá. Mẫu này phục vụ thu thập thông tin; không có hướng dẫn tăng tải, chạy thử, tháo máy hoặc thay linh kiện."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-006",
+      "version": "1.0",
+      "title": "Case nóng sau chu kỳ dài — mô phỏng chưa đủ bằng chứng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "temperature",
+        "incomplete_case"
+      ],
+      "keywords": [
+        "nhiệt độ",
+        "nóng",
+        "chu kỳ dài",
+        "chạy lâu",
+        "trục chính",
+        "bôi trơn",
+        "chưa kết luận"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Hiện tượng trong case hư cấu",
+          "text": "Case mẫu mô tả người bảo trì nhận thấy vùng trục chính CNC-04 nóng hơn trong một ca có chu kỳ vận hành dài. Bản ghi chỉ là nhận xét; không có nhiệt độ đo, thời điểm đo, tải cụ thể hoặc tiêu chuẩn cho phép. Một ghi chú đặt giả thuyết liên quan bôi trơn nhưng không kèm kiểm chứng. Không có sự cố thực tế nào được xác nhận từ case này."
+        },
+        {
+          "id": "outcome",
+          "heading": "Kết quả mô phỏng và phần còn thiếu",
+          "text": "Case chưa kết luận nguyên nhân, chưa ghi nhận thay linh kiện và chưa xác nhận phục hồi. Phần bàn giao là bổ sung điều kiện vận hành, số đo nếu có, nguồn tiêu chuẩn phù hợp và nhận xét chuyên gia. Khi hỏi có phải thiếu bôi trơn hay không, câu trả lời phải giữ đó là giả thuyết chưa kiểm chứng. Không hướng dẫn thêm dầu, đổi loại dầu hoặc tiếp tục chạy máy từ nguồn này."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-007",
+      "version": "1.0",
+      "title": "Mẫu ghi kết quả PM và bất thường — mô phỏng",
+      "type": "recording_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "pm",
+        "recording"
+      ],
+      "keywords": [
+        "PM",
+        "checklist",
+        "bảo dưỡng",
+        "kết quả",
+        "bất thường",
+        "người ghi",
+        "người thực hiện"
+      ],
+      "sections": [
+        {
+          "id": "template",
+          "heading": "Checklist không phải kết quả đã làm",
+          "text": "Fixture hiện có checklist PM-CNC-01 v1 với ba mục mẫu: quan sát cụm máy, tình trạng hệ thống bôi trơn và kết quả kiểm tra theo quy trình. Các mục đều chưa có kết quả. Sự tồn tại của checklist không chứng minh kiểm tra đã được thực hiện hoặc máy đạt tiêu chuẩn. Chưa có API nhập kết quả PM trong bản demo hiện tại."
+        },
+        {
+          "id": "recording",
+          "heading": "Cách diễn đạt bản ghi mẫu",
+          "text": "Một bản ghi kết quả cần nói rõ nội dung đã quan sát hoặc đã làm, người thực hiện, người ghi và thời điểm nếu biết. Khi phát hiện rung hoặc nhiệt độ bất thường, lưu hiện tượng vào nhật ký và liên kết đúng hồ sơ; không tự đánh dấu đạt, sửa xong hoặc xác nhận nguyên nhân. Nguồn này mô tả cấu trúc bản ghi, không bổ sung quy trình thao tác PM."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-008",
+      "version": "1.0",
+      "title": "Phạm vi nguồn và câu trả lời khi thiếu dữ kiện — mô phỏng",
+      "type": "answering_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "scope",
+        "missing_evidence"
+      ],
+      "keywords": [
+        "thiếu dữ kiện",
+        "không có nguồn",
+        "ngưỡng",
+        "SOP",
+        "manual",
+        "toàn văn",
+        "nguyên nhân",
+        "phạm vi"
+      ],
+      "sections": [
+        {
+          "id": "scope",
+          "heading": "Phạm vi của bộ nguồn",
+          "text": "Bộ này chỉ dành cho demo CNC-04, model MC-400. Chưa có tài liệu cho máy Vision, máy ép hoặc model CNC khác. Tài liệu tham chiếu SOP-CNC-04 v3.0 trong fixture chỉ có tóm tắt và chưa được xác minh phê duyệt; không có toàn văn SOP, bản vẽ đấu nối, danh sách linh kiện thay thế hoặc tồn kho trực tiếp để trả lời chi tiết. Các nguồn tự soạn ở đây không thay thế tài liệu còn thiếu đó."
+        },
+        {
+          "id": "response",
+          "heading": "Nêu đúng phần đã biết và chưa biết",
+          "text": "Khi có đoạn phù hợp, dẫn mã tài liệu, phiên bản và mục nội dung; nêu rõ dữ liệu mô phỏng. Khi có hiện tượng nhưng thiếu phép đo, tiêu chuẩn hoặc kiểm chứng, nêu phần thiếu và không xác nhận nguyên nhân. Với máy hoặc chủ đề ngoài phạm vi, thông báo chưa có nguồn phù hợp trong bộ demo. Không tự tạo ngưỡng, bước sửa chữa, mã phụ tùng hoặc kết quả bảo dưỡng đã thực hiện."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-009",
+      "version": "1.0",
+      "title": "Case rung sau thay dao — mô phỏng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "rung sau thay dao",
+        "dao mới",
+        "thay dao",
+        "dao cắt"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Rung xuất hiện sau khi thay dao cắt trong kịch bản CNC-04; chưa có số đo hoặc thông số dao được xác minh."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Nhật ký hư cấu đã ghi nhận thời điểm thay dao và đề nghị đối chiếu mã dao, chương trình, vật liệu và điều kiện gia công. Chưa xác nhận dao là nguyên nhân và chưa có kết quả sửa chữa. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-010",
+      "version": "1.0",
+      "title": "Case nhiệt độ tăng kèm Alarm — mô phỏng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "nhiệt độ tăng kèm alarm",
+        "alarm nhiệt",
+        "cảnh báo nhiệt",
+        "nhiệt độ tăng"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Kịch bản CNC-04 ghi nhận màn hình báo nhiệt độ tăng kèm Alarm. Chưa có mã Alarm nguyên văn, giá trị, đơn vị và vị trí đo."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Cần bổ sung ảnh hoặc nội dung Alarm, thời điểm phát sinh, vị trí đo và điều kiện quan sát đã có. Nguồn không có bảng mã lỗi, ngưỡng dừng máy hoặc hướng dẫn reset Alarm. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-011",
+      "version": "1.0",
+      "title": "Case rung kèm tiếng ồn — mô phỏng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "rung kèm tiếng ồn",
+        "tiếng ồn lạ",
+        "âm thanh bất thường"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Tình huống hư cấu CNC-04 có rung kèm tiếng ồn lạ ở khu vực trục chính, chưa xác định vị trí phát ra chính xác."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Ghi riêng thời điểm và vị trí quan sát tiếng ồn, chế độ vận hành và thay đổi gần nhất. Chuyên gia chưa xác nhận hỏng ổ trục; không có căn cứ yêu cầu thay vòng bi. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-012",
+      "version": "1.0",
+      "title": "Case nhiệt độ tăng sau đổi sản phẩm — mô phỏng",
+      "type": "synthetic_case",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "nhiệt độ tăng sau đổi sản phẩm",
+        "đổi model sản phẩm",
+        "đổi chương trình"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Sau đổi model sản phẩm trong kịch bản CNC-04, người dùng ghi nhận nhiệt độ có xu hướng tăng. Chưa có chuỗi số đo để xác minh xu hướng."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Phiếu đối chiếu mẫu ghi model sản phẩm trước và sau đổi, phiên bản chương trình, vật liệu, thời gian chu kỳ và cách đo nếu đã biết. Chưa kết luận chương trình, tải hoặc bôi trơn là nguyên nhân. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-013",
+      "version": "1.0",
+      "title": "Mẫu ghi nhận số đo rung và nhiệt độ — mô phỏng",
+      "type": "intake_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "phiếu số đo",
+        "ghi nhận số đo",
+        "đơn vị đo",
+        "vị trí đo"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Phiếu mẫu dành cho dữ liệu đã được thu thập: đại lượng đo, giá trị, đơn vị, vị trí đo, thời điểm đo, thiết bị đo và điều kiện vận hành."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Không có số đo minh họa để tránh nhầm với dữ liệu thật. Thiếu đơn vị hoặc điều kiện đo thì chưa đủ cơ sở so sánh; nguồn không cung cấp ngưỡng chấp nhận. Nếu nhập số đo vào nhật ký demo, giá trị và đơn vị phải đi cùng nhau. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    },
+    {
+      "id": "DEMO-CNC-014",
+      "version": "1.0",
+      "title": "Mẫu bàn giao sự cố CNC chưa kết luận — mô phỏng",
+      "type": "intake_guide",
+      "environment": "demo",
+      "isSimulated": true,
+      "status": "demo_ready",
+      "assetIds": [
+        "CNC-04"
+      ],
+      "machineModel": "MC-400",
+      "topics": [
+        "supplemental_demo"
+      ],
+      "keywords": [
+        "bàn giao sự cố",
+        "việc còn lại",
+        "chưa kết luận",
+        "bàn giao cnc"
+      ],
+      "sections": [
+        {
+          "id": "scenario",
+          "heading": "Bối cảnh / nội dung mẫu",
+          "text": "Mẫu bàn giao tổng hợp hiện tượng, các việc đã thực hiện, kết quả quan sát, nguồn tham khảo và thông tin chưa xác minh."
+        },
+        {
+          "id": "limits",
+          "heading": "Ghi nhận và giới hạn áp dụng",
+          "text": "Ghi việc còn lại cùng người tiếp nhận dự kiến nếu đã biết. Phân biệt giả thuyết với nguyên nhân đã xác nhận; kết thúc đợt không đồng nghĩa máy đã phục hồi hoặc hồ sơ đã đóng. Toàn bộ nội dung tự soạn cho demo, không phải hướng dẫn của DENSO hoặc nhà chế tạo."
+        }
+      ]
+    }
+  ]
+}

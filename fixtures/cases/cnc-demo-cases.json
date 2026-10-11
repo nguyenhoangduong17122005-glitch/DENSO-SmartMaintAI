@@ -1,0 +1,187 @@
+{
+  "environment": "demo",
+  "isSimulated": true,
+  "provenance": "synthetic_for_demo",
+  "cases": [
+    {
+      "id": "BM-DEMO-001",
+      "title": "[DEMO] Case rung sau thay dao",
+      "assetId": "CNC-04",
+      "context": {
+        "symptom": "DEMO: Rung xuất hiện sau khi thay dao cắt trong kịch bản CNC-04; chưa có số đo hoặc thông số dao được xác minh.",
+        "alarm": "Chưa xác minh",
+        "component": "Chưa xác minh",
+        "mode": "Chưa xác minh",
+        "productModel": "Chưa xác minh",
+        "speed": "Chưa xác minh",
+        "shift": "Chưa xác minh",
+        "onset": "Thời điểm theo tình huống mô phỏng, chưa có dữ liệu thật",
+        "environment": "Dữ liệu tổng hợp cho demo",
+        "changes": []
+      },
+      "rounds": [
+        {
+          "id": "RD-DEMO-1-1",
+          "state": "ended",
+          "summary": "DEMO: Đã ghi nhận hiện tượng; chờ bổ sung dữ liệu.",
+          "nextSteps": "Nhật ký hư cấu đã ghi nhận thời điểm thay dao và đề nghị đối chiếu mã dao, chương trình, vật liệu và điều kiện gia công. Chưa xác nhận dao là nguyên nhân và chưa có kết quả sửa chữa.",
+          "events": [
+            {
+              "id": "EV-DEMO-1-1",
+              "type": "observation",
+              "content": "DEMO: Rung xuất hiện sau khi thay dao cắt trong kịch bản CNC-04; chưa có số đo hoặc thông số dao được xác minh.",
+              "performedBy": "u-minh",
+              "recordedBy": "u-minh",
+              "result": "Chưa xác nhận nguyên nhân."
+            },
+            {
+              "id": "EV-DEMO-1-2",
+              "type": "check",
+              "content": "DEMO: Chuyên gia đã rà soát những thông tin còn thiếu trong tình huống hư cấu.",
+              "performedBy": "u-hai",
+              "recordedBy": "u-minh",
+              "result": "Nhật ký hư cấu đã ghi nhận thời điểm thay dao và đề nghị đối chiếu mã dao, chương trình, vật liệu và điều kiện gia công. Chưa xác nhận dao là nguyên nhân và chưa có kết quả sửa chữa."
+            }
+          ]
+        }
+      ],
+      "suggestedQuery": "Máy CNC rung sau thay dao cần ghi nhận gì?",
+      "relatedSourceId": "DEMO-CNC-009"
+    },
+    {
+      "id": "BM-DEMO-002",
+      "title": "[DEMO] Case nhiệt độ tăng kèm Alarm",
+      "assetId": "CNC-04",
+      "context": {
+        "symptom": "DEMO: Kịch bản CNC-04 ghi nhận màn hình báo nhiệt độ tăng kèm Alarm. Chưa có mã Alarm nguyên văn, giá trị, đơn vị và vị trí đo.",
+        "alarm": "Chưa xác minh",
+        "component": "Chưa xác minh",
+        "mode": "Chưa xác minh",
+        "productModel": "Chưa xác minh",
+        "speed": "Chưa xác minh",
+        "shift": "Chưa xác minh",
+        "onset": "Thời điểm theo tình huống mô phỏng, chưa có dữ liệu thật",
+        "environment": "Dữ liệu tổng hợp cho demo",
+        "changes": []
+      },
+      "rounds": [
+        {
+          "id": "RD-DEMO-2-1",
+          "state": "ended",
+          "summary": "DEMO: Đã ghi nhận hiện tượng; chờ bổ sung dữ liệu.",
+          "nextSteps": "Cần bổ sung ảnh hoặc nội dung Alarm, thời điểm phát sinh, vị trí đo và điều kiện quan sát đã có. Nguồn không có bảng mã lỗi, ngưỡng dừng máy hoặc hướng dẫn reset Alarm.",
+          "events": [
+            {
+              "id": "EV-DEMO-2-1",
+              "type": "observation",
+              "content": "DEMO: Kịch bản CNC-04 ghi nhận màn hình báo nhiệt độ tăng kèm Alarm. Chưa có mã Alarm nguyên văn, giá trị, đơn vị và vị trí đo.",
+              "performedBy": "u-minh",
+              "recordedBy": "u-minh",
+              "result": "Chưa xác nhận nguyên nhân."
+            },
+            {
+              "id": "EV-DEMO-2-2",
+              "type": "check",
+              "content": "DEMO: Chuyên gia đã rà soát những thông tin còn thiếu trong tình huống hư cấu.",
+              "performedBy": "u-hai",
+              "recordedBy": "u-minh",
+              "result": "Cần bổ sung ảnh hoặc nội dung Alarm, thời điểm phát sinh, vị trí đo và điều kiện quan sát đã có. Nguồn không có bảng mã lỗi, ngưỡng dừng máy hoặc hướng dẫn reset Alarm."
+            }
+          ]
+        }
+      ],
+      "suggestedQuery": "Nhiệt độ tăng kèm Alarm cần bổ sung thông tin gì?",
+      "relatedSourceId": "DEMO-CNC-010"
+    },
+    {
+      "id": "BM-DEMO-003",
+      "title": "[DEMO] Case rung kèm tiếng ồn",
+      "assetId": "CNC-04",
+      "context": {
+        "symptom": "DEMO: Tình huống hư cấu CNC-04 có rung kèm tiếng ồn lạ ở khu vực trục chính, chưa xác định vị trí phát ra chính xác.",
+        "alarm": "Chưa xác minh",
+        "component": "Khu vực trục chính",
+        "mode": "Chưa xác minh",
+        "productModel": "Chưa xác minh",
+        "speed": "Chưa xác minh",
+        "shift": "Chưa xác minh",
+        "onset": "Thời điểm theo tình huống mô phỏng, chưa có dữ liệu thật",
+        "environment": "Dữ liệu tổng hợp cho demo",
+        "changes": []
+      },
+      "rounds": [
+        {
+          "id": "RD-DEMO-3-1",
+          "state": "ended",
+          "summary": "DEMO: Đã ghi nhận hiện tượng; chờ bổ sung dữ liệu.",
+          "nextSteps": "Ghi riêng thời điểm và vị trí quan sát tiếng ồn, chế độ vận hành và thay đổi gần nhất. Chuyên gia chưa xác nhận hỏng ổ trục; không có căn cứ yêu cầu thay vòng bi.",
+          "events": [
+            {
+              "id": "EV-DEMO-3-1",
+              "type": "observation",
+              "content": "DEMO: Tình huống hư cấu CNC-04 có rung kèm tiếng ồn lạ ở khu vực trục chính, chưa xác định vị trí phát ra chính xác.",
+              "performedBy": "u-minh",
+              "recordedBy": "u-minh",
+              "result": "Chưa xác nhận nguyên nhân."
+            },
+            {
+              "id": "EV-DEMO-3-2",
+              "type": "check",
+              "content": "DEMO: Chuyên gia đã rà soát những thông tin còn thiếu trong tình huống hư cấu.",
+              "performedBy": "u-hai",
+              "recordedBy": "u-minh",
+              "result": "Ghi riêng thời điểm và vị trí quan sát tiếng ồn, chế độ vận hành và thay đổi gần nhất. Chuyên gia chưa xác nhận hỏng ổ trục; không có căn cứ yêu cầu thay vòng bi."
+            }
+          ]
+        }
+      ],
+      "suggestedQuery": "Máy rung kèm tiếng ồn lạ đã xác định nguyên nhân chưa?",
+      "relatedSourceId": "DEMO-CNC-011"
+    },
+    {
+      "id": "BM-DEMO-004",
+      "title": "[DEMO] Case nhiệt độ tăng sau đổi sản phẩm",
+      "assetId": "CNC-04",
+      "context": {
+        "symptom": "DEMO: Sau đổi model sản phẩm trong kịch bản CNC-04, người dùng ghi nhận nhiệt độ có xu hướng tăng. Chưa có chuỗi số đo để xác minh xu hướng.",
+        "alarm": "Chưa xác minh",
+        "component": "Chưa xác minh",
+        "mode": "Chưa xác minh",
+        "productModel": "Chưa xác minh",
+        "speed": "Chưa xác minh",
+        "shift": "Chưa xác minh",
+        "onset": "Thời điểm theo tình huống mô phỏng, chưa có dữ liệu thật",
+        "environment": "Dữ liệu tổng hợp cho demo",
+        "changes": []
+      },
+      "rounds": [
+        {
+          "id": "RD-DEMO-4-1",
+          "state": "ended",
+          "summary": "DEMO: Đã ghi nhận hiện tượng; chờ bổ sung dữ liệu.",
+          "nextSteps": "Phiếu đối chiếu mẫu ghi model sản phẩm trước và sau đổi, phiên bản chương trình, vật liệu, thời gian chu kỳ và cách đo nếu đã biết. Chưa kết luận chương trình, tải hoặc bôi trơn là nguyên nhân.",
+          "events": [
+            {
+              "id": "EV-DEMO-4-1",
+              "type": "observation",
+              "content": "DEMO: Sau đổi model sản phẩm trong kịch bản CNC-04, người dùng ghi nhận nhiệt độ có xu hướng tăng. Chưa có chuỗi số đo để xác minh xu hướng.",
+              "performedBy": "u-minh",
+              "recordedBy": "u-minh",
+              "result": "Chưa xác nhận nguyên nhân."
+            },
+            {
+              "id": "EV-DEMO-4-2",
+              "type": "check",
+              "content": "DEMO: Chuyên gia đã rà soát những thông tin còn thiếu trong tình huống hư cấu.",
+              "performedBy": "u-hai",
+              "recordedBy": "u-minh",
+              "result": "Phiếu đối chiếu mẫu ghi model sản phẩm trước và sau đổi, phiên bản chương trình, vật liệu, thời gian chu kỳ và cách đo nếu đã biết. Chưa kết luận chương trình, tải hoặc bôi trơn là nguyên nhân."
+            }
+          ]
+        }
+      ],
+      "suggestedQuery": "Nhiệt độ tăng sau đổi sản phẩm cần đối chiếu gì?",
+      "relatedSourceId": "DEMO-CNC-012"
+    }
+  ]
+}

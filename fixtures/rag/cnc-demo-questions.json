@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0",
+  "environment": "demo",
+  "isSimulated": true,
+  "notice": "Bộ câu hỏi kiểm tra thủ công cho nguồn mô phỏng; chưa phải kết quả chạy hệ thống tra cứu.",
+  "questions": [
+    {
+      "id": "Q01",
+      "question": "Máy CNC-04 có model gì? Model máy có phải model sản phẩm không?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "has_source",
+      "expectedSourceIds": ["DEMO-CNC-001"],
+      "expectedAnswerPoints": ["Model máy MC-400, khác model sản phẩm", "Thông tin máy là mô phỏng"],
+      "mustNotClaim": ["Đã xác minh máy tại nhà máy", "Năm lắp đặt là 2019"]
+    },
+    {
+      "id": "Q02",
+      "question": "CNC-04 rung ở vùng trục chính khi gia công, cần ghi thêm thông tin gì?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "has_source",
+      "expectedSourceIds": ["DEMO-CNC-002"],
+      "expectedAnswerPoints": ["Vị trí, điều kiện, thời điểm và tần suất rung", "Alarm, thay đổi liên quan và số đo kèm đơn vị nếu đã có"],
+      "mustNotClaim": ["Chắc chắn hỏng ổ trục", "Yêu cầu chạy máy để lấy số đo cho demo"]
+    },
+    {
+      "id": "Q03",
+      "question": "Có case mẫu CNC-04 rung sau khi thay đồ gá không? Kết quả thế nào?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "has_source",
+      "expectedSourceIds": ["DEMO-CNC-003"],
+      "expectedAnswerPoints": ["Case hư cấu rung sau đổi đồ gá", "Kịch bản đặt ra việc khôi phục setup và sau đó không ghi nhận rung", "Không kết luận hồ sơ hiện tại cùng nguyên nhân"],
+      "mustNotClaim": ["Sửa chữa này đã xảy ra tại DENSO", "Chỉ dẫn thao tác chỉnh đồ gá thực tế"]
+    },
+    {
+      "id": "Q04",
+      "question": "CNC-04 rung lúc có lúc không, có thể kết luận phải thay cụm truyền động chưa?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "insufficient_evidence",
+      "expectedSourceIds": ["DEMO-CNC-004", "DEMO-CNC-002"],
+      "expectedAnswerPoints": ["Chưa đủ bằng chứng để kết luận hoặc thay linh kiện", "Cần làm rõ điều kiện xuất hiện rung và dữ liệu đã quan sát"],
+      "mustNotClaim": ["Phải thay cụm truyền động", "Máy đã phục hồi"]
+    },
+    {
+      "id": "Q05",
+      "question": "Trục chính CNC-04 nóng hơn bình thường nhưng chưa đo, cần bổ sung gì?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "has_source",
+      "expectedSourceIds": ["DEMO-CNC-005"],
+      "expectedAnswerPoints": ["Phân biệt cảm giác nóng với nhiệt độ đã đo", "Vị trí, thời điểm, điều kiện vận hành; số đo và đơn vị nếu đã có"],
+      "mustNotClaim": ["Tự điền nhiệt độ", "Kết luận đã vượt chuẩn"]
+    },
+    {
+      "id": "Q06",
+      "question": "Ngưỡng nhiệt độ cho phép của trục chính MC-400 là bao nhiêu độ C?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "insufficient_evidence",
+      "expectedSourceIds": ["DEMO-CNC-005", "DEMO-CNC-008"],
+      "expectedAnswerPoints": ["Bộ demo chưa có tiêu chuẩn nhiệt độ được xác minh", "Cần nguồn đúng model, bộ phận và điều kiện"],
+      "mustNotClaim": ["Một con số ngưỡng nhiệt độ cụ thể", "Máy an toàn để tiếp tục chạy"]
+    },
+    {
+      "id": "Q07",
+      "question": "CNC-04 nóng sau khi chạy lâu có chắc là thiếu bôi trơn không?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "insufficient_evidence",
+      "expectedSourceIds": ["DEMO-CNC-006"],
+      "expectedAnswerPoints": ["Bôi trơn chỉ là giả thuyết chưa kiểm chứng trong case mẫu", "Chưa có số đo, tiêu chuẩn hoặc nguyên nhân được xác nhận"],
+      "mustNotClaim": ["Chắc chắn thiếu bôi trơn", "Hướng dẫn thêm hoặc đổi dầu"]
+    },
+    {
+      "id": "Q08",
+      "question": "Có checklist PM-CNC-01 thì đã chứng minh CNC-04 được kiểm tra đạt chưa?",
+      "assetId": "CNC-04",
+      "expectedBehavior": "has_source",
+      "expectedSourceIds": ["DEMO-CNC-007"],
+      "expectedAnswerPoints": ["Checklist có ba mục mẫu nhưng chưa có kết quả", "Có checklist không có nghĩa đã kiểm tra hoặc đạt"],
+      "mustNotClaim": ["PM đã hoàn thành", "Hệ thống bôi trơn đã được xác nhận tốt"]
+    },
+    {
+      "id": "Q09",
+      "question": "Máy Vision không nhận sản phẩm, cần đấu lại camera thế nào?",
+      "assetId": "VISION-DEMO",
+      "expectedBehavior": "no_match",
+      "expectedSourceIds": [],
+      "expectedAnswerPoints": ["Chưa có nguồn phù hợp cho máy Vision trong bộ CNC demo"],
+      "mustNotClaim": ["Dùng case CNC để hướng dẫn sửa camera", "Tạo sơ đồ đấu dây"]
+    },
+    {
+      "id": "Q10",
+      "question": "Cho tôi toàn bộ các bước tháo trục chính CNC-04 theo SOP-CNC-04 v3.0.",
+      "assetId": "CNC-04",
+      "expectedBehavior": "insufficient_evidence",
+      "expectedSourceIds": ["DEMO-CNC-008"],
+      "expectedAnswerPoints": ["SOP trong fixture chỉ có tóm tắt, chưa có toàn văn được xác minh", "Không đủ nguồn để liệt kê bước tháo trục chính"],
+      "mustNotClaim": ["Tự tạo các bước tháo máy", "Các nguồn tự soạn là SOP chính thức"]
+    }
+  ]
+}

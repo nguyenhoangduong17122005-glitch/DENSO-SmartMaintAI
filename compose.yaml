@@ -1,0 +1,24 @@
+services:
+  smartmaint:
+    build: .
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      PORT: "8001"
+      SMARTMAINT_DB: /data/smartmaint.sqlite3
+      SMARTMAINT_VECTOR_DB: /data/rag-vectors.sqlite3
+      SMARTMAINT_ANSWER_MODE: ${SMARTMAINT_ANSWER_MODE:-template}
+      SMARTMAINT_RETRIEVAL_MODE: ${SMARTMAINT_RETRIEVAL_MODE:-keyword}
+      SMARTMAINT_GEMINI_MODEL: ${SMARTMAINT_GEMINI_MODEL:-gemini-3.8-flash}
+      SMARTMAINT_EMBEDDING_MODEL: ${SMARTMAINT_EMBEDDING_MODEL:-gemini-embedding-001}
+      SMARTMAINT_EMBEDDING_DIMENSIONS: ${SMARTMAINT_EMBEDDING_DIMENSIONS:-768}
+      SMARTMAINT_VECTOR_MIN_SCORE: ${SMARTMAINT_VECTOR_MIN_SCORE:-0.45}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      SMARTMAINT_SECURE_COOKIE: "0"
+      SMARTMAINT_DEMO_ROLE_SELECTION: "1"
+    volumes:
+      - smartmaint-data:/data
+    restart: unless-stopped
+
+volumes:
+  smartmaint-data:
